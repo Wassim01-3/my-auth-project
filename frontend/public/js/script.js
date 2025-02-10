@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (response.ok) {
                     const { token } = await response.json();
                     localStorage.setItem('token', token);
-                    window.location.href = '/home';
+                    window.location.href = '/index.html';
                 } else {
                     alert('Login failed');
                 }
