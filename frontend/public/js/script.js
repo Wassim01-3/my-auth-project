@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (response.ok) {
                     alert('Registration successful!');
-                    window.location.href = '/login.html'; // Redirect to login page
+                    window.location.href = '/index.html'; // Redirect to login page
                 } else {
                     alert('Registration failed');
                 }
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (response.ok) {
                     const { token } = await response.json();
                     localStorage.setItem('token', token);
-                    window.location.href = '/index.html';
+                    window.location.href = '/home.html';
                 } else {
                     alert('Login failed');
                 }
