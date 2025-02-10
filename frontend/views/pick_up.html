@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pickup Services - EcoTunisia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo"> GreenTunisia<i class="fa-solid fa-leaf"></i></div>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="buy_sell.html">Buy & Sell</a></li>
+        <li><a href="garbage-trading.html">Garbage Trading</a></li>
+        <li><a href="plastic_selling.html">Sell Plastic</a></li>
+        <li><a href="pick_up.html">Pickup Services</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="pickup-form">
+    <h1>Request a Pickup</h1>
+    <form id="pickupForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" required>
+      
+      <label for="wasteType">Type of Waste:</label>
+      <select id="wasteType" name="wasteType" required>
+        <option value="plastic">Plastic</option>
+        <option value="paper">Paper</option>
+        <option value="metal">Metal</option>
+        <option value="electronics">Electronics</option>
+      </select>
+      
+      <label for="date">Pickup Date:</label>
+      <input type="date" id="date" name="date" required>
+      
+      <button type="submit">Submit Request</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy;2025 GreenTunisia. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
