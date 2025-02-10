@@ -23,8 +23,8 @@ app.use('/api/auth', authRoutes);
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
 // Serve the home page
-app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/views/home.html'));
+app.get('/index', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/views/index.html'));
 });
 
 // Start the server
