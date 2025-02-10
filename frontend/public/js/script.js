@@ -1,4 +1,4 @@
-const backendUrl = process.env.BACKEND_URL || 'https://green-tunisia-h3ji.onrender.com';
+const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM fully loaded!");
 
