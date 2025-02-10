@@ -1,4 +1,5 @@
 const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM fully loaded!");
 
@@ -13,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = Object.fromEntries(formData.entries());
 
             try {
-                const response = await fetch('/api/auth/register', {
+                const response = await fetch(`${backendUrl}/api/auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
@@ -45,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = Object.fromEntries(formData.entries());
 
             try {
-                const response = await fetch('/api/auth/login', {
+                const response = await fetch(`${backendUrl}/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
