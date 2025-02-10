@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (response.ok) {
                     alert('Registration successful!');
-                    window.location.href = '/index.html'; // Redirect to login page
+                    window.location.href = '/login.html'; // Redirect to login page
                 } else {
                     alert('Registration failed');
                 }
