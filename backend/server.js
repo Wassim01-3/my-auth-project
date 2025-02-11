@@ -1,7 +1,7 @@
-require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
+const authMiddleware = require('./middleware/authMiddleware'); // Import the middleware
 const path = require('path');
 
 const app = express();
@@ -16,12 +16,13 @@ mongoose.connect(process.env.MONGO_URI, {
 // Middleware
 app.use(express.json());
 
-// Routes
-app.use('/api/auth', authRoutes);
-
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
+// Routes
+app.use('/api/auth', authRoutes);
+
+// Protect the /home route
 app.get('/home', authMiddleware, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/home.html'));
 });
