@@ -56,17 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     const { token } = await response.json();
                     localStorage.setItem('token', token); // Store the token in localStorage
 
-                    // Verify the token before redirecting to /home
-                    const homeResponse = await fetch(`${backendUrl}/home`, {
-                        headers: { 'Authorization': `Bearer ${token}` },
-                    });
-
-                    if (homeResponse.ok) {
-                        window.location.href = '/home'; // Redirect to the home page
-                    } else {
-                        alert('Unauthorized access. Please log in again.');
-                        window.location.href = '/login.html'; // Redirect to the login page
-                    }
+                    // Redirect to /home with the token in the headers
+                    window.location.href = '/home';
                 } else {
                     alert('Login failed');
                 }
