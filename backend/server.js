@@ -22,9 +22,8 @@ app.use('/api/auth', authRoutes);
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
-// Serve the home page
-app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/views/home.html'));
+app.get('/home', authMiddleware, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/home.html'));
 });
 
 // Start the server
