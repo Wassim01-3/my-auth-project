@@ -54,8 +54,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (response.ok) {
                     const { token } = await response.json();
-                    localStorage.setItem('token', token);
-                    window.location.href = '/home';
+                    localStorage.setItem('token', token); // Store the token in localStorage
+
+                    // Verify the token before redirecting to /home
+                    const homeResponse = await fetch(`${backendUrl}/home`, {
+                        headers: { 'Authorization': `Bearer ${token}` },
+                    });
+
+                    if (homeResponse.ok) {
+                        window.location.href = '/home'; // Redirect to the home page
+                    } else {
+                        alert('Unauthorized access. Please log in again.');
+                        window.location.href = '/login.html'; // Redirect to the login page
+                    }
                 } else {
                     alert('Login failed');
                 }
@@ -66,5 +77,31 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     } else {
         console.log("No login form found, skipping login handler.");
+    }
+
+    // Check authentication status when loading /home
+    if (window.location.pathname === '/home') {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            // If no token is found, redirect to the login page
+            window.location.href = '/login.html';
+            return;
+        }
+
+        // Verify the token before allowing access to /home
+        fetch(`${backendUrl}/home`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+        })
+        .then(response => {
+            if (!response.ok) {
+                // If the token is invalid, redirect to the login page
+                window.location.href = '/login.html';
+            }
+        })
+        .catch(err => {
+            console.error('Fetch error:', err);
+            window.location.href = '/login.html';
+        });
     }
 });
