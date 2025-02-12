@@ -29,9 +29,23 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
 });
 
-// Protect the /home route
-app.get('/home', authMiddleware, (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/home.html'));
+app.get('/home', (req, res) => {
+    const token = req.cookies.token; // Extract the token from the cookie
+
+    if (!token) {
+        return res.status(401).send('Access denied. No token provided.');
+    }
+
+    try {
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.userId = decoded.userId;
+
+        // Serve the home.html file
+        res.sendFile(path.join(__dirname, '../frontend/public/home.html'));
+    } catch (err) {
+        res.status(400).send('Invalid token.');
+    }
 });
 
 // Start the server
