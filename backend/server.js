@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser'); // Import cookie-parser
 const authRoutes = require('./routes/authRoutes');
 const authMiddleware = require('./middleware/authMiddleware'); // Import the middleware
 const path = require('path');
@@ -17,6 +18,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser()); // Use cookie-parser middleware
 
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname, '../frontend/public')));
@@ -29,23 +31,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
 });
 
-app.get('/home', (req, res) => {
-    const token = req.cookies.token; // Extract the token from the cookie
-
-    if (!token) {
-        return res.status(401).send('Access denied. No token provided.');
-    }
-
-    try {
-        // Verify the token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.userId = decoded.userId;
-
-        // Serve the home.html file
-        res.sendFile(path.join(__dirname, '../frontend/public/home.html'));
-    } catch (err) {
-        res.status(400).send('Invalid token.');
-    }
+// Protect the /home route
+app.get('/home', authMiddleware, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/home.html'));
 });
 
 // Start the server
