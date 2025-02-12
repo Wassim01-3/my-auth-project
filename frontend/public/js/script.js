@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const { token } = await response.json();
                     localStorage.setItem('token', token); // Store the token in localStorage
 
-                    // Redirect to /home with the token in the headers
+                    // Redirect to /home after successful login
                     window.location.href = '/home';
                 } else {
                     alert('Login failed');
