@@ -24,6 +24,11 @@ app.use(express.static(path.join(__dirname, '../frontend/public')));
 // Routes
 app.use('/api/auth', authRoutes);
 
+// Serve the index.html file as the default route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
+});
+
 // Protect the /home route
 app.get('/home', authMiddleware, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/home.html'));
