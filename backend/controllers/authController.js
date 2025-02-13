@@ -42,11 +42,12 @@ const login = async (req, res) => {
         // Generate a JWT token
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Set the token in an HTTP-only cookie
         res.cookie('token', token, {
-            httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-            secure: process.env.NODE_ENV === 'production', // Ensures the cookie is only sent over HTTPS in production
-            sameSite: 'strict', // Prevents CSRF attacks
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            domain: 'green-tunisia-h3ji.onrender.com', // Set the domain explicitly
+            path: '/', // Set the path explicitly
         });
 
         res.json({ message: 'Login successful' });
