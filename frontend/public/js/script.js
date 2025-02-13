@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check authentication status when loading /home
     if (window.location.pathname === '/home') {
+        console.log('Fetching /home with credentials...');
         fetch(`${backendUrl}/home`, {
             credentials: 'include', // Include cookies in the request
         })
