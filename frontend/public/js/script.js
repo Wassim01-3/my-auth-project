@@ -53,11 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 if (response.ok) {
-                    const { token } = await response.json();
-                    localStorage.setItem('token', token); // Store the token in localStorage
-
-                    // Redirect to /home after successful login
-                    window.location.href = '/home';
+                    const { message } = await response.json();
+                    alert(message); // Show a success message
+                    window.location.href = '/home'; // Redirect to /home
                 } else {
                     alert('Login failed');
                 }
@@ -72,17 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check authentication status when loading /home
     if (window.location.pathname === '/home') {
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-            // If no token is found, redirect to the login page
-            window.location.href = '/login.html';
-            return;
-        }
-
-        // Verify the token before allowing access to /home
         fetch(`${backendUrl}/home`, {
-            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include', // Include cookies in the request
         })
         .then(response => {
             if (!response.ok) {
