@@ -35,35 +35,33 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("No registration form found, skipping registration handler.");
     }
 
-    // Handle login form submission only if it exists
-    const loginForm = document.getElementById("loginForm");
-    if (loginForm) {
-        console.log("Login form found!");
+    // Handle login form submission
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
 
-        loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
+        try {
+            const response = await fetch(`${backendUrl}/api/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
 
-            try {
-                const response = await fetch(`${backendUrl}/api/auth/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                });
-
-                if (response.ok) {
-                    const { message } = await response.json();
-                    alert(message); // Show a success message
-                    window.location.href = '/home'; // Redirect to /home
-                } else {
-                    alert('Login failed');
-                }
-            } catch (err) {
-                console.error('Fetch error:', err);
-                alert('An error occurred. Please try again.');
+            if (response.ok) {
+                const { message } = await response.json();
+                alert(message); // Show a success message
+                window.location.href = '/home'; // Redirect to /home
+            } else {
+                alert('Login failed');
             }
-        });
+        } catch (err) {
+            console.error('Fetch error:', err);
+            alert('An error occurred. Please try again.');
+        }
+    });
     } else {
         console.log("No login form found, skipping login handler.");
     }
