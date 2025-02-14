@@ -1,8 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser'); // Import cookie-parser
+const session = require('express-session'); // Import express-session
 const authRoutes = require('./routes/authRoutes');
-const authMiddleware = require('./middleware/authMiddleware'); // Import the middleware
 const path = require('path');
 require('dotenv').config(); // Load environment variables from .env
 
@@ -18,7 +17,18 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Middleware
 app.use(express.json());
-app.use(cookieParser()); // Use cookie-parser middleware
+
+// Configure session middleware
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your-secret-key', // Secret key to sign the session ID cookie
+    resave: false, // Don't save the session if it hasn't been modified
+    saveUninitialized: false, // Don't create a session until something is stored
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
+        httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+        maxAge: 1000 * 60 * 60, // Session expires after 1 hour
+    },
+}));
 
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname, '../frontend/public')));
@@ -32,7 +42,10 @@ app.get('/', (req, res) => {
 });
 
 // Protect the /home route
-app.get('/home', authMiddleware, (req, res) => {
+app.get('/home', (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).send('Access denied. Please log in.');
+    }
     res.sendFile(path.join(__dirname, '../frontend/public/home.html'));
 });
 
