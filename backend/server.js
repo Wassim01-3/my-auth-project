@@ -1,9 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const session = require('express-session'); // Import express-session
+const session = require('express-session');
+const MongoStore = require('connect-mongo'); // Import connect-mongo
 const authRoutes = require('./routes/authRoutes');
 const path = require('path');
-require('dotenv').config(); // Load environment variables from .env
+require('dotenv').config();
 
 const app = express();
 
@@ -18,11 +19,15 @@ mongoose.connect(process.env.MONGO_URI, {
 // Middleware
 app.use(express.json());
 
-// Configure session middleware
+// Configure session middleware with connect-mongo
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key', // Secret key to sign the session ID cookie
-    resave: false, // Don't save the session if it hasn't been modified
-    saveUninitialized: false, // Don't create a session until something is stored
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ // Use MongoDB to store sessions
+        mongoUrl: process.env.MONGO_URI, // MongoDB connection string
+        ttl: 60 * 60, // Session TTL (1 hour)
+    }),
     cookie: {
         secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
         httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
