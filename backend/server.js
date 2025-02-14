@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const MongoStore = require('connect-mongo'); // Import connect-mongo
+const MongoStore = require('connect-mongo');
 const authRoutes = require('./routes/authRoutes');
 const path = require('path');
 require('dotenv').config();
@@ -9,12 +9,9 @@ require('dotenv').config();
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log('MongoDB connection error:', err));
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log('MongoDB connection error:', err));
 
 // Middleware
 app.use(express.json());
@@ -24,7 +21,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secret-key',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ // Use MongoDB to store sessions
+    store: MongoStore.create({
         mongoUrl: process.env.MONGO_URI, // MongoDB connection string
         ttl: 60 * 60, // Session TTL (1 hour)
     }),
