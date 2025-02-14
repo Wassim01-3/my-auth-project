@@ -70,13 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check authentication status when loading /home
     if (window.location.pathname === '/home') {
-        console.log('Fetching /home with credentials...');
-        fetch(`${backendUrl}/home`, {
-            credentials: 'include', // Include cookies in the request
-        })
+        fetch(`${backendUrl}/home`)
         .then(response => {
             if (!response.ok) {
-                // If the token is invalid, redirect to the login page
+                // If the user is not authenticated, redirect to the login page
                 window.location.href = '/login.html';
             }
         })
