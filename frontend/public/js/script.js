@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
+                    credentials: 'include', // Include cookies
                 });
 
                 if (response.ok) {
@@ -50,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
+                    credentials: 'include', // Include cookies
                 });
 
                 if (response.ok) {
@@ -70,7 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check authentication status when loading /home
     if (window.location.pathname === '/home') {
-        fetch(`${backendUrl}/home`)
+        fetch(`${backendUrl}/home`, {
+            credentials: 'include', // Include cookies
+        })
         .then(response => {
             if (!response.ok) {
                 // If the user is not authenticated, redirect to the login page
