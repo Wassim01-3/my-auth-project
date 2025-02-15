@@ -9,6 +9,10 @@ require('dotenv').config();
 
 const app = express();
 
+// Log environment variables
+console.log('MONGO_URI:', process.env.MONGO_URI);
+console.log('SESSION_SECRET:', process.env.SESSION_SECRET);
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB connected'))
@@ -16,9 +20,11 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Middleware
 app.use(express.json());
+
+// Configure CORS to allow requests from the static site
 app.use(cors({
-    origin: true, // Allow all origins (update this in production)
-    credentials: true, // Allow cookies
+    origin: 'https://my-auth-project.onrender.com', // Allow requests from your static site
+    credentials: true, // Allow cookies to be sent
 }));
 
 // Configure session middleware with connect-mongo
@@ -31,10 +37,10 @@ app.use(session({
         ttl: 60 * 60, // 1 hour
     }),
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // Use HTTPS in production
+        secure: true, // Use HTTPS
         httpOnly: true, // Prevent client-side JS from accessing the cookie
         maxAge: 1000 * 60 * 60, // 1 hour
-        sameSite: 'lax', // Recommended for CSRF protection
+        sameSite: 'none', // Allow cross-origin cookies
     },
 }));
 
