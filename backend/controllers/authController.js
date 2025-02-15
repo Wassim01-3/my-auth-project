@@ -17,7 +17,8 @@ const login = async (req, res) => {
 
         // Store the user ID in the session
         req.session.userId = user._id;
-        console.log('Session created for user:', user._id); // Log the session for debugging
+        console.log('Session created for user:', user._id); // Log the session
+        console.log('Session ID:', req.sessionID); // Log the session ID
 
         res.json({ message: 'Login successful' });
     } catch (err) {
