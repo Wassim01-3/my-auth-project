@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const path = require('path');
 require('dotenv').config();
@@ -15,6 +16,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Middleware
 app.use(express.json());
+app.use(cors({
+    origin: true, // Allow all origins (update this in production)
+    credentials: true, // Allow cookies
+}));
 
 // Configure session middleware with connect-mongo
 app.use(session({
@@ -22,13 +27,14 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI, // MongoDB connection string
-        ttl: 60 * 60, // Session TTL (1 hour)
+        mongoUrl: process.env.MONGO_URI,
+        ttl: 60 * 60, // 1 hour
     }),
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
-        httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
-        maxAge: 1000 * 60 * 60, // Session expires after 1 hour
+        secure: process.env.NODE_ENV === 'production', // Use HTTPS in production
+        httpOnly: true, // Prevent client-side JS from accessing the cookie
+        maxAge: 1000 * 60 * 60, // 1 hour
+        sameSite: 'lax', // Recommended for CSRF protection
     },
 }));
 
@@ -45,6 +51,7 @@ app.get('/', (req, res) => {
 
 // Protect the /home route
 app.get('/home', (req, res) => {
+    console.log('Session data:', req.session); // Log the session
     if (!req.session.userId) {
         return res.status(401).send('Access denied. Please log in.');
     }
