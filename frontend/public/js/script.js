@@ -21,14 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     credentials: 'include', // Include cookies
                 });
 
-                if (response.redirected) {
-                    // If the backend redirects, follow the redirect
-                    window.location.href = response.url;
-                } else if (response.ok) {
-                    alert('Registration successful!');
-                    window.location.href = '/login.html'; // Redirect to login page
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message); // Show a success message
+                    window.location.href = result.redirectUrl; // Redirect to the login page
                 } else {
-                    alert('Registration failed');
+                    alert(result.message || 'Registration failed');
                 }
             } catch (err) {
                 console.error('Fetch error:', err);
@@ -57,15 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     credentials: 'include', // Include cookies
                 });
 
-                if (response.redirected) {
-                    // If the backend redirects, follow the redirect
-                    window.location.href = response.url;
-                } else if (response.ok) {
-                    const { message } = await response.json();
-                    alert(message); // Show a success message
-                    window.location.href = '/home'; // Redirect to /home
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message); // Show a success message
+                    window.location.href = result.redirectUrl; // Redirect to the home page
                 } else {
-                    alert('Login failed');
+                    alert(result.message || 'Login failed');
                 }
             } catch (err) {
                 console.error('Fetch error:', err);
