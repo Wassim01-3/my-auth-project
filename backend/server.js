@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
-const authRoutes = require('./routes/authRoutes'); // Correct import
+const authRoutes = require('./routes/authRoutes');
 const path = require('path');
 require('dotenv').config();
 
@@ -15,53 +15,53 @@ console.log('SESSION_SECRET:', process.env.SESSION_SECRET);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log('MongoDB connection error:', err));
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log('MongoDB connection error:', err));
 
 // Middleware
 app.use(express.json());
 
 // Configure CORS to allow requests from the static site
 app.use(cors({
-    origin: 'https://my-auth-project.onrender.com', // Allow requests from your static site
-    credentials: true, // Allow cookies to be sent
+  origin: 'https://my-auth-project.onrender.com', // Allow requests from your static site
+  credentials: true, // Allow cookies to be sent
 }));
 
 // Configure session middleware with connect-mongo
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI,
-        ttl: 60 * 60, // 1 hour
-    }),
-    cookie: {
-        secure: true, // Use HTTPS
-        httpOnly: true, // Prevent client-side JS from accessing the cookie
-        maxAge: 1000 * 60 * 60, // 1 hour
-        sameSite: 'none', // Allow cross-origin cookies
-    },
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    ttl: 60 * 60, // 1 hour
+  }),
+  cookie: {
+    secure: true, // Use HTTPS
+    httpOnly: true, // Prevent client-side JS from accessing the cookie
+    maxAge: 1000 * 60 * 60, // 1 hour
+    sameSite: 'none', // Allow cross-origin cookies
+  },
 }));
 
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
-app.use('/api/auth', authRoutes); // Correct usage
+app.use('/api/auth', authRoutes);
 
 // Serve the index.html file as the default route
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 // Protect the /home route
 app.get('/home', (req, res) => {
-    console.log('Session data:', req.session); // Log the session
-    if (!req.session.userId) {
-        return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://my-auth-project.onrender.com/login' });
-    }
-    res.json({ message: 'Welcome to the home page' });
+  console.log('Session data:', req.session); // Log the session
+  if (!req.session.userId) {
+    return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://my-auth-project.onrender.com/login' });
+  }
+  res.json({ message: 'Welcome to the home page' });
 });
 
 // Start the server
