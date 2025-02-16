@@ -5,7 +5,57 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EcoTunisia - Protect Tunisia's Environment</title>
-  <link rel="stylesheet" href="/css/stylehome.css"> <!-- Updated path -->
+  <link rel="stylesheet" href="css/stylehome.css"> <!-- Updated path -->
+  <style>
+    /* Dropdown Button Styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown-btn i {
+      margin-left: 5px;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      right: 0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -13,11 +63,21 @@
     <div class="logo"> GreenTunisia<i class="fa-solid fa-leaf"></i></div>
     <nav>
       <ul>
-        <li><a href="/home">Home</a></li> <!-- Updated link -->
-        <li><a href="/buy_sell">Buy & Sell</a></li> <!-- Updated link -->
-        <li><a href="/garbage-trading">Garbage Trading</a></li> <!-- Updated link -->
-        <li><a href="/plastic-selling">Sell Plastic</a></li> <!-- Updated link -->
-        <li><a href="/pick_up">Pickup Services</a></li> <!-- Updated link -->
+        <li><a href="/home">Home</a></li>
+        <li><a href="/buy_sell">Buy & Sell</a></li>
+        <li><a href="/garbage-trading">Garbage Trading</a></li>
+        <li><a href="/plastic-selling">Sell Plastic</a></li>
+        <!-- Dropdown Button -->
+        <li class="dropdown">
+          <button class="dropdown-btn">
+            <span id="username">Username</span> <!-- Placeholder for username -->
+            <i class="fas fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="#" id="user-email">user@example.com</a> <!-- Placeholder for email -->
+            <a href="/logout">Logout</a> <!-- Logout link -->
+          </div>
+        </li>
       </ul>
     </nav>
   </header>
@@ -27,8 +87,8 @@
     <h1>Turn Your Waste into Wealth</h1>
     <p>Join us in protecting Tunisia's environment by recycling and trading waste.</p>
     <div class="cta-buttons">
-      <a href="/buy-sell" class="btn">Start Selling</a> <!-- Updated link -->
-      <a href="/pickup-services" class="btn">Request Pickup</a> <!-- Updated link -->
+      <a href="/buy-sell" class="btn">Start Selling</a>
+      <a href="/pickup-services" class="btn">Request Pickup</a>
     </div>
   </section>
 
@@ -39,17 +99,17 @@
       <div class="card">
         <h3>Earn Money</h3>
         <p>Sell your recyclable items and earn cash.</p>
-        <img src="/images/1.jpg" alt="" class="img"> <!-- Updated path -->
+        <img src="images/1.jpg" alt="Earn Money" class="img">
       </div>
       <div class="card">
         <h3>Reduce Waste</h3>
         <p>Help reduce landfill pollution in Tunisia.</p>
-        <img src="/images/2.jpeg" alt="" class="img"> <!-- Updated path -->
+        <img src="images/2.jpeg" alt="Reduce Waste" class="img">
       </div>
       <div class="card">
         <h3>Eco-Friendly</h3>
         <p>Promote a sustainable and green future.</p>
-        <img src="/images/3.jpg" alt="" class="img"> <!-- Updated path -->
+        <img src="images/3.jpg" alt="Eco-Friendly" class="img">
       </div>
     </div>
   </section>
@@ -58,5 +118,29 @@
   <footer>
     <p>&copy; 2023 EcoTunisia. All rights reserved.</p>
   </footer>
+
+  <script>
+    // Fetch user data from the backend
+    async function fetchUserData() {
+      try {
+        const response = await fetch('/api/auth/user', {
+          credentials: 'include', // Include cookies
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          document.getElementById('username').textContent = user.username;
+          document.getElementById('user-email').textContent = user.email;
+        } else {
+          console.error('Failed to fetch user data');
+        }
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+      }
+    }
+
+    // Call the function to fetch user data when the page loads
+    fetchUserData();
+  </script>
 </body>
 </html>
