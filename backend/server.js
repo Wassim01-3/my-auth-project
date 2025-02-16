@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/authRoutes'); // Correct import
 const path = require('path');
 require('dotenv').config();
 
@@ -48,7 +48,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes); // Correct usage
 
 // Serve the index.html file as the default route
 app.get('/', (req, res) => {
