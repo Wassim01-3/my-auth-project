@@ -23,7 +23,7 @@ app.use(express.json());
 
 // Configure CORS to allow requests from the static site
 app.use(cors({
-  origin: 'https://my-auth-project.onrender.com', // Allow requests from your static site
+  origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
   credentials: true, // Allow cookies to be sent
 }));
 
@@ -37,10 +37,10 @@ app.use(session({
     ttl: 60 * 60, // 1 hour
   }),
   cookie: {
-    secure: true, // Use HTTPS
+    secure: process.env.NODE_ENV === 'production', // Use HTTPS in production only
     httpOnly: true, // Prevent client-side JS from accessing the cookie
     maxAge: 1000 * 60 * 60, // 1 hour
-    sameSite: 'none', // Allow cross-origin cookies
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Allow cross-origin cookies in production
   },
 }));
 
