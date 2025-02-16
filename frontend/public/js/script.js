@@ -21,7 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     credentials: 'include', // Include cookies
                 });
 
-                if (response.ok) {
+                if (response.redirected) {
+                    // If the backend redirects, follow the redirect
+                    window.location.href = response.url;
+                } else if (response.ok) {
                     alert('Registration successful!');
                     window.location.href = '/login.html'; // Redirect to login page
                 } else {
@@ -54,7 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     credentials: 'include', // Include cookies
                 });
 
-                if (response.ok) {
+                if (response.redirected) {
+                    // If the backend redirects, follow the redirect
+                    window.location.href = response.url;
+                } else if (response.ok) {
                     const { message } = await response.json();
                     alert(message); // Show a success message
                     window.location.href = '/home'; // Redirect to /home
