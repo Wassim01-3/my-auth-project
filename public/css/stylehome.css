@@ -159,3 +159,28 @@ header nav ul li a:hover::after {
   transform: translateY(-10px); 
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);  
 }
+#log{
+    background-color: #29892b; /* Vert */
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#log-btn:hover {
+    background-color: #45a049; /* Vert plus foncé */
+    transform: translateY(10px); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); }
+
+#log-btn:active {
+    transform: scale(1.0);
+}
+ 
+#log i {
+  font-size: 25px;}
