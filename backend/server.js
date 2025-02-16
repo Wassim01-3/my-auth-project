@@ -59,10 +59,10 @@ app.get('/', (req, res) => {
 app.get('/home', (req, res) => {
     console.log('Session data:', req.session); // Log the session
     if (!req.session.userId) {
-        // Redirect to the frontend's /login page if the user is not authenticated
-        return res.redirect('https://my-auth-project.onrender.com/login');
+        // Return a JSON response if the user is not authenticated
+        return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://my-auth-project.onrender.com/login' });
     }
-    res.sendFile(path.join(__dirname, '../public/home.html'));
+    res.json({ message: 'Welcome to the home page' });
 });
 
 // Start the server
