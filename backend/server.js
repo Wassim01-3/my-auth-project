@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
-const authRoutes = require('./routes/authRoutes'); // Import authRoutes
+const authRoutes = require('./routes/authRoutes');
 const path = require('path');
 require('dotenv').config();
 
@@ -45,14 +45,14 @@ app.use(session({
 }));
 
 // Serve static files (frontend)
-app.use(express.static(path.join(__dirname, '../frontend/public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
-app.use('/api/auth', authRoutes); // Use authRoutes
+app.use('/api/auth', authRoutes);
 
 // Serve the index.html file as the default route
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
+    res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 // Protect the /home route
@@ -61,7 +61,7 @@ app.get('/home', (req, res) => {
     if (!req.session.userId) {
         return res.status(401).send('Access denied. Please log in.');
     }
-    res.sendFile(path.join(__dirname, '../frontend/public/home.html'));
+    res.sendFile(path.join(__dirname, '../public/home.html'));
 });
 
 // Start the server
