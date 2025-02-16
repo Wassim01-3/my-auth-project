@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
+const authController = require('../controllers/authController'); // Correct import
 const User = require('../models/User');
 
 // User registration
-router.post('/register', authController.register);
+router.post('/register', authController.register); // Correct usage
 
 // User login
-router.post('/login', authController.login);
+router.post('/login', authController.login); // Correct usage
 
 // Fetch logged-in user data
 router.get('/user', (req, res) => {
@@ -30,6 +30,6 @@ router.get('/user', (req, res) => {
 });
 
 // User logout
-router.post('/logout', authController.logout);
+router.post('/logout', authController.logout); // Correct usage
 
 module.exports = router;
