@@ -1,5 +1,3 @@
-const User = require('../models/User');
-
 const login = async (req, res) => {
     const { email, password } = req.body;
 
@@ -18,7 +16,8 @@ const login = async (req, res) => {
         console.log('Session created for user:', user._id); // Log the session
         console.log('Session ID:', req.sessionID); // Log the session ID
 
-        res.json({ message: 'Login successful' });
+        // Redirect to the frontend's /home page
+        res.redirect('https://my-auth-project.onrender.com/home');
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ message: 'Server error' });
@@ -39,12 +38,12 @@ const register = async (req, res) => {
         const user = new User({ username, email, password });
         await user.save();
 
-        res.status(201).json({ message: 'User registered successfully' });
+        // Redirect to the frontend's /login page
+        res.redirect('https://my-auth-project.onrender.com/login');
     } catch (err) {
         console.error('Registration error:', err);
         res.status(500).json({ message: 'Server error' });
     }
 };
 
-// Export the functions
 module.exports = { login, register };
