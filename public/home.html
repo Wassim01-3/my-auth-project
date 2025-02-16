@@ -133,9 +133,11 @@
           document.getElementById('user-email').textContent = user.email;
         } else {
           console.error('Failed to fetch user data');
+          window.location.href = '/login.html';
         }
       } catch (err) {
         console.error('Error fetching user data:', err);
+        window.location.href = '/login.html';
       }
     }
 
@@ -150,7 +152,6 @@
         });
 
         if (response.ok) {
-          // Redirect to the login page after successful logout
           window.location.href = '/login.html';
         } else {
           console.error('Logout failed');
