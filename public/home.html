@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EcoTunisia - Protect Tunisia's Environment</title>
-  <link rel="stylesheet" href="css/stylehome.css"> <!-- Updated path -->
+  <link rel="stylesheet" href="css/stylehome.css">
   <style>
     /* Dropdown Button Styles */
     .dropdown {
@@ -69,13 +69,13 @@
         <li><a href="/plastic-selling">Sell Plastic</a></li>
         <!-- Dropdown Button -->
         <li class="dropdown">
-          <button class="dropdown-btn">
-            <span id="username">Username</span> <!-- Placeholder for username -->
+          <button class="dropdown-btn" id="log-btn">
+            <span id="username">Username</span>
             <i class="fas fa-caret-down"></i>
           </button>
           <div class="dropdown-content">
-            <a href="#" id="user-email">user@example.com</a> <!-- Placeholder for email -->
-            <a href="/logout">Logout</a> <!-- Logout link -->
+            <a href="#" id="user-email">user@example.com</a>
+            <a href="#" id="logout-link">Logout</a>
           </div>
         </li>
       </ul>
@@ -138,6 +138,27 @@
         console.error('Error fetching user data:', err);
       }
     }
+
+    // Logout functionality
+    document.getElementById('logout-link').addEventListener('click', async (e) => {
+      e.preventDefault(); // Prevent default link behavior
+
+      try {
+        const response = await fetch('/api/auth/logout', {
+          method: 'POST',
+          credentials: 'include', // Include cookies
+        });
+
+        if (response.ok) {
+          // Redirect to the login page after successful logout
+          window.location.href = '/login.html';
+        } else {
+          console.error('Logout failed');
+        }
+      } catch (err) {
+        console.error('Error during logout:', err);
+      }
+    });
 
     // Call the function to fetch user data when the page loads
     fetchUserData();
