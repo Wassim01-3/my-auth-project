@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const result = await response.json();
         if (response.ok) {
-          alert(result.message);
-          window.location.href = result.redirectUrl;
+          alert(result.message); // Show a success message
+          window.location.href = result.redirectUrl; // Redirect to the login page
         } else {
           alert(result.message || 'Registration failed');
         }
@@ -51,8 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const result = await response.json();
         if (response.ok) {
-          alert(result.message);
-          window.location.href = result.redirectUrl;
+          alert(result.message); // Show a success message
+          window.location.href = result.redirectUrl; // Redirect to the home page
         } else {
           alert(result.message || 'Login failed');
         }
@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then(response => {
       if (!response.ok) {
+        // If the user is not authenticated, redirect to the login page
         window.location.href = '/login.html';
       }
     })
