@@ -70,11 +70,11 @@
         <!-- Dropdown Button -->
         <li class="dropdown">
           <button class="dropdown-btn" id="log-btn">
-            <span id="username">Username</span>
+            <span id="username">Username</span> <!-- Placeholder for username -->
             <i class="fas fa-caret-down"></i>
           </button>
           <div class="dropdown-content">
-            <a href="#" id="user-email">user@example.com</a>
+            <a href="#" id="user-email">user@example.com</a> <!-- Placeholder for email -->
             <a href="#" id="logout-link">Logout</a>
           </div>
         </li>
@@ -131,6 +131,7 @@
         if (response.ok) {
           const user = await response.json();
           console.log('User data fetched:', user);
+
           // Update the dropdown button with the user's data
           document.getElementById('username').textContent = user.username;
           document.getElementById('user-email').textContent = user.email;
