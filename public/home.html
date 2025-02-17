@@ -123,43 +123,56 @@
     // Fetch user data from the backend
     async function fetchUserData() {
       try {
+        console.log('Fetching user data...');
         const response = await fetch('/api/auth/user', {
           credentials: 'include', // Include cookies
         });
 
         if (response.ok) {
           const user = await response.json();
+          console.log('User data fetched:', user);
           document.getElementById('username').textContent = user.username;
           document.getElementById('user-email').textContent = user.email;
         } else {
-          console.error('Failed to fetch user data');
-          window.location.href = '/login.html';
+          console.error('Failed to fetch user data:', response.status, response.statusText);
+          // Only redirect if the user is not authenticated
+          if (response.status === 401) {
+            window.location.href = '/login.html';
+          }
         }
       } catch (err) {
         console.error('Error fetching user data:', err);
-        window.location.href = '/login.html';
+        // Only redirect if there's a network error
+        if (err instanceof TypeError) {
+          window.location.href = '/login.html';
+        }
       }
     }
 
     // Logout functionality
-    document.getElementById('logout-link').addEventListener('click', async (e) => {
-      e.preventDefault(); // Prevent default link behavior
+    const logoutLink = document.getElementById('logout-link');
+    if (logoutLink) {
+      logoutLink.addEventListener('click', async (e) => {
+        e.preventDefault(); // Prevent default link behavior
 
-      try {
-        const response = await fetch('/api/auth/logout', {
-          method: 'POST',
-          credentials: 'include', // Include cookies
-        });
+        try {
+          console.log('Logging out...');
+          const response = await fetch('/api/auth/logout', {
+            method: 'POST',
+            credentials: 'include', // Include cookies
+          });
 
-        if (response.ok) {
-          window.location.href = '/login.html';
-        } else {
-          console.error('Logout failed');
+          if (response.ok) {
+            console.log('Logout successful');
+            window.location.href = '/login.html';
+          } else {
+            console.error('Logout failed:', response.status, response.statusText);
+          }
+        } catch (err) {
+          console.error('Error during logout:', err);
         }
-      } catch (err) {
-        console.error('Error during logout:', err);
-      }
-    });
+      });
+    }
 
     // Call the function to fetch user data when the page loads
     fetchUserData();
