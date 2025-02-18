@@ -59,5 +59,4 @@ const logout = (req, res) => {
   });
 };
 
-// Export the functions
 module.exports = { login, register, logout };
