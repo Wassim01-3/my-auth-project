@@ -20,11 +20,27 @@ body {
     border-radius: 80px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 350px;
+    position: relative; /* Added for positioning the login header */
+}
+
+/* Small container for the "Login" heading */
+.login-header {
+    background-color: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 50px 50px 0 0; /* Rounded corners only at the top */
+    padding: 10px 20px;
+    position: absolute; /* Position it absolutely within the container */
+    top: -40px; /* Move it above the container */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%); /* Adjust for exact centering */
+    width: 80%; /* Match the width of the form */
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
 }
 
 h2 {
-    text-align: center;
-    border-radius: 50px;
+    margin: 0; /* Remove default margin */
 }
 
 label {
@@ -41,13 +57,14 @@ input {
     border: 1px solid #ccc;
     border-radius: 8px;
 }
-label{
+
+label {
     text-align: center;
 }
 
 button {
     width: 80%;
-    margin:10%;
+    margin: 10%;
     padding: 10px;
     background-color: #28a745;
     color: #fff;
