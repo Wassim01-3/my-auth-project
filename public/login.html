@@ -5,24 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap'>
 </head>
 <body>
-  <div class="container">
-    <!-- Small container for the "Login" heading -->
-    <div class="login-header">
-      <h2>Login</h2>
+  <div class="wrapper">
+    <div class="container">
+      <div class="login-header">
+        <span>Login</span>
+      </div>
+
+      <form id="loginForm">
+        <div class="input_box">
+          <input type="email" id="email" class="input-field" required>
+          <label for="email" class="label">Email</label>
+          <i class="bx bx-user icon"></i>
+        </div>
+
+        <div class="input_box">
+          <input type="password" id="password" class="input-field" required>
+          <label for="password" class="label">Password</label>
+          <i class="bx bx-lock-alt icon"></i>
+        </div>
+
+        <div class="remember-forgot">
+          <div class="remember-me">
+            <input type="checkbox" id="remember">
+            <label for="remember">Remember me</label>
+          </div>
+
+          <div class="forgot">
+            <a href="#">Forgot password?</a>
+          </div>
+        </div>
+
+        <div class="input_box">
+          <input type="submit" class="input-submit" value="Login">
+        </div>
+      </form>
+
+      <div class="register">
+        <span>Don't have an account? <a href="/register.html">Register here</a></span>
+      </div>
     </div>
-    <!-- Login form -->
-    <form id="loginForm">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/register.html">Register here</a></p>
   </div>
   <script src="js/script.js"></script>
 </body>
