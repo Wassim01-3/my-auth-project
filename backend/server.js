@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGO_URI)
 // Middleware
 app.use(express.json());
 
-// Configure CORS to allow requests from the static site
+// Configure CORS to allow requests from the frontend
 app.use(cors({
   origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
   credentials: true, // Allow cookies to be sent
@@ -48,7 +48,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes); // Register auth routes
 
 // Serve the index.html file as the default route
 app.get('/', (req, res) => {
@@ -57,11 +57,17 @@ app.get('/', (req, res) => {
 
 // Protect the /home route
 app.get('/home', (req, res) => {
-  console.log('Session data:', req.session); // Log the session
+  console.log('Session data:', req.session); // Log the session for debugging
   if (!req.session.userId) {
     return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://my-auth-project.onrender.com/login' });
   }
   res.json({ message: 'Welcome to the home page' });
+});
+
+// Catch-all route for debugging undefined routes
+app.use((req, res) => {
+  console.log(`Requested URL: ${req.url}`); // Log the requested URL
+  res.status(404).json({ message: 'Route not found' });
 });
 
 // Start the server
