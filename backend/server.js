@@ -9,23 +9,24 @@ require('dotenv').config();
 
 const app = express();
 
-// Log environment variables
-console.log('MONGO_URI:', process.env.MONGO_URI);
-console.log('SESSION_SECRET:', process.env.SESSION_SECRET);
-
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB connection error:', err));
 
-// Middleware
-app.use(express.json());
-
 // Configure CORS to allow requests from the frontend
 app.use(cors({
   origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
   credentials: true, // Allow cookies to be sent
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all necessary methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
 }));
+
+// Handle preflight requests
+app.options('*', cors()); // Allow preflight requests for all routes
+
+// Middleware
+app.use(express.json());
 
 // Configure session middleware with connect-mongo
 app.use(session({
@@ -37,10 +38,10 @@ app.use(session({
     ttl: 60 * 60, // 1 hour
   }),
   cookie: {
-    secure: false, // Set to false for HTTP (development), true for HTTPS (production)
+    secure: true, // Set to true for HTTPS
     httpOnly: true, // Prevent client-side JS from accessing the cookie
     maxAge: 1000 * 60 * 60, // 1 hour
-    sameSite: 'lax', // Use 'lax' for development, 'none' for production (with HTTPS)
+    sameSite: 'none', // Use 'none' for cross-site cookies
   },
 }));
 
@@ -48,26 +49,11 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
-app.use('/api/auth', authRoutes); // Register auth routes
+app.use('/api/auth', authRoutes);
 
 // Serve the index.html file as the default route
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
-});
-
-// Protect the /home route
-app.get('/home', (req, res) => {
-  console.log('Session data:', req.session); // Log the session for debugging
-  if (!req.session.userId) {
-    return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://my-auth-project.onrender.com/login' });
-  }
-  res.json({ message: 'Welcome to the home page' });
-});
-
-// Catch-all route for debugging undefined routes
-app.use((req, res) => {
-  console.log(`Requested URL: ${req.url}`); // Log the requested URL
-  res.status(404).json({ message: 'Route not found' });
 });
 
 // Start the server
