@@ -49,7 +49,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes); // Register auth routes
 
 // Serve the index.html file as the default route
 app.get('/', (req, res) => {
