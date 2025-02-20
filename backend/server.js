@@ -45,6 +45,12 @@ app.use(session({
   },
 }));
 
+// Log session data for debugging
+app.use((req, res, next) => {
+  console.log('Session data:', req.session); // Log the session data for every request
+  next();
+});
+
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname, '../public')));
 
