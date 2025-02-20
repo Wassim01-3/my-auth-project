@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const authController = require('../controllers/authController');
 const User = require('../models/User');
+
+// User login
+router.post('/login', (req, res) => {
+  console.log('Login request received:', req.body); // Log the request body
+  authController.login(req, res);
+});
 
 // Fetch logged-in user data
 router.get('/user', (req, res) => {
