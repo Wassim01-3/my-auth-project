@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const authController = require('../controllers/authController');
 const User = require('../models/User');
 
@@ -19,8 +20,11 @@ router.get('/user', (req, res) => {
     return res.status(401).json({ message: 'Not authenticated' });
   }
 
+  // Convert userId to ObjectId
+  const userId = new mongoose.Types.ObjectId(req.session.userId);
+
   // Fetch user data from the database
-  User.findById(req.session.userId)
+  User.findById(userId)
     .then(user => {
       if (!user) {
         console.log('User not found in database'); // Log if the user is not found
