@@ -3,75 +3,68 @@ const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM fully loaded!');
 
-  // Get the current page path
-  const currentPath = window.location.pathname;
+  // Handle registration form submission (if the form exists)
+  const registrationForm = document.getElementById('registrationForm');
+  if (registrationForm) {
+    registrationForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
 
-  // Handle registration form submission (only on the register page)
-  if (currentPath === '/register.html') {
-    const registrationForm = document.getElementById('registrationForm');
-    if (registrationForm) {
-      registrationForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
+      try {
+        const response = await fetch(`${backendUrl}/api/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+          credentials: 'include', // Include cookies
+        });
 
-        try {
-          const response = await fetch(`${backendUrl}/api/auth/register`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-            credentials: 'include', // Include cookies
-          });
-
-          const result = await response.json();
-          if (response.ok) {
-            alert(result.message); // Show a success message
-            window.location.href = result.redirectUrl; // Redirect to the login page
-          } else {
-            alert(result.message || 'Registration failed');
-          }
-        } catch (err) {
-          console.error('Fetch error:', err);
-          alert('An error occurred. Please try again.');
+        const result = await response.json();
+        if (response.ok) {
+          alert(result.message); // Show a success message
+          window.location.href = result.redirectUrl; // Redirect to the login page
+        } else {
+          alert(result.message || 'Registration failed');
         }
-      });
-    }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        alert('An error occurred. Please try again.');
+      }
+    });
   }
 
-  // Handle login form submission (only on the login page)
-  if (currentPath === '/login.html') {
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-      loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
+  // Handle login form submission (if the form exists)
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
 
-        try {
-          const response = await fetch(`${backendUrl}/api/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-            credentials: 'include', // Include cookies
-          });
+      try {
+        const response = await fetch(`${backendUrl}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+          credentials: 'include', // Include cookies
+        });
 
-          const result = await response.json();
-          if (response.ok) {
-            alert(result.message); // Show a success message
-            window.location.href = result.redirectUrl; // Redirect to the home page
-          } else {
-            alert(result.message || 'Login failed');
-          }
-        } catch (err) {
-          console.error('Fetch error:', err);
-          alert('An error occurred. Please try again.');
+        const result = await response.json();
+        if (response.ok) {
+          alert(result.message); // Show a success message
+          window.location.href = result.redirectUrl; // Redirect to the home page
+        } else {
+          alert(result.message || 'Login failed');
         }
-      });
-    }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        alert('An error occurred. Please try again.');
+      }
+    });
   }
 
-  // Fetch user data on the home page
-  if (currentPath === '/home.html') {
+  // Fetch user data on the home page (if on the home page)
+  if (window.location.pathname === '/home') {
     fetch(`${backendUrl}/api/auth/user`, {
       credentials: 'include', // Include cookies
     })
@@ -93,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // Handle logout
+  // Handle logout (if the logout link exists)
   const logoutLink = document.getElementById('logout-link');
   if (logoutLink) {
     logoutLink.addEventListener('click', async (e) => {
