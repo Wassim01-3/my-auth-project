@@ -1,4 +1,4 @@
-const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+const backendUrl = 'https://my-auth-project.onrender.com';
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded!");
@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
         if (response.ok) {
           alert(result.message); // Show a success message
+          console.log('Login successful. Redirecting to:', result.redirectUrl);
           window.location.href = result.redirectUrl; // Redirect to the home page
         } else {
           alert(result.message || 'Login failed');
