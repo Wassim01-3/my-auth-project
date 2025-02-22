@@ -19,7 +19,19 @@ document.addEventListener("DOMContentLoaded", () => {
           credentials: 'include', // Include cookies
         });
 
-        const result = await response.json();
+        // Log the raw response
+        const rawResponse = await response.text();
+        console.log('Raw response:', rawResponse);
+
+        // Attempt to parse the response as JSON
+        let result;
+        try {
+          result = JSON.parse(rawResponse);
+        } catch (parseError) {
+          console.error('Failed to parse response as JSON:', parseError);
+          throw new Error('Invalid server response');
+        }
+
         if (response.ok) {
           alert(result.message); // Show a success message
           window.location.href = result.redirectUrl; // Redirect to the login page
