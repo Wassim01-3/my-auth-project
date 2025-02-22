@@ -18,14 +18,16 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB connection error:', err));
 
-// Middleware
-app.use(express.json());
+
 
 // Configure CORS to allow requests from the static site
 app.use(cors({
   origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
   credentials: true, // Allow cookies to be sent
 }));
+
+// Middleware
+app.use(express.json());
 
 // Configure session middleware with connect-mongo
 app.use(session({
