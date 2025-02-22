@@ -21,9 +21,9 @@ mongoose.connect(process.env.MONGO_URI)
 // Middleware
 app.use(express.json());
 
-// Configure CORS to allow requests from the frontend
+// Configure CORS to allow requests from the static site
 app.use(cors({
-  origin: 'https://my-auth-project.onrender.com', // Frontend URL
+  origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
   credentials: true, // Allow cookies to be sent
 }));
 
@@ -37,10 +37,10 @@ app.use(session({
     ttl: 60 * 60, // 1 hour
   }),
   cookie: {
-    secure: true, // Set to true for HTTPS
+    secure: false, // Set to false for HTTP (development), true for HTTPS (production)
     httpOnly: true, // Prevent client-side JS from accessing the cookie
     maxAge: 1000 * 60 * 60, // 1 hour
-    sameSite: 'none', // Use 'none' for cross-site cookies
+    sameSite: 'lax', // Use 'lax' for development, 'none' for production (with HTTPS)
   },
 }));
 
@@ -49,11 +49,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
 app.use('/api/auth', authRoutes);
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK' });
-});
 
 // Serve the index.html file as the default route
 app.get('/', (req, res) => {
@@ -70,5 +65,5 @@ app.get('/home', (req, res) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 10000; // Use port 10000
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
