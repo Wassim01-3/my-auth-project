@@ -50,6 +50,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Routes
 app.use('/api/auth', authRoutes);
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK' });
+});
+
 // Serve the index.html file as the default route
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
