@@ -43,6 +43,11 @@ app.use(session({
     sameSite: 'none', // Use 'none' for cross-site cookies (with HTTPS)
   },
 }));
+// Log session data
+app.use((req, res, next) => {
+  console.log('Session data:', req.session);
+  next();
+});
 
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname, '../public')));
