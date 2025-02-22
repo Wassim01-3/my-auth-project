@@ -18,16 +18,14 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB connection error:', err));
 
-
+// Middleware
+app.use(express.json());
 
 // Configure CORS to allow requests from the static site
 app.use(cors({
-  origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
-  credentials: true, // Allow cookies to be sent
+  origin: 'https://your-frontend-url.onrender.com', // Replace with your frontend URL
+  credentials: true, // Allow credentials (sessions)
 }));
-
-// Middleware
-app.use(express.json());
 
 // Configure session middleware with connect-mongo
 app.use(session({
@@ -69,11 +67,11 @@ app.get('/home', (req, res) => {
   console.log('Session data in /home:', req.session);
   if (!req.session.userId) {
     console.log('User not authenticated. Redirecting to login.');
-    return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://my-auth-project.onrender.com/login' });
+    return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://your-frontend-url.onrender.com/login' });
   }
   res.json({ message: 'Welcome to the home page' });
 });
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000; // Use the correct port
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
