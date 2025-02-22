@@ -1,4 +1,4 @@
-const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+const backendUrl = 'https://green-tunisia-h3ji.onrender.com'; // Backend URL
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded!");
