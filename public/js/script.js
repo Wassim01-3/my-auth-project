@@ -1,4 +1,4 @@
-const backendUrl = 'https://my-auth-project.onrender.com';
+const backendUrl = 'https://your-backend-url.onrender.com';
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded!");
@@ -12,11 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = Object.fromEntries(formData.entries());
 
       try {
+        console.log('Registration form submitted:', data);
+
         const response = await fetch(`${backendUrl}/api/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
-          credentials: 'include', // Include cookies
+          credentials: 'include', // Include credentials (sessions)
         });
 
         // Log the raw response
@@ -54,11 +56,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = Object.fromEntries(formData.entries());
 
       try {
+        console.log('Login form submitted:', data);
+
         const response = await fetch(`${backendUrl}/api/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
-          credentials: 'include', // Include cookies
+          credentials: 'include', // Include credentials (sessions)
         });
 
         // Log the raw response
@@ -91,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Check authentication status when loading /home
   if (window.location.pathname === '/home') {
     fetch(`${backendUrl}/home`, {
-      credentials: 'include', // Include cookies
+      credentials: 'include', // Include credentials (sessions)
     })
     .then(response => {
       if (!response.ok) {
