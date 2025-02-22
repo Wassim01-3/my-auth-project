@@ -6,7 +6,7 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid email ' });
+      return res.status(400).json({ message: 'Invalid email' });
     }
 
     if (user.password !== password) {
@@ -15,11 +15,20 @@ const login = async (req, res) => {
 
     // Store the user ID in the session
     req.session.userId = user._id;
-    console.log('Session created for user:', user._id); // Log the session
-    console.log('Session ID:', req.sessionID); // Log the session ID
+    console.log('Session created for user:', user._id);
+    console.log('Session ID:', req.sessionID);
+    console.log('Session data after login:', req.session);
 
-    // Return a success message
-    res.json({ message: 'Login successful', redirectUrl: 'https://my-auth-project.onrender.com/home' });
+    // Save the session explicitly
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res.status(500).json({ message: 'Session save failed' });
+      }
+
+      // Return a success message
+      res.json({ message: 'Login successful', redirectUrl: 'https://my-auth-project.onrender.com/home' });
+    });
   } catch (err) {
     console.error('Login error:', err);
     res.status(500).json({ message: 'Server error' });
