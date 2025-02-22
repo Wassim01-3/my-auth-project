@@ -35,7 +35,6 @@ app.use(session({
   store: MongoStore.create({
     mongoUrl: process.env.MONGO_URI,
     ttl: 60 * 60, // 1 hour
-    autoRemove: 'native', // Automatically remove expired sessions
   }),
   cookie: {
     secure: true, // Set to true for HTTPS
