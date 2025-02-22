@@ -37,10 +37,10 @@ app.use(session({
     ttl: 60 * 60, // 1 hour
   }),
   cookie: {
-    secure: false, // Set to false for HTTP (development), true for HTTPS (production)
+    secure: true, // Set to true for HTTPS (production)
     httpOnly: true, // Prevent client-side JS from accessing the cookie
     maxAge: 1000 * 60 * 60, // 1 hour
-    sameSite: 'lax', // Use 'lax' for development, 'none' for production (with HTTPS)
+    sameSite: 'none', // Use 'none' for cross-site cookies (with HTTPS)
   },
 }));
 
