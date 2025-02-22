@@ -11,9 +11,6 @@ router.post('/login', authController.login);
 
 // Fetch logged-in user data
 router.get('/user', (req, res) => {
-  console.log('Session ID:', req.sessionID); // Log the session ID
-  console.log('User ID from session:', req.session.userId); // Log the user ID from session
-
   if (!req.session.userId) {
     return res.status(401).json({ message: 'Not authenticated' });
   }
