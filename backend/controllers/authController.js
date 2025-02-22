@@ -19,16 +19,8 @@ const login = async (req, res) => {
     console.log('Session ID:', req.sessionID);
     console.log('Session data after login:', req.session);
 
-    // Save the session explicitly
-    req.session.save((err) => {
-      if (err) {
-        console.error('Session save error:', err);
-        return res.status(500).json({ message: 'Session save failed' });
-      }
-
-      // Return a success message
-      res.json({ message: 'Login successful', redirectUrl: 'https://my-auth-project.onrender.com/home' });
-    });
+    // Return a success message
+    res.json({ message: 'Login successful', redirectUrl: 'https://my-auth-project.onrender.com/home' });
   } catch (err) {
     console.error('Login error:', err);
     res.status(500).json({ message: 'Server error' });
