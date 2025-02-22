@@ -35,16 +35,19 @@ app.use(session({
   store: MongoStore.create({
     mongoUrl: process.env.MONGO_URI,
     ttl: 60 * 60, // 1 hour
+    autoRemove: 'native', // Automatically remove expired sessions
   }),
   cookie: {
-    secure: true, // Set to true for HTTPS (production)
-    httpOnly: true, // Prevent client-side JS from accessing the cookie
+    secure: true, // Set to true for HTTPS
+    httpOnly: true,
     maxAge: 1000 * 60 * 60, // 1 hour
-    sameSite: 'none', // Use 'none' for cross-site cookies (with HTTPS)
+    sameSite: 'none', // Use 'none' for cross-site cookies
   },
 }));
-// Log session data
+
+// Log session data for debugging
 app.use((req, res, next) => {
+  console.log('Session ID:', req.sessionID);
   console.log('Session data:', req.session);
   next();
 });
@@ -62,8 +65,9 @@ app.get('/', (req, res) => {
 
 // Protect the /home route
 app.get('/home', (req, res) => {
-  console.log('Session data:', req.session); // Log the session
+  console.log('Session data in /home:', req.session);
   if (!req.session.userId) {
+    console.log('User not authenticated. Redirecting to login.');
     return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://my-auth-project.onrender.com/login' });
   }
   res.json({ message: 'Welcome to the home page' });
