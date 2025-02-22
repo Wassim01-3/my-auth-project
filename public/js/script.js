@@ -62,8 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-});
- // Check authentication status when loading /home
+
+  // Check authentication status when loading /home
   if (window.location.pathname === '/home') {
     fetch(`${backendUrl}/home`, {
       credentials: 'include', // Include cookies
