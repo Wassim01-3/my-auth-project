@@ -21,9 +21,8 @@ mongoose.connect(process.env.MONGO_URI)
 // Middleware
 app.use(express.json());
 
-// Configure CORS to allow requests from the static site
 app.use(cors({
-  origin: 'https://your-frontend-url.onrender.com', // Replace with your frontend URL
+  origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
   credentials: true, // Allow credentials (sessions)
 }));
 
