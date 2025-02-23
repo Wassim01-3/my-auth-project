@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
+const authMiddleware = require('../middleware/authMiddleware');
 const User = require('../models/User');
 
 // User registration
@@ -9,14 +10,9 @@ router.post('/register', authController.register);
 // User login
 router.post('/login', authController.login);
 
-// Fetch logged-in user data
-router.get('/user', (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ message: 'Not authenticated' });
-  }
-
-  // Fetch user data from the database
-  User.findById(req.session.userId)
+// Fetch logged-in user data (protected route)
+router.get('/user', authMiddleware, (req, res) => {
+  User.findById(req.userId)
     .then(user => {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
