@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
+const authMiddleware = require('./middleware/authMiddleware'); // Import the middleware
 const path = require('path');
 require('dotenv').config();
 
@@ -33,6 +34,11 @@ app.use('/api/auth', authRoutes);
 // Serve the index.html file as the default route
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+// Protect the /home route
+app.get('/home', authMiddleware, (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/home.html'));
 });
 
 // Start the server
