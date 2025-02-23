@@ -22,12 +22,13 @@ mongoose.connect(process.env.MONGO_URI)
 // Middleware
 app.use(express.json());
 
+// CORS Configuration
 app.use(cors({
   origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
-  credentials: true, // Allow credentials (sessions)
+  credentials: true, // Allow credentials (cookies, sessions)
 }));
 
-// Configure session middleware with connect-mongo
+// Session Configuration
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
