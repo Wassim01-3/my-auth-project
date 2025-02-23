@@ -54,8 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json();
         if (response.ok) {
           console.log('Login successful. Redirecting to:', result.redirectUrl);
-          localStorage.setItem('token', result.token); // Store the token
-          window.location.href = result.redirectUrl;
+          console.log('Token received:', result.token); // Debugging log
+          localStorage.setItem('token', result.token); // Store the token in localStorage
+          console.log('Token stored in localStorage:', localStorage.getItem('token')); // Debugging log
+          window.location.href = result.redirectUrl; // Redirect to the home page
         } else {
           alert(result.message || 'Login failed');
         }
