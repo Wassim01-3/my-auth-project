@@ -76,6 +76,44 @@
   </footer>
 
   <script>
+    const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+
+    // Fetch user data from the backend
+    async function fetchUserData() {
+      try {
+        console.log('Fetching user data...');
+        const token = localStorage.getItem('token'); // Get the token from localStorage
+
+        if (!token) {
+          console.error('No token found');
+          window.location.href = '/login.html'; // Redirect to login if no token
+          return;
+        }
+
+        const response = await fetch(`${backendUrl}/api/auth/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the header
+          },
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          console.log('User data fetched:', user);
+
+          // Update the dropdown button with the user's data
+          document.getElementById('username').textContent = user.username;
+          document.getElementById('user-email').textContent = user.email;
+        } else {
+          console.error('Failed to fetch user data:', response.status, response.statusText);
+          window.location.href = '/login.html'; // Redirect to login if unauthorized
+        }
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+        window.location.href = '/login.html'; // Redirect to login on error
+      }
+    }
+
+    // Logout functionality
     const logoutLink = document.getElementById('logout-link');
     if (logoutLink) {
       logoutLink.addEventListener('click', (e) => {
@@ -84,6 +122,9 @@
         window.location.href = '/login.html';
       });
     }
+
+    // Call the function to fetch user data when the page loads
+    fetchUserData();
   </script>
 </body>
 </html>
