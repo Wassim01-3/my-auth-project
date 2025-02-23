@@ -68,7 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Check authentication status when loading /home
   if (window.location.pathname === '/home') {
-    fetchUserData();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login.html'; // Redirect to login if no token
+    } else {
+      fetchUserData(); // Fetch user data if token exists
+    }
   }
 });
 
