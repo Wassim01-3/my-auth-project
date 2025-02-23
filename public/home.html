@@ -95,17 +95,11 @@
           document.getElementById('user-email').textContent = user.email;
         } else {
           console.error('Failed to fetch user data:', response.status, response.statusText);
-          // Only redirect if the user is not authenticated
-          if (response.status === 401) {
-            window.location.href = '/login.html';
-          }
+          // Do not redirect here. Only log the error.
         }
       } catch (err) {
         console.error('Error fetching user data:', err);
-        // Only redirect if there's a network error
-        if (err instanceof TypeError) {
-          window.location.href = '/login.html';
-        }
+        // Do not redirect here. Only log the error.
       }
     }
 
