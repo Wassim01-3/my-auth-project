@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (registrationForm) {
     registrationForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Clear previous errors
+      clearErrors();
+
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
 
@@ -22,14 +26,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const result = await response.json();
         if (response.ok) {
-          alert(result.message); // Show a success message
+          console.log('Registration successful. Redirecting to:', result.redirectUrl);
           window.location.href = result.redirectUrl; // Redirect to the login page
         } else {
-          alert(result.message || 'Registration failed');
+          // Handle errors
+          if (result.message === 'User already exists') {
+            showError('email', 'Email address already exists');
+          } else if (result.message === 'Invalid username') {
+            showError('username', 'Username is not supported');
+          } else {
+            showError('general', result.message || 'Registration failed'); // Fallback for other errors
+          }
         }
       } catch (err) {
         console.error('Fetch error:', err);
-        alert('An error occurred. Please try again.');
+        showError('general', 'An error occurred. Please try again.'); // Fallback for network errors
       }
     });
   }
@@ -39,6 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Clear previous errors
+      clearErrors();
+
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
 
@@ -54,28 +69,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json();
         if (response.ok) {
           console.log('Login successful. Redirecting to:', result.redirectUrl);
-          console.log('Token received:', result.token); // Debugging log
-          localStorage.setItem('token', result.token); // Store the token in localStorage
-          console.log('Token stored in localStorage:', localStorage.getItem('token')); // Debugging log
+          localStorage.setItem('token', result.token); // Store the token
           window.location.href = result.redirectUrl; // Redirect to the home page
         } else {
-          alert(result.message || 'Login failed');
+          // Handle errors
+          if (result.message === 'Invalid email') {
+            showError('email', 'Invalid email address');
+          } else if (result.message === 'Invalid password') {
+            showError('password', 'Invalid password');
+          } else {
+            showError('general', result.message || 'Login failed'); // Fallback for other errors
+          }
         }
       } catch (err) {
         console.error('Fetch error:', err);
-        alert('An error occurred. Please try again.');
+        showError('general', 'An error occurred. Please try again.'); // Fallback for network errors
       }
     });
   }
 
   // Check authentication status when loading /home
   if (window.location.pathname === '/home') {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      window.location.href = '/login.html'; // Redirect to login if no token
-    } else {
-      fetchUserData(); // Fetch user data if token exists
-    }
+    fetchUserData();
   }
 });
 
@@ -86,9 +101,8 @@ async function fetchUserData() {
     const token = localStorage.getItem('token'); // Get the token from localStorage
 
     if (!token) {
-      console.error('No token found');
-      window.location.href = '/login.html'; // Redirect to login if no token
-      return;
+      console.log('No token found. User is not logged in.'); // Log a message
+      return; // Stop further execution
     }
 
     const response = await fetch(`${backendUrl}/api/auth/user`, {
@@ -106,10 +120,66 @@ async function fetchUserData() {
       document.getElementById('user-email').textContent = user.email;
     } else {
       console.error('Failed to fetch user data:', response.status, response.statusText);
-      window.location.href = '/login.html'; // Redirect to login if unauthorized
+      console.log('User is not authenticated.'); // Log a message
     }
   } catch (err) {
     console.error('Error fetching user data:', err);
-    window.location.href = '/login.html'; // Redirect to login on error
+    console.log('An error occurred while fetching user data.'); // Log a message
   }
+}
+
+// Logout functionality
+const logoutLink = document.getElementById('logout-link');
+if (logoutLink) {
+  logoutLink.addEventListener('click', async (e) => {
+    e.preventDefault(); // Prevent default link behavior
+
+    try {
+      console.log('Logging out...');
+      const response = await fetch(`${backendUrl}/api/auth/logout`, {
+        method: 'POST',
+        credentials: 'include', // Include cookies
+      });
+
+      if (response.ok) {
+        console.log('Logout successful');
+        localStorage.removeItem('token'); // Remove the token
+        window.location.href = '/login.html';
+      } else {
+        console.error('Logout failed:', response.status, response.statusText);
+      }
+    } catch (err) {
+      console.error('Error during logout:', err);
+    }
+  });
+}
+
+// Function to display error messages
+function showError(field, message) {
+  const input = document.getElementById(field);
+  const errorElement = document.getElementById(`${field}-error`);
+
+  if (input && errorElement) {
+    input.classList.add('error'); // Add red border
+    errorElement.textContent = message; // Set error message
+    errorElement.style.display = 'block'; // Show error message
+  } else if (field === 'general') {
+    // Fallback for general errors (e.g., network errors)
+    alert(message); // Use alert as a fallback
+  }
+}
+
+// Function to clear all errors
+function clearErrors() {
+  const errors = document.querySelectorAll('.error-message');
+  const inputs = document.querySelectorAll('.input-field');
+
+  errors.forEach((error) => {
+    error.textContent = '';
+    error.style.display = 'none';
+  });
+
+  inputs.forEach((input) => {
+    input.classList.remove('error');
+  });
 }
