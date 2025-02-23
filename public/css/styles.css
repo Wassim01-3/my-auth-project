@@ -162,6 +162,18 @@ body {
 .register a {
   font-weight: 500;
 }
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  display: none; /* Hide by default */
+}
+
+/* Error input border styling */
+.input-field.error {
+  border-color: red;
+}
 
 @media only screen and (max-width: 564px) {
   .wrapper {
