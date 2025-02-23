@@ -76,60 +76,14 @@
   </footer>
 
   <script>
-    const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
-
-    // Fetch user data from the backend
-    async function fetchUserData() {
-      try {
-        console.log('Fetching user data...');
-        const response = await fetch(`${backendUrl}/api/auth/user`, {
-          credentials: 'include', // Include cookies
-        });
-
-        if (response.ok) {
-          const user = await response.json();
-          console.log('User data fetched:', user);
-
-          // Update the dropdown button with the user's data
-          document.getElementById('username').textContent = user.username;
-          document.getElementById('user-email').textContent = user.email;
-        } else {
-          console.error('Failed to fetch user data:', response.status, response.statusText);
-          // Do not redirect here. Only log the error.
-        }
-      } catch (err) {
-        console.error('Error fetching user data:', err);
-        // Do not redirect here. Only log the error.
-      }
-    }
-
-    // Logout functionality
     const logoutLink = document.getElementById('logout-link');
     if (logoutLink) {
-      logoutLink.addEventListener('click', async (e) => {
-        e.preventDefault(); // Prevent default link behavior
-
-        try {
-          console.log('Logging out...');
-          const response = await fetch(`${backendUrl}/api/auth/logout`, {
-            method: 'POST',
-            credentials: 'include', // Include cookies
-          });
-
-          if (response.ok) {
-            console.log('Logout successful');
-            window.location.href = '/login.html';
-          } else {
-            console.error('Logout failed:', response.status, response.statusText);
-          }
-        } catch (err) {
-          console.error('Error during logout:', err);
-        }
+      logoutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token'); // Remove the token
+        window.location.href = '/login.html';
       });
     }
-
-    // Call the function to fetch user data when the page loads
-    fetchUserData();
   </script>
 </body>
 </html>
