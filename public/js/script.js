@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
-          credentials: 'include', // Include credentials (sessions)
+          credentials: 'include', // Include credentials (cookies)
         });
 
         // Log the raw response
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
-          credentials: 'include', // Include credentials (sessions)
+          credentials: 'include', // Include credentials (cookies)
         });
 
         // Log the raw response
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Check authentication status when loading /home
   if (window.location.pathname === '/home') {
     fetch(`${backendUrl}/home`, {
-      credentials: 'include', // Include credentials (sessions)
+      credentials: 'include', // Include credentials (cookies)
     })
     .then(response => {
       if (!response.ok) {
