@@ -76,11 +76,13 @@
   </footer>
 
   <script>
+    const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+
     // Fetch user data from the backend
     async function fetchUserData() {
       try {
         console.log('Fetching user data...');
-        const response = await fetch('/api/auth/user', {
+        const response = await fetch(`${backendUrl}/api/auth/user`, {
           credentials: 'include', // Include cookies
         });
 
@@ -115,7 +117,7 @@
 
         try {
           console.log('Logging out...');
-          const response = await fetch('/api/auth/logout', {
+          const response = await fetch(`${backendUrl}/api/auth/logout`, {
             method: 'POST',
             credentials: 'include', // Include cookies
           });
