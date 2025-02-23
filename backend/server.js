@@ -1,4 +1,3 @@
-// backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -22,13 +21,12 @@ mongoose.connect(process.env.MONGO_URI)
 // Middleware
 app.use(express.json());
 
-// CORS Configuration
 app.use(cors({
   origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
-  credentials: true, // Allow credentials (cookies, sessions)
+  credentials: true, // Allow credentials (sessions)
 }));
 
-// Session Configuration
+// Configure session middleware with connect-mongo
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
@@ -68,7 +66,7 @@ app.get('/home', (req, res) => {
   console.log('Session data in /home:', req.session);
   if (!req.session.userId) {
     console.log('User not authenticated. Redirecting to login.');
-    return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://my-auth-project.onrender.com/login' });
+    return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://your-frontend-url.onrender.com/login' });
   }
   res.json({ message: 'Welcome to the home page' });
 });
