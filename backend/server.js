@@ -1,3 +1,4 @@
+// backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -66,7 +67,7 @@ app.get('/home', (req, res) => {
   console.log('Session data in /home:', req.session);
   if (!req.session.userId) {
     console.log('User not authenticated. Redirecting to login.');
-    return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://your-frontend-url.onrender.com/login' });
+    return res.status(401).json({ message: 'Access denied. Please log in.', redirectUrl: 'https://my-auth-project.onrender.com/login' });
   }
   res.json({ message: 'Welcome to the home page' });
 });
