@@ -85,9 +85,8 @@
         const token = localStorage.getItem('token'); // Get the token from localStorage
 
         if (!token) {
-          console.error('No token found');
-          window.location.href = '/login.html'; // Redirect to login if no token
-          return;
+          console.log('No token found. User is not logged in.'); // Log a message instead of redirecting
+          return; // Stop further execution
         }
 
         const response = await fetch(`${backendUrl}/api/auth/user`, {
@@ -105,11 +104,11 @@
           document.getElementById('user-email').textContent = user.email;
         } else {
           console.error('Failed to fetch user data:', response.status, response.statusText);
-          window.location.href = '/login.html'; // Redirect to login if unauthorized
+          console.log('User is not authenticated.'); // Log a message instead of redirecting
         }
       } catch (err) {
         console.error('Error fetching user data:', err);
-        window.location.href = '/login.html'; // Redirect to login on error
+        console.log('An error occurred while fetching user data.'); // Log a message instead of redirecting
       }
     }
 
