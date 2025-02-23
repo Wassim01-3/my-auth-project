@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const login = async (req, res) => {
@@ -17,14 +18,19 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid password' });
     }
 
-    // Store the user ID in the session
-    req.session.userId = user._id;
-    console.log('Session created for user:', user._id);
-    console.log('Session ID:', req.sessionID);
-    console.log('Session data after login:', req.session);
+    // Generate a JWT
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET, // Use a strong secret key
+      { expiresIn: '1h' } // Token expires in 1 hour
+    );
 
-    // Return a success message
-    const responseData = { message: 'Login successful', redirectUrl: 'https://my-auth-project.onrender.com/home' };
+    // Return the token to the client
+    const responseData = {
+      message: 'Login successful',
+      redirectUrl: 'https://my-auth-project.onrender.com/home',
+      token, // Include the token in the response
+    };
     console.log('Sending response:', responseData);
     res.json(responseData);
   } catch (err) {
@@ -61,14 +67,7 @@ const register = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
-      console.error('Logout error:', err);
-      return res.status(500).json({ message: 'Logout failed' });
-    }
-    res.clearCookie('connect.sid'); // Clear the session cookie
-    res.json({ message: 'Logout successful' });
-  });
+  res.json({ message: 'Logout successful' });
 };
 
 module.exports = { login, register, logout };
