@@ -229,3 +229,38 @@ footer {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+/* Style for navigation links (same as dropdown button) */
+nav ul li a.dropdown-btn {
+  background-color: #29892b; /* Green */
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  text-transform: uppercase;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none; /* Remove underline from links */
+}
+
+/* Hover effect for navigation links */
+nav ul li a.dropdown-btn:hover {
+  background-color: #45a049; /* Darker green */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Remove the dropdown arrow from navigation links */
+nav ul li a.dropdown-btn i {
+  display: none;
+}
+
+/* Ensure the dropdown button for the username retains the arrow */
+nav ul li.dropdown .dropdown-btn i {
+  display: inline-block; /* Show the arrow only for the username dropdown */
+}
