@@ -17,8 +17,14 @@
 	 <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
 	  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
 	
-    
- 
+  <style>
+    /* Add this CSS to ensure the icon and text are aligned */
+    .dropdown-content a {
+      display: flex;
+      align-items: center; /* Vertically center the icon and text */
+      gap: 10px; /* Add space between the icon and text */
+    }
+  </style>
 </head>
 <body>
 <div class="top_box clearfix">
@@ -63,8 +69,8 @@
                             <i class="fas fa-caret-down"></i>
                         </a>
                         <div class="dropdown-content">
-                            <a href="#" id="user-email"><i class="fas fa-envelope" style="margin-right: 10px;"></i>user@example.com</a>
-                            <a href="#" id="logout-link"><i class="fas fa-sign-out-alt" style="margin-right: 10px;"></i>Logout</a>
+                            <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
+                            <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
                         </div>
                     </li>
                 </ul>
@@ -124,7 +130,7 @@
 
           // Update the dropdown button with the user's data
           document.getElementById('username').textContent = user.username;
-          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope" style="margin-right: 10px;"></i>${user.email}`;
+          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
         } else {
           console.error('Failed to fetch user data:', response.status, response.statusText);
           console.log('User is not authenticated.'); // Log a message instead of redirecting
