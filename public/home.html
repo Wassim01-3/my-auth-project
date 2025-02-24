@@ -1,4 +1,4 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -58,13 +58,13 @@
 				<ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a class="tag_menu_right" href="#" id="log-btn">
-			    <i class="fa-solid fa-user"></i>
+			    <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
                             <span id="username">Username</span>
                             <i class="fas fa-caret-down"></i>
                         </a>
                         <div class="dropdown-content">
-                            <a href="#" id="user-email">user@example.com</a>
-                            <a href="#" id="logout-link">Logout</a>
+                            <a href="#" id="user-email"><i class="fas fa-envelope" style="margin-right: 10px;"></i>user@example.com</a>
+                            <a href="#" id="logout-link"><i class="fas fa-sign-out-alt" style="margin-right: 10px;"></i>Logout</a>
                         </div>
                     </li>
                 </ul>
@@ -124,7 +124,7 @@
 
           // Update the dropdown button with the user's data
           document.getElementById('username').textContent = user.username;
-          document.getElementById('user-email').textContent = user.email;
+          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope" style="margin-right: 10px;"></i>${user.email}`;
         } else {
           console.error('Failed to fetch user data:', response.status, response.statusText);
           console.log('User is not authenticated.'); // Log a message instead of redirecting
