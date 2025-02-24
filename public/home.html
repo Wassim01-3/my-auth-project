@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <title>GreenTunisia - Protect Tunisia's Environment</title>
   <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
@@ -12,70 +11,93 @@
   <meta name="apple-mobile-web-app-title" content="GreenTunisia" />
   <link rel="manifest" href="/images/fav/site.webmanifest" />
   <link rel="stylesheet" href="css/stylehome.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	 <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
+	  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+	
+    
+ 
 </head>
 <body>
-  <!-- Header -->
-  <header>
-  <div class="logo"> GreenTunisia<i class="fa-solid fa-leaf"></i></div>
-  <nav>
-    <ul>
-      <li><a href="/home" class="dropdown-btn">Home</a></li>
-      <li><a href="/buy_sell" class="dropdown-btn">Buy & Sell</a></li>
-      <li><a href="/garbage-trading" class="dropdown-btn">Garbage Trading</a></li>
-      <li><a href="/plastic-selling" class="dropdown-btn">Sell Plastic</a></li>
-      <!-- Dropdown Button -->
-      <li class="dropdown">
-        <button class="dropdown-btn" id="log-btn">
-          <span id="username">Username</span> <!-- Placeholder for username -->
-          <i class="fas fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-          <a href="#" id="user-email">user@example.com</a> <!-- Placeholder for email -->
-          <a href="#" id="logout-link">Logout</a>
-        </div>
-      </li>
-    </ul>
-  </nav>
-</header>
+<div class="top_box clearfix">
+ <div class="top_box_inner_1 clearfix">
+  <section id="header">
+	<nav class="navbar navbar-default">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                </button>
+                <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>            </div>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Turn Your Waste into Wealth</h1>
-    <p>Join us in protecting Tunisia's environment by recycling and trading waste.</p>
-    <div class="cta-buttons">
-      <a href="/buy-sell" class="btn">Start Selling</a>
-      <a href="/pickup-services" class="btn">Request Pickup</a>
-    </div>
-  </section>
-
-  <!-- Benefits Section -->
-  <section class="benefits">
-    <h2>Why use GreenTunisia?</h2>
-    <div class="benefit-cards">
-      <div class="card">
-        <h3>Earn Money</h3>
-        <p>Sell your recyclable items and earn cash.</p>
-        <img src="images/1.jpg" alt="Earn Money" class="img">
-      </div>
-      <div class="card">
-        <h3>Reduce Waste</h3>
-        <p>Help reduce landfill pollution in Tunisia.</p>
-        <img src="images/2.jpeg" alt="Reduce Waste" class="img">
-      </div>
-      <div class="card">
-        <h3>Eco-Friendly</h3>
-        <p>Promote a sustainable and green future.</p>
-        <img src="images/3.jpg" alt="Eco-Friendly" class="img">
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2023 EcoTunisia. All rights reserved.</p>
-  </footer>
-
-  <script>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a class="tag_menu active_tab" href="/home">HOME</a>                    </li>
+                     
+                    <li>
+                        <a class="tag_menu" href="/about">ABOUT</a>                    </li>
+					
+					<li>
+                        <a class="tag_menu" href="/buy_sell">BUY & SELL</a>                    </li>
+                    
+					<li>
+                        <a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a>                    </li>
+					
+						
+					<li>
+                        <a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a>                    </li>	
+					
+					
+                </ul>
+				<ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="tag_menu_right" href="#" id="log-btn">
+                            <span id="username">Username</span>
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="#" id="user-email">user@example.com</a>
+                            <a href="#" id="logout-link">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+                <script>document.addEventListener('click', function(event) {
+                    var dropdown = document.querySelector('.dropdown');
+                    var dropdownContent = document.querySelector('.dropdown-content');
+                    
+                    // Check if the click is outside the dropdown
+                    if (!dropdown.contains(event.target)) {
+                        dropdownContent.style.display = 'none';
+                    }
+                });</script>
+            </div>
+            <!-- /.navbar-collapse -->
+    </nav>
+</section>
+ </div>
+ <div class="top_box_inner_2  clearfix">
+  <section id="top" class="clearfix">
+ <div class="top clearfix">
+  <div class="top_main clearfix">
+    
+   <h4>Join us in protecting Tunisia's environment by recycling and trading waste</h4>
+   <h2>Turn Your Waste into Wealth</h2>  <br> <br> 
+   <ul>
+    <li class="reading_1"><a href="#">START SELLING</a></li>
+	<li class="reading_2"><a href="#">LOOK FOR BUYING</a></li>
+   </ul></div>
+  </div>
+ </div>
+</section>
+ </div>
+</div>
+<script>
     const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
 
     // Fetch user data from the backend
