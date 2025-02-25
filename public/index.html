@@ -47,6 +47,7 @@
     <div class="top_box_inner_2 clearfix">
       <section id="top" class="clearfix">
         <div class="top clearfix">
+          <!-- Slide 1: Texte et boutons -->
           <div class="top_main clearfix" id="slide1">
             <h4>Join us in protecting Tunisia's environment by recycling and trading waste</h4>
             <h2>Turn Your Waste into Wealth</h2>
@@ -55,16 +56,24 @@
               <li class="reading_1"><a href="/register.html">SIGN UP</a></li>
               <li class="reading_2"><a href="/login.html">LOGIN</a></li>
             </ul>
+            <!-- Indicateurs de slide -->
+            <div class="slide-indicators">
+              <span class="indicator active" onclick="showSlide(0)"></span>
+              <span class="indicator" onclick="showSlide(1)"></span>
+            </div>
           </div>
+
+          <!-- Slide 2: Vidéo -->
           <div class="top_main clearfix" id="slide2" style="display: none;">
             <video width="100%" height="auto" autoplay loop muted>
               <source src="/images/vid.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-          </div>
-          <div class="slide-indicators">
-            <span class="indicator active" onclick="showSlide(0)"></span>
-            <span class="indicator" onclick="showSlide(1)"></span>
+            <!-- Indicateurs de slide -->
+            <div class="slide-indicators">
+              <span class="indicator" onclick="showSlide(0)"></span>
+              <span class="indicator active" onclick="showSlide(1)"></span>
+            </div>
           </div>
         </div>
       </section>
@@ -73,18 +82,15 @@
   <script>
     let currentSlide = 0;
     const slides = document.querySelectorAll('.top_main');
-    const indicators = document.querySelectorAll('.indicator');
 
     function showSlide(index) {
       slides.forEach((slide, i) => {
         slide.style.display = i === index ? 'block' : 'none';
       });
-      indicators.forEach((indicator, i) => {
-        indicator.classList.toggle('active', i === index);
-      });
       currentSlide = index;
     }
 
+    // Transition automatique toutes les 15 secondes
     setInterval(() => {
       currentSlide = (currentSlide + 1) % slides.length;
       showSlide(currentSlide);
