@@ -5,7 +5,18 @@ Author: Templates On Web
 Author URI: http://templateonweb.com/
 Licence: <a href="http://www.templateonweb.com/terms.php?v=content&contentid=152">Website Template Licence</a>
 */
-/* Styles pour les slides */
+/* Styles pour les slides dans top_main */
+.top_main {
+  position: relative;
+  width: 100%;
+  height: 700px; /* Ajustez la hauteur selon vos besoins */
+  overflow: hidden;
+  border-radius: 10px; /* Coins arrondis */
+  background-color: rgba(255, 255, 255, 0.1); /* Fond transparent */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Bordure légèrement claire */
+}
+
+/* Style des slides */
 .slide {
   position: absolute;
   top: 0;
@@ -21,6 +32,7 @@ Licence: <a href="http://www.templateonweb.com/terms.php?v=content&contentid=152
   text-align: center;
 }
 
+/* Slide active */
 .slide.active {
   opacity: 1;
 }
