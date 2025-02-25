@@ -16,12 +16,21 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
   <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  <style>
+    /* Add this CSS to ensure the icon and text are aligned */
+    .dropdown-content a {
+      display: flex;
+      align-items: center; /* Vertically center the icon and text */
+      gap: 10px; /* Add space between the icon and text */
+    }
+  </style>
 </head>
 <body>
   <div class="top_box clearfix">
     <div class="top_box_inner_1 clearfix">
       <section id="header">
         <nav class="navbar navbar-default">
+          <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
               <span class="sr-only">Toggle navigation</span>
@@ -31,72 +40,156 @@
             </button>
             <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
           </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav">
               <li>
-                <a class="tag_menu_right" href="/about">
-                  <i class="fa-solid fa-info-circle" style="margin-right: 10px;"></i>
-                  <span>About</span>
+                <a class="tag_menu active_tab" href="/home">HOME</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/about">ABOUT</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/buy_sell">BUY & SELL</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a class="tag_menu_right" href="#" id="log-btn">
+                  <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
+                  <span id="username">Username</span>
+                  <i class="fas fa-caret-down"></i>
                 </a>
+                <div class="dropdown-content">
+                  <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
+                  <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                </div>
               </li>
             </ul>
           </div>
         </nav>
       </section>
     </div>
+
     <div class="top_box_inner_2 clearfix">
       <section id="top" class="clearfix">
         <div class="top clearfix">
-          <!-- Slide 1: Texte et boutons -->
-          <div class="top_main clearfix" id="slide1">
-            <h4>Join us in protecting Tunisia's environment by recycling and trading waste</h4>
-            <h2>Turn Your Waste into Wealth</h2>
-            <br><br>
-            <ul>
-              <li class="reading_1"><a href="/register.html">SIGN UP</a></li>
-              <li class="reading_2"><a href="/login.html">LOGIN</a></li>
-            </ul>
-            <!-- Indicateurs de slide -->
-            <div class="slide-indicators">
-              <span class="indicator active" onclick="showSlide(0)"></span>
-              <span class="indicator" onclick="showSlide(1)"></span>
+          <div class="top_main clearfix">
+            <!-- Slide 1 : Texte et boutons -->
+            <div class="slide slide-1 active">
+              <h4>Join us in protecting Tunisia's environment by recycling and trading waste</h4>
+              <h2>Turn Your Waste into Wealth</h2>
+              <br><br>
+              <ul>
+                <li class="reading_1"><a href="/register.html">SIGN UP</a></li>
+                <li class="reading_2"><a href="/login.html">LOGIN</a></li>
+              </ul>
             </div>
-          </div>
 
-          <!-- Slide 2: Vidéo -->
-          <div class="top_main clearfix" id="slide2" style="display: none;">
-            <div class="video-container">
-              <video autoplay loop muted>
+            <!-- Slide 2 : Vidéo -->
+            <div class="slide slide-2">
+              <video autoplay muted loop class="video-background">
                 <source src="/images/vid.mp4" type="video/mp4">
-                Your browser does not support the video tag.
+                Votre navigateur ne supporte pas la vidéo.
               </video>
             </div>
+
             <!-- Indicateurs de slide -->
             <div class="slide-indicators">
-              <span class="indicator" onclick="showSlide(0)"></span>
-              <span class="indicator active" onclick="showSlide(1)"></span>
+              <div class="indicator active" data-slide="1"></div>
+              <div class="indicator" data-slide="2"></div>
             </div>
           </div>
         </div>
       </section>
     </div>
   </div>
-  <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.top_main');
 
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.style.display = i === index ? 'block' : 'none';
-      });
-      currentSlide = index;
+  <script>
+    const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+
+    // Fetch user data from the backend
+    async function fetchUserData() {
+      try {
+        console.log('Fetching user data...');
+        const token = localStorage.getItem('token'); // Get the token from localStorage
+
+        if (!token) {
+          console.log('No token found. User is not logged in.'); // Log a message instead of redirecting
+          return; // Stop further execution
+        }
+
+        const response = await fetch(`${backendUrl}/api/auth/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the header
+          },
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          console.log('User data fetched:', user);
+
+          // Update the dropdown button with the user's data
+          document.getElementById('username').textContent = user.username;
+          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
+        } else {
+          console.error('Failed to fetch user data:', response.status, response.statusText);
+          console.log('User is not authenticated.'); // Log a message instead of redirecting
+        }
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+        console.log('An error occurred while fetching user data.'); // Log a message instead of redirecting
+      }
     }
 
-    // Transition automatique toutes les 15 secondes
-    setInterval(() => {
-      currentSlide = (currentSlide + 1) % slides.length;
-      showSlide(currentSlide);
-    }, 15000);
+    // Logout functionality
+    const logoutLink = document.getElementById('logout-link');
+    if (logoutLink) {
+      logoutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token'); // Remove the token
+        window.location.href = '/login.html';
+      });
+    }
+
+    // Call the function to fetch user data when the page loads
+    fetchUserData();
+
+    // Gestion des slides
+    const slides = document.querySelectorAll('.slide');
+    const indicators = document.querySelectorAll('.indicator');
+
+    // Fonction pour afficher une slide spécifique
+    function showSlide(slideIndex) {
+      // Masquer toutes les slides
+      slides.forEach(slide => slide.classList.remove('active'));
+
+      // Afficher la slide sélectionnée
+      slides[slideIndex - 1].classList.add('active');
+
+      // Mettre à jour les indicateurs
+      indicators.forEach(indicator => indicator.classList.remove('active'));
+      indicators[slideIndex - 1].classList.add('active');
+    }
+
+    // Gérer les clics sur les indicateurs
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        showSlide(index + 1); // Afficher la slide correspondante
+      });
+    });
+
+    // Afficher la deuxième slide (vidéo) après 20 secondes
+    setTimeout(() => {
+      showSlide(2); // Afficher la slide 2 (vidéo)
+    }, 20000); // 20 secondes
   </script>
 </body>
 </html>
