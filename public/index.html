@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <title>GreenTunisia - Protect Tunisia's Environment</title>
   <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
@@ -17,14 +17,21 @@
   <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
   <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
   <style>
-    /* Add this CSS to ensure the icon and text are aligned */
-    .dropdown-content a {
-      display: flex;
-      align-items: center; /* Vertically center the icon and text */
-      gap: 10px; /* Add space between the icon and text */
+    /* Styles pour la div centrale */
+    .top_main {
+      text-align: center;
+      width: 800px; /* Largeur fixe */
+      height: 400px; /* Hauteur fixe */
+      margin: 100px auto; /* Centrer horizontalement */
+      padding: 50px; /* Espacement interne */
+      background: rgba(255, 255, 255, 0.1); /* Fond transparent */
+      border: 1px solid rgba(255, 255, 255, 0.3); /* Bordure légère */
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); /* Ombre */
+      position: relative;
+      overflow: hidden;
     }
 
-    /* Styles for the slides */
+    /* Styles pour les slides */
     .slide {
       display: none;
       position: absolute;
@@ -44,12 +51,14 @@
       opacity: 0;
     }
 
+    /* Styles pour la vidéo */
     .slide video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover; /* Remplir toute la div */
     }
 
+    /* Styles pour les indicateurs de slide */
     .slide-indicators {
       position: absolute;
       bottom: 20px;
@@ -63,177 +72,155 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background-color: #fff;
+      background-color: #fff; /* Cercle blanc */
       cursor: pointer;
     }
 
     .slide-indicator.active {
-      background-color: #009900;
+      background-color: #009900; /* Cercle vert pour le slide actif */
+    }
+
+    /* Styles pour les boutons */
+    .reading_1 a,
+    .reading_2 a {
+      display: inline-block;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+
+    .reading_1 a {
+      border: 2px solid #fff;
+      color: #fff;
+    }
+
+    .reading_1 a:hover {
+      border-color: #a5f15f;
+      color: #a5f15f;
+    }
+
+    .reading_2 a {
+      background: #009900;
+      color: #fff;
+    }
+
+    .reading_2 a:hover {
+      background: #fff;
+      color: #009900;
     }
   </style>
 </head>
 <body>
-<div class="top_box clearfix">
- <div class="top_box_inner_1 clearfix">
-  <section id="header">
-    <nav class="navbar navbar-default">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header page-scroll">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
-      </div>
+  <div class="top_box clearfix">
+    <div class="top_box_inner_1 clearfix">
+      <section id="header">
+        <nav class="navbar navbar-default">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
+          </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li>
-            <a class="tag_menu active_tab" href="/home">HOME</a>
-          </li>
-          <li>
-            <a class="tag_menu" href="/about">ABOUT</a>
-          </li>
-          <li>
-            <a class="tag_menu" href="/buy_sell">BUY & SELL</a>
-          </li>
-          <li>
-            <a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a>
-          </li>
-          <li>
-            <a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a class="tag_menu_right" href="#" id="log-btn">
-              <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
-              <span id="username">Username</span>
-              <i class="fas fa-caret-down"></i>
-            </a>
-            <div class="dropdown-content">
-              <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
-              <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
-            </div>
-          </li>
-        </ul>
-        <script>
-          document.addEventListener('click', function(event) {
-            var dropdown = document.querySelector('.dropdown');
-            var dropdownContent = document.querySelector('.dropdown-content');
-            
-            // Check if the click is outside the dropdown
-            if (!dropdown.contains(event.target)) {
-              dropdownContent.style.display = 'none';
-            }
-          });
-        </script>
-      </div>
-      <!-- /.navbar-collapse -->
-    </nav>
-  </section>
- </div>
- <div class="top_box_inner_2 clearfix">
-  <section id="top" class="clearfix">
-    <div class="top clearfix">
-      <div class="top_main clearfix">
-        <div class="slide active">
-          <h4>Join us in protecting Tunisia's environment by recycling and trading waste</h4>
-          <h2>Turn Your Waste into Wealth</h2>  <br> <br> 
-          <ul>
-            <li class="reading_1"><a href="/register.html">SIGN UP</a></li>
-            <li class="reading_2"><a href="/login.html">LOGIN</a></li>
-          </ul>
-        </div>
-        <div class="slide">
-          <video autoplay loop muted>
-            <source src="/images/vid.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div class="slide-indicators">
-          <div class="slide-indicator active" onclick="showSlide(0)"></div>
-          <div class="slide-indicator" onclick="showSlide(1)"></div>
-        </div>
-      </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li>
+                <a class="tag_menu active_tab" href="/home">HOME</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/about">ABOUT</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/buy_sell">BUY & SELL</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a class="tag_menu_right" href="#" id="log-btn">
+                  <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
+                  <span id="username">Username</span>
+                  <i class="fas fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content">
+                  <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
+                  <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </section>
     </div>
-  </section>
- </div>
-</div>
+    <div class="top_box_inner_2 clearfix">
+      <section id="top" class="clearfix">
+        <div class="top clearfix">
+          <div class="top_main clearfix">
+            <!-- Slide 1 : Texte et boutons -->
+            <div class="slide active">
+              <h4>Join us in protecting Tunisia's environment by recycling and trading waste</h4>
+              <h2>Turn Your Waste into Wealth</h2>
+              <br><br>
+              <ul>
+                <li class="reading_1"><a href="/register.html">SIGN UP</a></li>
+                <li class="reading_2"><a href="/login.html">LOGIN</a></li>
+              </ul>
+            </div>
 
-<script>
-  const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+            <!-- Slide 2 : Vidéo -->
+            <div class="slide">
+              <video autoplay loop muted>
+                <source src="/images/vid.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
 
-  // Fetch user data from the backend
-  async function fetchUserData() {
-    try {
-      console.log('Fetching user data...');
-      const token = localStorage.getItem('token'); // Get the token from localStorage
+            <!-- Indicateurs de slide -->
+            <div class="slide-indicators">
+              <div class="slide-indicator active" onclick="showSlide(0)"></div>
+              <div class="slide-indicator" onclick="showSlide(1)"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 
-      if (!token) {
-        console.log('No token found. User is not logged in.'); // Log a message instead of redirecting
-        return; // Stop further execution
-      }
+  <script>
+    // JavaScript pour la transition et la navigation entre les slides
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicators = document.querySelectorAll('.slide-indicator');
 
-      const response = await fetch(`${backendUrl}/api/auth/user`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the header
-        },
-      });
-
-      if (response.ok) {
-        const user = await response.json();
-        console.log('User data fetched:', user);
-
-        // Update the dropdown button with the user's data
-        document.getElementById('username').textContent = user.username;
-        document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
-      } else {
-        console.error('Failed to fetch user data:', response.status, response.statusText);
-        console.log('User is not authenticated.'); // Log a message instead of redirecting
-      }
-    } catch (err) {
-      console.error('Error fetching user data:', err);
-      console.log('An error occurred while fetching user data.'); // Log a message instead of redirecting
+    // Fonction pour afficher un slide spécifique
+    function showSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      indicators[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+      indicators[currentSlide].classList.add('active');
     }
-  }
 
-  // Logout functionality
-  const logoutLink = document.getElementById('logout-link');
-  if (logoutLink) {
-    logoutLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      localStorage.removeItem('token'); // Remove the token
-      window.location.href = '/login.html';
-    });
-  }
+    // Fonction pour passer au slide suivant
+    function nextSlide() {
+      let nextSlideIndex = (currentSlide + 1) % slides.length;
+      showSlide(nextSlideIndex);
+    }
 
-  // Call the function to fetch user data when the page loads
-  fetchUserData();
-
-  // Slide functionality
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.slide');
-  const indicators = document.querySelectorAll('.slide-indicator');
-
-  function showSlide(index) {
-    slides[currentSlide].classList.remove('active');
-    indicators[currentSlide].classList.remove('active');
-    currentSlide = index;
-    slides[currentSlide].classList.add('active');
-    indicators[currentSlide].classList.add('active');
-  }
-
-  function nextSlide() {
-    let nextSlideIndex = (currentSlide + 1) % slides.length;
-    showSlide(nextSlideIndex);
-  }
-
-  // Automatically switch slides every 15 seconds
-  setInterval(nextSlide, 15000);
-</script>
+    // Automatisation : changer de slide toutes les 15 secondes
+    setInterval(nextSlide, 15000);
+  </script>
 </body>
 </html>
