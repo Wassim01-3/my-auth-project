@@ -514,9 +514,9 @@ figure.effect-romeo:hover p {
 }
 
 .top_main {
+  position: relative; /* Pour positionner les indicateurs correctement */
   transition: opacity 1s ease;
 }
-
 .project_bottom h5{
   padding-top:70px;
   text-align:center;
