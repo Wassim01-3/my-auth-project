@@ -27,14 +27,14 @@
     /* Styles for the welcome section */
     #welcome-section {
       margin: 50px 0;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease, transform 1s ease;
+      opacity: 0; /* Initially hidden */
+      transform: translateY(20px); /* Slightly shifted down */
+      transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
     }
 
     #welcome-section.visible {
-      opacity: 1;
-      transform: translateY(0);
+      opacity: 1; /* Fully visible */
+      transform: translateY(0); /* Move to original position */
     }
 
     .welcome-text {
@@ -107,7 +107,7 @@
   </div>
 
   <!-- New Welcome Section -->
-  <section id="welcome-section" class="hidden">
+  <section id="welcome-section">
     <div class="welcome-text">
       <p>Welcome to Green Tunisia, a revolutionary online marketplace dedicated to protecting the environment and promoting a cleaner, greener planet. In a world where waste is becoming an ever-growing problem, our platform offers a simple yet powerful solution: reducing waste by giving unused items a second life.</p>
       <p>At Green Tunisia, we believe that every item has value, even if it’s no longer needed by its original owner. Instead of throwing away perfectly usable items, our platform connects sellers with buyers who can find value in them. Whether it’s clothing, electronics, furniture, or household goods, our community of users is committed to reducing waste by reusing, repurposing, and recycling.</p>
