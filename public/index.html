@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GreenTunisia - Protect Tunisia's Environment</title>
   <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
@@ -12,52 +11,84 @@
   <meta name="apple-mobile-web-app-title" content="GreenTunisia" />
   <link rel="manifest" href="/images/fav/site.webmanifest" />
   <link rel="stylesheet" href="css/stylehome.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="logo"> GreenTunisia<i class="fa-solid fa-leaf"></i></div>
-    <nav>
-      <ul>
-        <li id="log"><a href="login.html">LOG IN&nbsp;<i class="fas fa-user-circle"></i></a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="video">
-    <!-- Add your video content here -->
-    <video autoplay muted loop>
-      <source src="videos/hero.mp4" type="video/mp4"> <!-- Example video path -->
-      Your browser does not support the video tag.
-    </video>
-  </section>
-
-  <!-- Benefits Section -->
-  <section class="benefits">
-    <h2>Why use GreenTunisia?</h2>
-    <div class="benefit-cards">
-      <div class="card">
-        <h3>Earn Money</h3>
-        <p>Sell your recyclable items and earn cash.</p>
-        <img src="images/1.jpg" alt="Earn Money" class="img">
-      </div>
-      <div class="card">
-        <h3>Reduce Waste</h3>
-        <p>Help reduce landfill pollution in Tunisia.</p>
-        <img src="images/2.jpeg" alt="Reduce Waste" class="img">
-      </div>
-      <div class="card">
-        <h3>Eco-Friendly</h3>
-        <p>Promote a sustainable and green future.</p>
-        <img src="images/3.jpg" alt="Eco-Friendly" class="img">
-      </div>
+  <div class="top_box clearfix">
+    <div class="top_box_inner_1 clearfix">
+      <section id="header">
+        <nav class="navbar navbar-default">
+          <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a class="tag_menu_right" href="/about">
+                  <i class="fa-solid fa-info-circle" style="margin-right: 10px;"></i>
+                  <span>About</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </section>
     </div>
-  </section>
+    <div class="top_box_inner_2 clearfix">
+      <section id="top" class="clearfix">
+        <div class="top clearfix">
+          <div class="top_main clearfix" id="slide1">
+            <h4>Join us in protecting Tunisia's environment by recycling and trading waste</h4>
+            <h2>Turn Your Waste into Wealth</h2>
+            <br><br>
+            <ul>
+              <li class="reading_1"><a href="/register.html">SIGN UP</a></li>
+              <li class="reading_2"><a href="/login.html">LOGIN</a></li>
+            </ul>
+          </div>
+          <div class="top_main clearfix" id="slide2" style="display: none;">
+            <video width="100%" height="auto" autoplay loop muted>
+              <source src="path/to/your/video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="slide-indicators">
+            <span class="indicator active" onclick="showSlide(0)"></span>
+            <span class="indicator" onclick="showSlide(1)"></span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.top_main');
+    const indicators = document.querySelectorAll('.indicator');
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 GreenTunisia. All rights reserved</p>
-  </footer>
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.style.display = i === index ? 'block' : 'none';
+      });
+      indicators.forEach((indicator, i) => {
+        indicator.classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
+
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 15000);
+  </script>
 </body>
 </html>
