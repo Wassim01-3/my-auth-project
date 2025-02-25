@@ -55,9 +55,9 @@ body {
 
 /*********************header****************/
 #header .navbar-nav.navbar-right .tag_menu_right {
-  padding: 10px 20px; /* Augmentez le padding pour un bouton plus grand */
+  padding: 8px 18px; /* Augmentez le padding pour un bouton plus grand */
   border: 2px solid #fff;
-  font-size: 18px !important; /* Taille de police plus grande */
+  font-size: 15px !important; /* Taille de police plus grande */
 }
 
 #header .navbar-nav.navbar-right .tag_menu_right i {
