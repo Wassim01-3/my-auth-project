@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <title>GreenTunisia - Protect Tunisia's Environment</title>
   <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
@@ -13,10 +13,9 @@
   <link rel="stylesheet" href="css/stylehome.css">
   <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
-     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-	 <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
-	  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
-	
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
   <style>
     /* Add this CSS to ensure the icon and text are aligned */
     .dropdown-content a {
@@ -24,55 +23,126 @@
       align-items: center; /* Vertically center the icon and text */
       gap: 10px; /* Add space between the icon and text */
     }
+
+    /* Styles for the welcome section */
+    #welcome-section {
+      margin: 50px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    #welcome-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .welcome-text {
+      margin-left: 5%;
+      margin-right: 25%;
+      font-family: 'Slabo 27px', serif; /* Match the font of the page */
+      font-size: 18px; /* Adjust as needed */
+      line-height: 1.6;
+      color: #333; /* Adjust as needed */
+    }
+
+    .welcome-video video {
+      width: 100%;
+      max-width: 800px; /* Adjust as needed */
+      border-radius: 20px; /* Great border radius */
+      margin-left: 25%;
+      margin-right: 5%;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-<div class="top_box clearfix">
- <div class="top_box_inner_1 clearfix">
-  <section id="header">
-	<nav class="navbar navbar-default">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>                </button>
-                <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>            </div>
+  <div class="top_box clearfix">
+    <div class="top_box_inner_1 clearfix">
+      <section id="header">
+        <nav class="navbar navbar-default">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
+          </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <!-- Removed navigation items -->
-                </ul>
-				<ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="tag_menu_right" href="/about">
-                            <i class="fa-solid fa-info-circle" style="margin-right: 10px; font-size: 20px;"></i>
-                            <span style="font-size: 18px;">ABOUT</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-    </nav>
-</section>
- </div>
- <div class="top_box_inner_2  clearfix">
-  <section id="top" class="clearfix">
- <div class="top clearfix">
-  <div class="top_main clearfix">
-    
-   <h4>Join us in protecting Tunisia's environment by recycling and trading waste</h4>
-   <h2>Turn Your Waste into Wealth</h2>  <br> <br> 
-   <ul>
-    <li class="reading_1"><a href="/register.html">SIGN UP</a></li>
-	<li class="reading_2"><a href="/login.html">SIGN IN</a></li>
-   </ul></div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <!-- Removed navigation items -->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a class="tag_menu_right" href="/about">
+                  <i class="fa-solid fa-info-circle" style="margin-right: 10px; font-size: 20px;"></i>
+                  <span style="font-size: 18px;">ABOUT</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.navbar-collapse -->
+        </nav>
+      </section>
+    </div>
+    <div class="top_box_inner_2  clearfix">
+      <section id="top" class="clearfix">
+        <div class="top clearfix">
+          <div class="top_main clearfix">
+            <h4>Join us in protecting Tunisia's environment by recycling and trading waste</h4>
+            <h2>Turn Your Waste into Wealth</h2>  <br> <br> 
+            <ul>
+              <li class="reading_1"><a href="/register.html">SIGN UP</a></li>
+              <li class="reading_2"><a href="/login.html">SIGN IN</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
- </div>
-</section>
- </div>
-</div>
+
+  <!-- New Welcome Section -->
+  <section id="welcome-section" class="hidden">
+    <div class="welcome-text">
+      <p>Welcome to Green Tunisia, a revolutionary online marketplace dedicated to protecting the environment and promoting a cleaner, greener planet. In a world where waste is becoming an ever-growing problem, our platform offers a simple yet powerful solution: reducing waste by giving unused items a second life.</p>
+      <p>At Green Tunisia, we believe that every item has value, even if it’s no longer needed by its original owner. Instead of throwing away perfectly usable items, our platform connects sellers with buyers who can find value in them. Whether it’s clothing, electronics, furniture, or household goods, our community of users is committed to reducing waste by reusing, repurposing, and recycling.</p>
+      <p>But we don’t stop there. Recognizing the global challenge of plastic pollution, we’ve created a dedicated space for plastic sellers and buyers to connect. By facilitating the exchange of recyclable plastics, we’re helping to keep these materials out of landfills and oceans while empowering individuals and businesses to profit from sustainable practices.</p>
+      <p>For second-hand shoppers, Green Tunisia is a treasure trove of unique and affordable finds. Whether you’re looking for a vintage piece, a budget-friendly alternative, or simply want to shop sustainably, our platform makes it easy to discover items that align with your values.</p>
+      <p>Join us in our mission to create a cleaner, more sustainable future. Together, we can reduce waste, support the circular economy, and make a positive impact on the environment—one transaction at a time. Welcome to Green Tunisia, where sustainability meets opportunity.</p>
+    </div>
+    <div class="welcome-video">
+      <video controls>
+        <source src="/images/vid.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- JavaScript for Smooth Transition -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const welcomeSection = document.getElementById("welcome-section");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              welcomeSection.classList.add("visible");
+            }
+          });
+        },
+        {
+          threshold: 0.1, // Trigger when 10% of the section is visible
+        }
+      );
+
+      observer.observe(welcomeSection);
+    });
+  </script>
 </body>
 </html>
