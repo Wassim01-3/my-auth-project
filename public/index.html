@@ -30,6 +30,9 @@
       opacity: 0; /* Initially hidden */
       transform: translateY(20px); /* Slightly shifted down */
       transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
+      display: flex; /* Use flexbox for layout */
+      align-items: flex-start; /* Align items to the top */
+      gap: 20px; /* Space between text and video */
     }
 
     #welcome-section.visible {
@@ -38,21 +41,22 @@
     }
 
     .welcome-text {
-      margin-left: 5%;
-      margin-right: 25%;
+      flex: 0 0 35%; /* Text takes 35% of the width */
       font-family: 'Slabo 27px', serif; /* Match the font of the page */
       font-size: 18px; /* Adjust as needed */
       line-height: 1.6;
       color: #333; /* Adjust as needed */
+      margin-left: 5%; /* Margin as requested */
+    }
+
+    .welcome-video {
+      flex: 1; /* Video takes the remaining space */
+      margin-right: 5%; /* Margin as requested */
     }
 
     .welcome-video video {
-      width: 100%;
-      max-width: 800px; /* Adjust as needed */
+      width: 100%; /* Make video responsive */
       border-radius: 20px; /* Great border radius */
-      margin-left: 25%;
-      margin-right: 5%;
-      margin-top: 20px;
     }
   </style>
 </head>
