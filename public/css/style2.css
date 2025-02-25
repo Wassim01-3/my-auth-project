@@ -491,6 +491,31 @@ figure.effect-romeo:hover p {
 	-webkit-transform: translate3d(0,-50%,0) translate3d(0,100%,0);
 	transform: translate3d(0,-50%,0) translate3d(0,100%,0);
 }
+/* Styles pour la slide de la vidéo */
+#slide2 {
+  padding: 0; /* Supprimer le padding */
+  margin: 0; /* Supprimer la marge */
+}
+
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Pour éviter tout débordement */
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Pour que la vidéo remplisse la div sans déformation */
+}
+
+/* Styles pour les indicateurs de slide */
 .slide-indicators {
   position: absolute;
   bottom: 20px;
@@ -498,6 +523,7 @@ figure.effect-romeo:hover p {
   transform: translateX(-50%);
   display: flex;
   gap: 10px;
+  z-index: 2; /* Pour s'assurer que les indicateurs sont au-dessus de la vidéo */
 }
 
 .indicator {
@@ -511,22 +537,6 @@ figure.effect-romeo:hover p {
 
 .indicator.active {
   background-color: #009900; /* Couleur verte du bouton Login */
-}
-
-.top_main {
-  position: relative; /* Pour positionner les indicateurs correctement */
-  height: 100%; /* Ajuster la hauteur pour remplir la div */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.top_main video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Pour que la vidéo remplisse la div sans déformation */
 }
 .project_bottom h5{
   padding-top:70px;
