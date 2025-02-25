@@ -491,12 +491,21 @@ figure.effect-romeo:hover p {
 	-webkit-transform: translate3d(0,-50%,0) translate3d(0,100%,0);
 	transform: translate3d(0,-50%,0) translate3d(0,100%,0);
 }
-/* Styles pour la slide de la vidéo */
-#slide2 {
+/* Styles pour la div .top_main */
+.top_main {
+  position: relative; /* Pour positionner les éléments enfants */
+  height: 700px; /* Hauteur fixe de la div (ajustez selon vos besoins) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden; /* Pour éviter tout débordement */
   padding: 0; /* Supprimer le padding */
   margin: 0; /* Supprimer la marge */
 }
 
+/* Styles pour le conteneur de la vidéo */
 .video-container {
   position: absolute;
   top: 0;
@@ -506,9 +515,9 @@ figure.effect-romeo:hover p {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Pour éviter tout débordement */
 }
 
+/* Styles pour la vidéo */
 video {
   width: 100%;
   height: 100%;
@@ -518,7 +527,7 @@ video {
 /* Styles pour les indicateurs de slide */
 .slide-indicators {
   position: absolute;
-  bottom: 20px;
+  bottom: 20px; /* Position en bas de la div .top_main */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
