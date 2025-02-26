@@ -254,6 +254,26 @@
 
     // Call the function to fetch user data when the page loads
     fetchUserData();
+
+    // Intersection Observer for the welcome section
+    document.addEventListener("DOMContentLoaded", function () {
+      const welcomeSection = document.getElementById("welcome-section");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              welcomeSection.classList.add("visible");
+            }
+          });
+        },
+        {
+          threshold: 0.2, // Trigger when 20% of the section is visible
+        }
+      );
+
+      observer.observe(welcomeSection);
+    });
   </script>
 </body>
 </html>
