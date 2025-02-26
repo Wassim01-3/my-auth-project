@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>GreenTunisia - Protect Tunisia's Environment</title>
+  <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
+  <link rel="shortcut icon" href="/images/fav/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/fav/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="GreenTunisia" />
+  <link rel="manifest" href="/images/fav/site.webmanifest" />
+  <link rel="stylesheet" href="css/stylehome.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  <style>
+    /* Add this CSS to ensure the icon and text are aligned */
+    .dropdown-content a {
+      display: flex;
+      align-items: center; /* Vertically center the icon and text */
+      gap: 10px; /* Add space between the icon and text */
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #009900; /* Replace with the color of the Sign In button */
+      padding: 20px 0; /* Add some padding */
+      text-align: center; /* Center the text */
+      color: white; /* Text color */
+      font-family: 'Slabo 27px', serif; /* Match the font of the page */
+      font-size: 18px; /* Adjust as needed */
+      position: relative; /* Ensure footer is positioned correctly */
+      width: 100%; /* Full width */
+      bottom: 0; /* Stick to the bottom */
+    }
+
+    .footer-content {
+      display: inline-flex; /* Use flexbox to align icon and text */
+      align-items: center; /* Vertically center the icon and text */
+      gap: 10px; /* Space between icon and text */
+    }
+
+    /* Smooth scrolling for the entire page */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Table styles for .top-main */
+    .top-main table {
+      background: transparent; /* Transparent background */
+      border: none; /* No borders */
+      width: 100%; /* Full width of the container */
+      color: inherit; /* Inherit text color from .top-main */
+      font-family: 'Slabo 27px', serif; /* Match page font */
+    }
+
+    .top-main td, .top-main th {
+      border: none; /* No cell borders */
+      padding: 10px; /* Spacing inside cells */
+      text-align: left; /* Align text left */
+    }
+
+    .top-main tr:not(:last-child) {
+      border-bottom: 2px solid #66B2FF; /* Color of the old "Look for Buying" button */
+    }
+  </style>
+</head>
+<body>
+  <div class="top_box clearfix">
+    <div class="top_box_inner_1 clearfix">
+      <section id="header">
+        <nav class="navbar navbar-default">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li>
+                <a class="tag_menu active_tab" href="/home">HOME</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/home#welcome-section">ABOUT</a> <!-- Updated to /home#welcome-section -->
+              </li>
+              <li>
+                <a class="tag_menu" href="/buy_sell">BUY & SELL</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a class="tag_menu_righ" href="#" id="log-btn">
+                  <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
+                  <span id="username">Username</span>
+                  <i class="fas fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content">
+                  <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
+                  <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                </div>
+              </li>
+            </ul>
+            <script>
+              document.addEventListener('click', function(event) {
+                var dropdown = document.querySelector('.dropdown');
+                var dropdownContent = document.querySelector('.dropdown-content');
+
+                // Check if the click is outside the dropdown
+                if (!dropdown.contains(event.target)) {
+                  dropdownContent.style.display = 'none';
+                }
+              });
+            </script>
+          </div>
+          <!-- /.navbar-collapse -->
+        </nav>
+      </section>
+    </div>
+    <div class="top_box_inner_2 clearfix">
+      <section id="top" class="clearfix">
+        <div class="top clearfix">
+          <div class="top_main clearfix">
+            <table>
+              <tr>
+                <th>Company Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Website</th>
+              </tr>
+              <tr>
+                <td>Tunisie Plastique</td>
+                <td>Tunisia (nationwide operations)</td>
+                <td>(+216) 71 973 111</td>
+                <td>www.tunisie-plastique.com</td>
+              </tr>
+              <tr>
+                <td>Cosmosplast Recycling</td>
+                <td>1 Rue des Usines, Sidi Rezig, Ben Arous, Tunisia</td>
+                <td>Not publicly listed</td>
+                <td>Not available</td>
+              </tr>
+              <tr>
+                <td>PERPLASTIC TUNISIA</td>
+                <td>Lot N°7 Z.I. M’ghira II, 2082 Fouchana Riadh, Tunisia</td>
+                <td>Not publicly listed</td>
+                <td>Listed on Europages</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <i class="fa-regular fa-copyright"></i> 2025 Green Tunisia - All Rights Reserved
+    </div>
+  </footer>
+
+  <script>
+    const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+
+    // Fetch user data from the backend
+    async function fetchUserData() {
+      try {
+        console.log('Fetching user data...');
+        const token = localStorage.getItem('token'); // Get the token from localStorage
+
+        if (!token) {
+          console.log('No token found. User is not logged in.');
+          return; // Stop further execution
+        }
+
+        const response = await fetch(`${backendUrl}/api/auth/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the header
+          },
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          console.log('User data fetched:', user);
+
+          // Update the dropdown button with the user's data
+          document.getElementById('username').textContent = user.username;
+          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
+        } else {
+          console.error('Failed to fetch user data:', response.status, response.statusText);
+          console.log('User is not authenticated.');
+        }
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+        console.log('An error occurred while fetching user data.');
+      }
+    }
+
+    // Logout functionality
+    const logoutLink = document.getElementById('logout-link');
+    if (logoutLink) {
+      logoutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token'); // Remove the token
+        window.location.href = '/login.html';
+      });
+    }
+
+    // Call the function to fetch user data when the page loads
+    fetchUserData();
+  </script>
+</body>
+</html>
