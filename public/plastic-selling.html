@@ -43,7 +43,8 @@
       scroll-behavior: smooth;
     }
 
-    .top_main {
+    /* Ensure .top_main is fully controlled */
+    #top .top .top_main {
       display: flex !important;
       justify-content: center !important;
       align-items: center !important;
@@ -53,19 +54,21 @@
       margin-top: 0 !important;
       padding: 0 !important;
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
-      background: transparent !important; /* Ensure .top_main has no background */
+      background: transparent !important; /* Force transparent background on .top_main */
     }
 
-    .top_main table {
-      background: #3a423abf !important; /* Apply semi-transparent dark green directly to the table */
+    /* Apply background directly to the table with 5px padding for margin effect */
+    #top .top .top_main table {
+      background: #3a423abf !important; /* Semi-transparent dark green for table */
       border: none !important;
       width: 100% !important;
       font-family: 'Slabo 27px', serif !important;
       font-size: 24px !important;
       color: #FFFFFF !important;
+      padding: 5px !important; /* 5px margin effect around table content */
     }
 
-    .top_main th {
+    #top .top .top_main th {
       background-color: transparent !important; /* Transparent background for column titles */
       color: #009900 !important; /* Text color matches footer */
       font-size: 24px !important;
@@ -74,18 +77,18 @@
       padding: 15px !important;
     }
 
-    .top_main td {
+    #top .top .top_main td {
       border: none !important;
       padding: 15px !important;
       text-align: center !important;
       color: #FFFFFF !important;
     }
 
-    .top_main td:first-child {
+    #top .top .top_main td:first-child {
       font-weight: bold !important;
     }
 
-    .top_main tr:not(:last-child) {
+    #top .top .top_main tr:not(:last-child) {
       border-bottom: 2px solid #009900 !important;
     }
   </style>
