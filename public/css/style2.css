@@ -1,3 +1,83 @@
+.dropdown-content a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+footer {
+  background-color: #009900;
+  padding: 20px 0;
+  text-align: center;
+  color: white;
+  font-family: 'Slabo 27px', serif;
+  font-size: 18px;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+}
+
+.footer-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.top_main {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 700px !important;
+  margin-left: 200px !important;
+  margin-right: 200px !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+.table-container {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+  margin-top: 100px !important;
+  padding-top: 100px !important;
+  padding-bottom: 100px !important;
+  background: #3a423abf;
+  text-align: center;
+}
+
+.top_main table {
+  background: transparent !important;
+  border: none !important;
+  width: 100% !important;
+  font-family: 'Slabo 27px', serif !important;
+  font-size: 24px !important;
+  color: #FFFFFF !important;
+}
+
+.top_main th {
+  background-color: #009900 !important;
+  color: #FFFFFF !important;
+  font-size: 24px !important;
+  font-weight: normal !important;
+  text-align: center !important;
+  padding: 15px !important;
+}
+
+.top_main td {
+  border: none !important;
+  padding: 15px !important;
+  text-align: center !important;
+  color: #FFFFFF !important;
+}
+
+.top_main td:first-child {
+  font-weight: bold !important;
+}
+
+.top_main tr:not(:last-child) {
+  border-bottom: 2px solid #009900 !important;
+}
 /*
 Template Name: Enjoy-Nature
 File: Layout CSS
@@ -111,7 +191,14 @@ body {
   margin-top: 100px;
   padding-top: 100px;
   padding-bottom: 100px;
+}
+
+.table-container {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+  background: #3a423abf;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
 }
 
 .top_main h4 {
@@ -269,7 +356,13 @@ body {
     margin-top: 150px;
     padding-top: 30px;
     padding-bottom: 60px;
+  }
+
+  .table-container {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
   }
 
   .top_main h4 {
@@ -334,6 +427,13 @@ body {
     padding-bottom: 100px;
   }
 
+  .table-container {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+  }
+
   .top_main h4 {
     font-size: 22px;
   }
@@ -372,13 +472,20 @@ body {
     font-size: 16px;
   }
 
-  .top_main h4 {
-    font-size: 24px;
-  }
-
   .top_main {
     margin-left: 150px;
     margin-right: 150px;
+  }
+
+  .table-container {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+  }
+
+  .top_main h4 {
+    font-size: 24px;
   }
 
   .top_main h2 {
