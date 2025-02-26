@@ -64,23 +64,23 @@ body {
   font-size: 24px; /* Taille de l'icône plus grande */
 }
 #header .navbar-nav.navbar-right .tag_menu_righ {
-  padding: 8px 18px; /* Padding for a larger button */
+  padding: 6px 14px; /* Padding for a larger button */
   border: 2px solid #fff;
-  font-size: 24px !important; /* Set the same font size for text and icon */
+  font-size: 18px !important; /* Set the same font size for text and icon */
   display: flex; /* Use flexbox to align items */
   align-items: center; /* Vertically center the icon and text */
   gap: 10px; /* Add space between the icon and text */
 }
 
 #header .navbar-nav.navbar-right .tag_menu_righ i {
-  font-size: 24px; /* Same size as the text */
+  font-size: 18px; /* Same size as the text */
 }
 
 #header .navbar-nav.navbar-right .tag_menu_right span {
   font-size: 24px; /* Ensure the text has the same size */
 }
 #header .navbar-nav.navbar-right .tag_menu_righ span {
-  font-size: 24px; /* Ensure the text has the same size */
+  font-size: 18px; /* Ensure the text has the same size */
 }
 
 #header .navbar-nav.navbar-right .tag_menu_right:hover {
@@ -88,7 +88,7 @@ body {
   color: #7bd44e;
 }
 #header .navbar-nav.navbar-right .tag_menu_righ:hover {
-  border: 2px solid #7bd44e;
+  border: 3px solid #7bd44e;
   color: #7bd44e;
 }
 
