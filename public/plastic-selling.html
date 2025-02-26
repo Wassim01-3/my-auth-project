@@ -26,7 +26,7 @@
 
     /* Footer Styles */
     footer {
-      background-color: #009900; /* Matches CSS */
+      background-color: #009900;
       padding: 20px 0;
       text-align: center;
       color: white;
@@ -48,30 +48,42 @@
       scroll-behavior: smooth;
     }
 
-    /* Updated Table Styles for .top-main */
+    /* Updated Styles for .top-main */
+    .top-main {
+      display: flex; /* Use flexbox for centering */
+      justify-content: center; /* Horizontal centering */
+      align-items: center; /* Vertical centering */
+      height: 700px; /* Match .top height from CSS */
+      margin-left: 200px;
+      margin-right: 200px;
+      margin-top: 100px;
+      padding: 0; /* Remove padding to avoid offset */
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+    }
+
     .top-main table {
       background: transparent; /* Transparent background */
       border: none; /* No borders */
       width: 100%; /* Full width of the container */
       font-family: 'Slabo 27px', serif; /* Match project font */
       font-size: 24px; /* Larger text */
-      color: #FFFFFF; /* White text */
+      color: #FFFFFF !important; /* White text, enforced */
     }
 
     .top-main th {
       background-color: #009900; /* Footer background color for headers */
-      color: #FFFFFF; /* White text for headers */
+      color: #FFFFFF !important; /* White text for headers, enforced */
       font-size: 24px; /* Same size as table text */
-      font-weight: normal; /* Headers not bold, per your CSS style */
+      font-weight: normal; /* Headers not bold */
       text-align: center; /* Centered text */
-      padding: 15px; /* Increased padding for better spacing */
+      padding: 15px; /* Increased padding */
     }
 
     .top-main td {
       border: none; /* No cell borders */
       padding: 15px; /* Increased padding */
       text-align: center; /* Centered text */
-      color: #FFFFFF; /* White text */
+      color: #FFFFFF !important; /* White text, enforced */
     }
 
     .top-main td:first-child {
