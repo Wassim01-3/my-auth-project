@@ -30,18 +30,18 @@ html {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  height: 700px !important;
+  height: 400px !important;
   margin-left: 200px !important;
   margin-right: 200px !important;
-  margin-top: 0 !important;
+  margin-top: 10px !important;
   padding: 0 !important;
-  margin-bottom: 100px !important;
+  margin-bottom: 150px !important;
 }
 
 .table-container {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
-  margin-top: 10px !important;
-  padding-top: 10px !important;
+  margin-top: 5px !important;
+  padding-top: 5px !important;
   padding-bottom: 10px !important;
   background: 0 0 30px rgba(0, 0, 0, 0.5) !important;
   text-align: center;
@@ -190,7 +190,7 @@ body {
   margin-left: 200px;
   margin-right: 200px;
   margin-top: 100px;
-  padding-top: 100px;
+  padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 100px
 }
