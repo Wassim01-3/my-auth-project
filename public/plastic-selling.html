@@ -11,16 +11,26 @@
   <meta name="apple-mobile-web-app-title" content="GreenTunisia" />
   <link rel="manifest" href="/images/fav/site.webmanifest" />
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
   <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
   <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
   <style>
+    /* Override style2.css for #top and .top to remove backgrounds */
+    #top {
+      background-image: none !important;
+    }
+    .top {
+      background: transparent !important;
+      height: auto !important; /* Remove fixed height to fit content */
+    }
+
+    /* Dropdown alignment */
     .dropdown-content a {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
+    /* Footer */
     footer {
       background-color: #009900;
       padding: 20px 0;
@@ -39,22 +49,23 @@
       gap: 10px;
     }
 
+    /* Smooth scrolling */
     html {
       scroll-behavior: smooth;
     }
 
-    /* Ensure .top_main is fully controlled */
+    /* Ensure .top_main is fully controlled and transparent */
     #top .top .top_main {
       display: flex !important;
       justify-content: center !important;
       align-items: center !important;
-      height: 700px !important;
+      height: auto !important; /* Adjust to fit content, not fixed height */
       margin-left: 200px !important;
       margin-right: 200px !important;
       margin-top: 0 !important;
       padding: 0 !important;
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
-      background: transparent !important; /* Force transparent background on .top_main */
+      background: transparent !important; /* Keep .top_main transparent */
     }
 
     /* Apply background directly to the table with 5px padding for margin effect */
@@ -68,9 +79,10 @@
       padding: 5px !important; /* 5px margin effect around table content */
     }
 
+    /* Transparent column titles with #009900 text */
     #top .top .top_main th {
-      background-color: transparent !important; /* Transparent background for column titles */
-      color: #009900 !important; /* Text color matches footer */
+      background-color: transparent !important;
+      color: #009900 !important;
       font-size: 24px !important;
       font-weight: normal !important;
       text-align: center !important;
@@ -90,6 +102,16 @@
 
     #top .top .top_main tr:not(:last-child) {
       border-bottom: 2px solid #009900 !important;
+    }
+
+    /* Override any Bootstrap table styles */
+    table {
+      background: none !important;
+      border-collapse: collapse !important;
+      margin-bottom: 0 !important;
+    }
+    th, td {
+      border: none !important;
     }
   </style>
 </head>
