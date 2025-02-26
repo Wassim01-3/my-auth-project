@@ -53,15 +53,11 @@
       margin-top: 0 !important;
       padding: 0 !important;
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
-    }
-
-    .table-wrapper {
-      background: #3a423abf; /* Matches .top background, semi-transparent dark green */
-      padding: 5px; /* 5px margin effect around the table */
+      background: transparent !important; /* Ensure .top_main has no background */
     }
 
     .top_main table {
-      background: transparent !important;
+      background: #3a423abf !important; /* Apply semi-transparent dark green directly to the table */
       border: none !important;
       width: 100% !important;
       font-family: 'Slabo 27px', serif !important;
@@ -71,7 +67,7 @@
 
     .top_main th {
       background-color: transparent !important; /* Transparent background for column titles */
-      color: #009900 !important; /* Text color matches previous background */
+      color: #009900 !important; /* Text color matches footer */
       font-size: 24px !important;
       font-weight: normal !important;
       text-align: center !important;
@@ -146,34 +142,32 @@
       <section id="top" class="clearfix">
         <div class="top clearfix">
           <div class="top_main clearfix">
-            <div class="table-wrapper">
-              <table>
-                <tr>
-                  <th>Company Name</th>
-                  <th>Address</th>
-                  <th>Phone Number</th>
-                  <th>Website</th>
-                </tr>
-                <tr>
-                  <td>Tunisie Plastique</td>
-                  <td>Tunisia (nationwide operations)</td>
-                  <td>(+216) 71 973 111</td>
-                  <td>www.tunisie-plastique.com</td>
-                </tr>
-                <tr>
-                  <td>Cosmosplast Recycling</td>
-                  <td>1 Rue des Usines, Sidi Rezig, Ben Arous, Tunisia</td>
-                  <td>Not publicly listed</td>
-                  <td>Not available</td>
-                </tr>
-                <tr>
-                  <td>PERPLASTIC TUNISIA</td>
-                  <td>Lot N°7 Z.I. M’ghira II, 2082 Fouchana Riadh, Tunisia</td>
-                  <td>Not publicly listed</td>
-                  <td>Listed on Europages</td>
-                </tr>
-              </table>
-            </div>
+            <table>
+              <tr>
+                <th>Company Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Website</th>
+              </tr>
+              <tr>
+                <td>Tunisie Plastique</td>
+                <td>Tunisia (nationwide operations)</td>
+                <td>(+216) 71 973 111</td>
+                <td>www.tunisie-plastique.com</td>
+              </tr>
+              <tr>
+                <td>Cosmosplast Recycling</td>
+                <td>1 Rue des Usines, Sidi Rezig, Ben Arous, Tunisia</td>
+                <td>Not publicly listed</td>
+                <td>Not available</td>
+              </tr>
+              <tr>
+                <td>PERPLASTIC TUNISIA</td>
+                <td>Lot N°7 Z.I. M’ghira II, 2082 Fouchana Riadh, Tunisia</td>
+                <td>Not publicly listed</td>
+                <td>Listed on Europages</td>
+              </tr>
+            </table>
           </div>
         </div>
       </section>
