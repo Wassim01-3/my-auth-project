@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <title>GreenTunisia - Protect Tunisia's Environment</title>
+  <title>GreenTunisia - Plastic Buyers</title>
   <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
   <link rel="shortcut icon" href="/images/fav/favicon.ico" />
@@ -26,21 +26,21 @@
 
     /* Footer Styles */
     footer {
-      background-color: #009900; /* Replace with the color of the Sign In button */
-      padding: 20px 0; /* Add some padding */
-      text-align: center; /* Center the text */
-      color: white; /* Text color */
-      font-family: 'Slabo 27px', serif; /* Match the font of the page */
-      font-size: 18px; /* Adjust as needed */
-      position: relative; /* Ensure footer is positioned correctly */
-      width: 100%; /* Full width */
-      bottom: 0; /* Stick to the bottom */
+      background-color: #009900; /* Matches CSS */
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      font-family: 'Slabo 27px', serif;
+      font-size: 18px;
+      position: relative;
+      width: 100%;
+      bottom: 0;
     }
 
     .footer-content {
-      display: inline-flex; /* Use flexbox to align icon and text */
-      align-items: center; /* Vertically center the icon and text */
-      gap: 10px; /* Space between icon and text */
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
 
     /* Smooth scrolling for the entire page */
@@ -48,23 +48,38 @@
       scroll-behavior: smooth;
     }
 
-    /* Table styles for .top-main */
+    /* Updated Table Styles for .top-main */
     .top-main table {
       background: transparent; /* Transparent background */
       border: none; /* No borders */
       width: 100%; /* Full width of the container */
-      color: inherit; /* Inherit text color from .top-main */
-      font-family: 'Slabo 27px', serif; /* Match page font */
+      font-family: 'Slabo 27px', serif; /* Match project font */
+      font-size: 24px; /* Larger text */
+      color: #FFFFFF; /* White text */
     }
 
-    .top-main td, .top-main th {
+    .top-main th {
+      background-color: #009900; /* Footer background color for headers */
+      color: #FFFFFF; /* White text for headers */
+      font-size: 24px; /* Same size as table text */
+      font-weight: normal; /* Headers not bold, per your CSS style */
+      text-align: center; /* Centered text */
+      padding: 15px; /* Increased padding for better spacing */
+    }
+
+    .top-main td {
       border: none; /* No cell borders */
-      padding: 10px; /* Spacing inside cells */
-      text-align: left; /* Align text left */
+      padding: 15px; /* Increased padding */
+      text-align: center; /* Centered text */
+      color: #FFFFFF; /* White text */
+    }
+
+    .top-main td:first-child {
+      font-weight: bold; /* Bold text for first column (Company Name) */
     }
 
     .top-main tr:not(:last-child) {
-      border-bottom: 2px solid #66B2FF; /* Color of the old "Look for Buying" button */
+      border-bottom: 2px solid #66B2FF; /* Line color from "Look for Buying" assumption */
     }
   </style>
 </head>
@@ -91,7 +106,7 @@
                 <a class="tag_menu active_tab" href="/home">HOME</a>
               </li>
               <li>
-                <a class="tag_menu" href="/home#welcome-section">ABOUT</a> <!-- Updated to /home#welcome-section -->
+                <a class="tag_menu" href="/home#welcome-section">ABOUT</a> <!-- Links to welcome-section on /home -->
               </li>
               <li>
                 <a class="tag_menu" href="/buy_sell">BUY & SELL</a>
