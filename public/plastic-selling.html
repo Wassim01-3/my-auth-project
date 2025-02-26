@@ -11,17 +11,17 @@
   <meta name="apple-mobile-web-app-title" content="GreenTunisia" />
   <link rel="manifest" href="/images/fav/site.webmanifest" />
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
   <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
   <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
   <style>
-    /* Override style2.css for #top and .top to remove backgrounds */
+    /* Preserve #top background image but make .top transparent */
     #top {
-      background-image: none !important;
+      background-image: url(../images/4.jpg) !important;
+      background-size: cover !important; /* Ensure image covers the area */
     }
     .top {
       background: transparent !important;
-      height: auto !important; /* Remove fixed height to fit content */
+      height: auto !important; /* Adjust to fit content */
     }
 
     /* Dropdown alignment */
@@ -55,29 +55,29 @@
       scroll-behavior: smooth;
     }
 
-    /* Ensure .top_main is fully controlled and transparent */
+    /* Match .top_main to the middle section design */
     #top .top .top_main {
       display: flex !important;
       justify-content: center !important;
       align-items: center !important;
-      height: auto !important; /* Adjust to fit content, not fixed height */
+      height: auto !important; /* Fit content (table) */
       margin-left: 200px !important;
       margin-right: 200px !important;
-      margin-top: 0 !important;
+      margin-top: 0 !important; /* Position at top, adjust if needed */
       padding: 0 !important;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
-      background: transparent !important; /* Keep .top_main transparent */
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important; /* Match shadow */
+      background: #3a423abf !important; /* Semi-transparent dark green overlay like the middle section */
     }
 
-    /* Apply background directly to the table with 5px padding for margin effect */
+    /* Style the table to fit within .top_main, no additional background */
     #top .top .top_main table {
-      background: #3a423abf !important; /* Semi-transparent dark green for table */
+      background: transparent !important; /* No additional background, inherit from .top_main */
       border: none !important;
-      width: 100% !important;
+      width: 100% !important; /* Full width within .top_main */
       font-family: 'Slabo 27px', serif !important;
       font-size: 24px !important;
       color: #FFFFFF !important;
-      padding: 5px !important; /* 5px margin effect around table content */
+      padding: 0 !important; /* Remove padding to fit tightly, margin handled by .top_main */
     }
 
     /* Transparent column titles with #009900 text */
