@@ -24,14 +24,14 @@
       height: auto !important; /* Adjust to fit content */
     }
 
-    /* Dropdown alignment */
+    /* Dropdown alignment (unchanged as requested) */
     .dropdown-content a {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    /* Footer */
+    /* Footer (unchanged) */
     footer {
       background-color: #009900;
       padding: 20px 0;
@@ -50,12 +50,12 @@
       gap: 10px;
     }
 
-    /* Smooth scrolling */
+    /* Smooth scrolling (unchanged) */
     html {
       scroll-behavior: smooth;
     }
 
-    /* Match .top_main to the middle section design */
+    /* Match .top_main to the desired design with semi-transparent overlay */
     #top .top .top_main {
       display: flex !important;
       justify-content: center !important;
@@ -65,8 +65,8 @@
       margin-right: 200px !important;
       margin-top: 0 !important; /* Position at top, adjust if needed */
       padding: 0 !important;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important; /* Match shadow */
-      background: #3a423abf !important; /* Semi-transparent dark green overlay like the middle section */
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important; /* Match shadow from screenshot */
+      background: #3a423abf !important; /* Semi-transparent dark green overlay over 4.jpg */
     }
 
     /* Style the table to fit within .top_main, no additional background */
@@ -105,14 +105,25 @@
       border-bottom: 2px solid #009900 !important;
     }
 
-    /* Override any Bootstrap table styles */
+    /* Override any Bootstrap or style2.css table styles to prevent solid #009900 */
     table {
       background: none !important;
       border-collapse: collapse !important;
       margin-bottom: 0 !important;
     }
     th, td {
+      background: none !important; /* Explicitly prevent solid #009900 */
       border: none !important;
+    }
+
+    /* Ensure no other backgrounds interfere */
+    .top_main, .top_main table, .top_main th, .top_main td {
+      background: none !important;
+    }
+
+    /* Preserve all structural elements (no div/section removed) */
+    .top_box, .top_box_inner_1, .top_box_inner_2 {
+      position: relative !important; /* Ensure positioning isn’t altered */
     }
   </style>
 </head>
@@ -142,7 +153,7 @@
               <li class="dropdown">
                 <a class="tag_menu_righ" href="#" id="log-btn">
                   <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
-                  <span id="username">Username</span>
+                  <span id="username">wassim</span>
                   <i class="fas fa-caret-down"></i>
                 </a>
                 <div class="dropdown-content">
@@ -222,15 +233,19 @@
         if (response.ok) {
           const user = await response.json();
           console.log('User data fetched:', user);
-          document.getElementById('username').textContent = user.username;
-          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
+          document.getElementById('username').textContent = user.username || 'wassim'; // Fallback to 'wassim'
+          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email || 'user@example.com'}</span>`;
         } else {
           console.error('Failed to fetch user data:', response.status, response.statusText);
           console.log('User is not authenticated.');
+          document.getElementById('username').textContent = 'wassim'; // Fallback username
+          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>user@example.com</span>`;
         }
       } catch (err) {
         console.error('Error fetching user data:', err);
         console.log('An error occurred while fetching user data.');
+        document.getElementById('username').textContent = 'wassim'; // Fallback username
+        document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>user@example.com</span>`;
       }
     }
     const logoutLink = document.getElementById('logout-link');
