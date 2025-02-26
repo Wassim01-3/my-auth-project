@@ -30,9 +30,6 @@
       opacity: 0; /* Initially hidden */
       transform: translateY(20px); /* Slightly shifted down */
       transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
-      display: flex; /* Use flexbox for layout */
-      align-items: flex-start; /* Align items to the top */
-      gap: 20px; /* Space between text and video */
     }
 
     #welcome-section.visible {
@@ -41,12 +38,20 @@
     }
 
     .welcome-text {
-      flex: 0 0 35%; /* Text takes 35% of the width */
       font-family: 'Slabo 27px', serif; /* Match the font of the page */
       font-size: 18px; /* Adjust as needed */
       line-height: 1.6;
       color: #333; /* Adjust as needed */
+    }
+
+    .welcome-text-part1 {
+      flex: 0 0 35%; /* First part takes 35% of the width */
       margin-left: 5%; /* Margin as requested */
+    }
+
+    .welcome-text-part2 {
+      width: 100%; /* Second part takes full width */
+      margin-top: 20px; /* Space between the two parts */
     }
 
     .welcome-video {
@@ -57,6 +62,12 @@
     .welcome-video video {
       width: 100%; /* Make video responsive */
       border-radius: 20px; /* Great border radius */
+    }
+
+    .flex-container {
+      display: flex; /* Flexbox for the first part and video */
+      align-items: flex-start; /* Align items to the top */
+      gap: 20px; /* Space between text and video */
     }
   </style>
 </head>
@@ -112,18 +123,22 @@
 
   <!-- New Welcome Section -->
   <section id="welcome-section">
-    <div class="welcome-text">
-      <p>Welcome to Green Tunisia, a revolutionary online marketplace dedicated to protecting the environment and promoting a cleaner, greener planet. In a world where waste is becoming an ever-growing problem, our platform offers a simple yet powerful solution: reducing waste by giving unused items a second life.</p>
-      <p>At Green Tunisia, we believe that every item has value, even if it’s no longer needed by its original owner. Instead of throwing away perfectly usable items, our platform connects sellers with buyers who can find value in them. Whether it’s clothing, electronics, furniture, or household goods, our community of users is committed to reducing waste by reusing, repurposing, and recycling.</p>
-      <p>But we don’t stop there. Recognizing the global challenge of plastic pollution, we’ve created a dedicated space for plastic sellers and buyers to connect. By facilitating the exchange of recyclable plastics, we’re helping to keep these materials out of landfills and oceans while empowering individuals and businesses to profit from sustainable practices.</p>
+    <div class="flex-container">
+      <div class="welcome-text welcome-text-part1">
+        <p>Welcome to Green Tunisia, a revolutionary online marketplace dedicated to protecting the environment and promoting a cleaner, greener planet. In a world where waste is becoming an ever-growing problem, our platform offers a simple yet powerful solution: reducing waste by giving unused items a second life.</p>
+        <p>At Green Tunisia, we believe that every item has value, even if it’s no longer needed by its original owner. Instead of throwing away perfectly usable items, our platform connects sellers with buyers who can find value in them. Whether it’s clothing, electronics, furniture, or household goods, our community of users is committed to reducing waste by reusing, repurposing, and recycling.</p>
+        <p>But we don’t stop there. Recognizing the global challenge of plastic pollution, we’ve created a dedicated space for plastic sellers and buyers to connect. By facilitating the exchange of recyclable plastics, we’re helping to keep these materials out of landfills and oceans while empowering individuals and businesses to profit from sustainable practices.</p>
+      </div>
+      <div class="welcome-video">
+        <video controls>
+          <source src="/images/vid.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="welcome-text welcome-text-part2">
       <p>For second-hand shoppers, Green Tunisia is a treasure trove of unique and affordable finds. Whether you’re looking for a vintage piece, a budget-friendly alternative, or simply want to shop sustainably, our platform makes it easy to discover items that align with your values.</p>
       <p>Join us in our mission to create a cleaner, more sustainable future. Together, we can reduce waste, support the circular economy, and make a positive impact on the environment—one transaction at a time. Welcome to Green Tunisia, where sustainability meets opportunity.</p>
-    </div>
-    <div class="welcome-video">
-      <video controls>
-        <source src="/images/vid.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
     </div>
   </section>
 
