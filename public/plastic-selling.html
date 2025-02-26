@@ -10,21 +10,17 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/fav/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="GreenTunisia" />
   <link rel="manifest" href="/images/fav/site.webmanifest" />
-  <link rel="stylesheet" href="css/stylehome.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
-  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
   <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
   <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
   <style>
-    /* Add this CSS to ensure the icon and text are aligned */
     .dropdown-content a {
       display: flex;
-      align-items: center; /* Vertically center the icon and text */
-      gap: 10px; /* Add space between the icon and text */
+      align-items: center;
+      gap: 10px;
     }
 
-    /* Footer Styles */
     footer {
       background-color: #009900;
       padding: 20px 0;
@@ -43,55 +39,53 @@
       gap: 10px;
     }
 
-    /* Smooth scrolling for the entire page */
     html {
       scroll-behavior: smooth;
     }
 
-    /* Updated Styles for .top-main */
-    .top-main {
-      display: flex; /* Use flexbox for centering */
-      justify-content: center; /* Horizontal centering */
-      align-items: center; /* Vertical centering */
-      height: 700px; /* Match .top height from CSS */
-      margin-left: 200px;
-      margin-right: 200px;
-      margin-top: 100px;
-      padding: 0; /* Remove padding to avoid offset */
+    .top_main {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      height: 700px !important;
+      margin-left: 200px !important;
+      margin-right: 200px !important;
+      margin-top: 0 !important; /* Removed margin-top to position at the top */
+      padding: 0 !important;
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
     }
 
-    .top-main table {
-      background: transparent; /* Transparent background */
-      border: none; /* No borders */
-      width: 100%; /* Full width of the container */
-      font-family: 'Slabo 27px', serif; /* Match project font */
-      font-size: 24px; /* Larger text */
-      color: #FFFFFF !important; /* White text, enforced */
+    .top_main table {
+      background: transparent !important;
+      border: none !important;
+      width: 100% !important;
+      font-family: 'Slabo 27px', serif !important;
+      font-size: 24px !important;
+      color: #FFFFFF !important;
     }
 
-    .top-main th {
-      background-color: #009900; /* Footer background color for headers */
-      color: #FFFFFF !important; /* White text for headers, enforced */
-      font-size: 24px; /* Same size as table text */
-      font-weight: normal; /* Headers not bold */
-      text-align: center; /* Centered text */
-      padding: 15px; /* Increased padding */
+    .top_main th {
+      background-color: #009900 !important;
+      color: #FFFFFF !important;
+      font-size: 24px !important;
+      font-weight: normal !important;
+      text-align: center !important;
+      padding: 15px !important;
     }
 
-    .top-main td {
-      border: none; /* No cell borders */
-      padding: 15px; /* Increased padding */
-      text-align: center; /* Centered text */
-      color: #FFFFFF !important; /* White text, enforced */
+    .top_main td {
+      border: none !important;
+      padding: 15px !important;
+      text-align: center !important;
+      color: #FFFFFF !important;
     }
 
-    .top-main td:first-child {
-      font-weight: bold; /* Bold text for first column (Company Name) */
+    .top_main td:first-child {
+      font-weight: bold !important;
     }
 
-    .top-main tr:not(:last-child) {
-      border-bottom: 2px solid #66B2FF; /* Line color from "Look for Buying" assumption */
+    .top_main tr:not(:last-child) {
+      border-bottom: 2px solid #009900 !important;
     }
   </style>
 </head>
@@ -100,7 +94,6 @@
     <div class="top_box_inner_1 clearfix">
       <section id="header">
         <nav class="navbar navbar-default">
-          <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
               <span class="sr-only">Toggle navigation</span>
@@ -110,25 +103,13 @@
             </button>
             <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
           </div>
-
-          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li>
-                <a class="tag_menu active_tab" href="/home">HOME</a>
-              </li>
-              <li>
-                <a class="tag_menu" href="/home#welcome-section">ABOUT</a> <!-- Links to welcome-section on /home -->
-              </li>
-              <li>
-                <a class="tag_menu" href="/buy_sell">BUY & SELL</a>
-              </li>
-              <li>
-                <a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a>
-              </li>
-              <li>
-                <a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a>
-              </li>
+              <li><a class="tag_menu active_tab" href="/home">HOME</a></li>
+              <li><a class="tag_menu" href="/home#welcome-section">ABOUT</a></li>
+              <li><a class="tag_menu" href="/buy_sell">BUY & SELL</a></li>
+              <li><a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a></li>
+              <li><a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -147,15 +128,12 @@
               document.addEventListener('click', function(event) {
                 var dropdown = document.querySelector('.dropdown');
                 var dropdownContent = document.querySelector('.dropdown-content');
-
-                // Check if the click is outside the dropdown
                 if (!dropdown.contains(event.target)) {
                   dropdownContent.style.display = 'none';
                 }
               });
             </script>
           </div>
-          <!-- /.navbar-collapse -->
         </nav>
       </section>
     </div>
@@ -195,7 +173,6 @@
     </div>
   </div>
 
-  <!-- Footer Section -->
   <footer>
     <div class="footer-content">
       <i class="fa-regular fa-copyright"></i> 2025 Green Tunisia - All Rights Reserved
@@ -204,29 +181,20 @@
 
   <script>
     const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
-
-    // Fetch user data from the backend
     async function fetchUserData() {
       try {
         console.log('Fetching user data...');
-        const token = localStorage.getItem('token'); // Get the token from localStorage
-
+        const token = localStorage.getItem('token');
         if (!token) {
           console.log('No token found. User is not logged in.');
-          return; // Stop further execution
+          return;
         }
-
         const response = await fetch(`${backendUrl}/api/auth/user`, {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include the token in the header
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
-
         if (response.ok) {
           const user = await response.json();
           console.log('User data fetched:', user);
-
-          // Update the dropdown button with the user's data
           document.getElementById('username').textContent = user.username;
           document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
         } else {
@@ -238,18 +206,14 @@
         console.log('An error occurred while fetching user data.');
       }
     }
-
-    // Logout functionality
     const logoutLink = document.getElementById('logout-link');
     if (logoutLink) {
       logoutLink.addEventListener('click', (e) => {
         e.preventDefault();
-        localStorage.removeItem('token'); // Remove the token
+        localStorage.removeItem('token');
         window.location.href = '/login.html';
       });
     }
-
-    // Call the function to fetch user data when the page loads
     fetchUserData();
   </script>
 </body>
