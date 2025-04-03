@@ -92,7 +92,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (window.location.pathname === '/sell') {
       fetchUserProducts();
+      setupProductForm();
     }
+  }
+
+  // Setup logout functionality
+  const logoutLink = document.getElementById('logout-link');
+  if (logoutLink) {
+    logoutLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('token');
+      window.location.href = '/login.html';
+    });
   }
 });
 
@@ -140,6 +151,77 @@ async function fetchUserData() {
   }
 }
 
+// Setup product form functionality
+function setupProductForm() {
+  const productForm = document.getElementById('product-form');
+  if (!productForm) return;
+
+  // Image preview handling
+  const imagesInput = document.getElementById('images');
+  if (imagesInput) {
+    imagesInput.addEventListener('change', function(e) {
+      const preview = document.getElementById('image-preview');
+      preview.innerHTML = '';
+      
+      Array.from(e.target.files).forEach(file => {
+        if (file.size > 3 * 1024 * 1024) {
+          alert(`File ${file.name} exceeds 3MB limit`);
+          return;
+        }
+        
+        if (!file.type.startsWith('image/')) {
+          alert(`File ${file.name} is not an image`);
+          return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const previewItem = document.createElement('div');
+          previewItem.className = 'image-preview-item';
+          previewItem.innerHTML = `
+            <img src="${event.target.result}" alt="Preview">
+            <button class="remove-btn" onclick="removeImagePreview(this)">×</button>
+          `;
+          preview.appendChild(previewItem);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  }
+
+  // Form submission handling
+  productForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    const token = localStorage.getItem('token');
+    
+    try {
+      const response = await fetch(`${backendUrl}/api/products`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert('Product added successfully!');
+        form.reset();
+        document.getElementById('image-preview').innerHTML = '';
+        fetchUserProducts();
+      } else {
+        alert(result.message || 'Failed to add product');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('An error occurred. Please try again.');
+    }
+  });
+}
+
 // Fetch user's products
 async function fetchUserProducts() {
   try {
@@ -159,10 +241,9 @@ async function fetchUserProducts() {
   }
 }
 
-// Render products
+// Render products with proper image handling
 function renderProducts(products) {
   const container = document.getElementById('products-container');
-  
   if (!container) return;
 
   if (products.length === 0) {
@@ -170,26 +251,66 @@ function renderProducts(products) {
     return;
   }
 
-  container.innerHTML = products.map(product => `
-    <div class="product-card" data-id="${product._id}">
-      <div class="product-images">
-        ${product.images.length > 0 ? 
-          `<img src="${product.images[0].startsWith('http') ? product.images[0] : backendUrl + product.images[0]}" alt="${product.name}">` : 
-          '<div style="background: #eee; width: 200px; height: 150px;"></div>'}
-      </div>
-      <div class="product-details">
-        <h3>${product.name}</h3>
-        <p><strong>Category:</strong> ${product.category}</p>
-        <p><strong>Price:</strong> ${product.price} TND</p>
-        <p><strong>Description:</strong> ${product.description}</p>
-        <div class="product-actions">
-          <button class="btn-edit" onclick="editProduct('${product._id}')">Edit</button>
-          <button class="btn-delete" onclick="deleteProduct('${product._id}')">Delete</button>
+  container.innerHTML = products.map(product => {
+    const mainImage = product.images.length > 0 ? 
+      (product.images[0].startsWith('http') ? product.images[0] : `${backendUrl}${product.images[0]}`) : 
+      '/images/default-product.jpg';
+    
+    return `
+      <div class="product-card" data-id="${product._id}">
+        <div class="product-images">
+          <img src="${mainImage}" alt="${product.name}" onerror="this.src='/images/default-product.jpg'">
+        </div>
+        <div class="product-details">
+          <h3>${product.name}</h3>
+          <p><strong>Category:</strong> ${product.category}</p>
+          <p><strong>Price:</strong> ${product.price} TND</p>
+          <p><strong>Description:</strong> ${product.description}</p>
+          <div class="product-actions">
+            <button class="btn-edit" onclick="editProduct('${product._id}')">Edit</button>
+            <button class="btn-delete" onclick="deleteProduct('${product._id}')">Delete</button>
+          </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
+
+// Remove image preview
+window.removeImagePreview = function(button) {
+  button.parentElement.remove();
+};
+
+// Edit product
+window.editProduct = function(productId) {
+  console.log('Edit product:', productId);
+  // Implement edit functionality
+  alert('Edit functionality will be implemented here');
+};
+
+// Delete product
+window.deleteProduct = async function(productId) {
+  if (!confirm('Are you sure you want to delete this product?')) return;
+  
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${backendUrl}/api/products/${productId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response.ok) {
+      alert('Product deleted successfully');
+      fetchUserProducts();
+    } else {
+      const result = await response.json();
+      alert(result.message || 'Failed to delete product');
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    alert('An error occurred. Please try again.');
+  }
+};
 
 // Function to display error messages
 function showError(field, message) {
@@ -217,44 +338,5 @@ function clearErrors() {
 
   inputs.forEach((input) => {
     input.classList.remove('error');
-  });
-}
-
-// Add to window object for HTML onclick handlers
-window.editProduct = function(productId) {
-  console.log('Edit product:', productId);
-  // Implement edit functionality
-};
-
-window.deleteProduct = async function(productId) {
-  if (!confirm('Are you sure you want to delete this product?')) return;
-  
-  try {
-    const token = localStorage.getItem('token');
-    const response = await fetch(`${backendUrl}/api/products/${productId}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (response.ok) {
-      alert('Product deleted successfully');
-      fetchUserProducts();
-    } else {
-      const result = await response.json();
-      alert(result.message || 'Failed to delete product');
-    }
-  } catch (err) {
-    console.error('Error:', err);
-    alert('An error occurred. Please try again.');
-  }
-};
-
-// Logout functionality
-const logoutLink = document.getElementById('logout-link');
-if (logoutLink) {
-  logoutLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    localStorage.removeItem('token');
-    window.location.href = '/login.html';
   });
 }
