@@ -208,52 +208,52 @@
   <script>
     const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
 
-    // Fetch user data from the backend
-    async function fetchUserData() {
-      try {
-        console.log('Fetching user data...');
-        const token = localStorage.getItem('token'); // Get the token from localStorage
-
-        if (!token) {
-          console.log('No token found. User is not logged in.'); // Log a message instead of redirecting
-          return; // Stop further execution
-        }
-
-        const response = await fetch(`${backendUrl}/api/auth/user`, {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include the token in the header
-          },
-        });
-
-        if (response.ok) {
-          const user = await response.json();
-          console.log('User data fetched:', user);
-
-          // Update the dropdown button with the user's data
-          document.getElementById('username').textContent = user.username;
-          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
-        } else {
-          console.error('Failed to fetch user data:', response.status, response.statusText);
-          console.log('User is not authenticated.'); // Log a message instead of redirecting
-        }
-      } catch (err) {
-        console.error('Error fetching user data:', err);
-        console.log('An error occurred while fetching user data.'); // Log a message instead of redirecting
-      }
-    }
-
-    // Logout functionality
-    const logoutLink = document.getElementById('logout-link');
-    if (logoutLink) {
-      logoutLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        localStorage.removeItem('token'); // Remove the token
+  async function fetchUserData() {
+    try {
+      console.log('Fetching user data...');
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        console.log('No token found - redirecting to login');
         window.location.href = '/login.html';
-      });
-    }
+        return;
+      }
 
-    // Call the function to fetch user data when the page loads
-    fetchUserData();
+      const response = await fetch(`${backendUrl}/api/auth/user`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const user = await response.json();
+      console.log('User data fetched:', user);
+      
+      // Update UI
+      document.getElementById('username').textContent = user.username;
+      document.getElementById('user-email').innerHTML = 
+        `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
+      
+    } catch (err) {
+      console.error('Failed to fetch user data:', err);
+      console.log('User is not authenticated - redirecting to login');
+      localStorage.removeItem('token');
+      window.location.href = '/login.html';
+    }
+  }
+
+  // Logout functionality
+  document.getElementById('logout-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    window.location.href = '/login.html';
+  });
+
+  // Fetch user data when page loads
+  document.addEventListener('DOMContentLoaded', fetchUserData);
 
     // Intersection Observer for the welcome section
     document.addEventListener("DOMContentLoaded", function () {
