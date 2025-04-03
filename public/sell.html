@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>Sell Items - Green Tunisia</title>
+  <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
+  <link rel="shortcut icon" href="/images/fav/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/fav/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="GreenTunisia" />
+  <link rel="manifest" href="/images/fav/site.webmanifest" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/style3.css" media="all">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  <style>
+    .sell-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+      color: #fff;
+    }
+    
+    .sell-form {
+      background: rgba(58, 66, 58, 0.75);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      margin-bottom: 50px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #009900;
+      border-radius: 30px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    
+    textarea.form-control {
+      border-radius: 10px;
+      min-height: 100px;
+    }
+    
+    .image-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .preview-image {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 2px solid #009900;
+    }
+    
+    .btn-submit {
+      padding: 16px 40px;
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: #009900;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-submit:hover {
+      background: #fff;
+      color: #009900;
+    }
+    
+    .products-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .product-card {
+      background: rgba(58, 66, 58, 0.75);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s;
+      color: #fff;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .product-info {
+      padding: 15px;
+    }
+    
+    .product-name {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    
+    .product-price {
+      font-size: 18px;
+      color: #7bd44e;
+      margin-bottom: 10px;
+    }
+    
+    .product-description {
+      margin-bottom: 15px;
+    }
+    
+    .product-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .action-btn {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    
+    .edit-btn {
+      background-color: #428bca;
+      color: white;
+    }
+    
+    .edit-btn:hover {
+      background-color: #3276b1;
+    }
+    
+    .delete-btn {
+      background-color: #d9534f;
+      color: white;
+    }
+    
+    .delete-btn:hover {
+      background-color: #c9302c;
+    }
+    
+    .no-products {
+      text-align: center;
+      padding: 20px;
+      color: #fff;
+      font-size: 18px;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 767px) {
+      .sell-container {
+        margin-top: 100px;
+      }
+      
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top_box clearfix">
+    <div class="top_box_inner_1 clearfix">
+      <section id="header">
+        <nav class="navbar navbar-default">
+          <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a class="tag_menu" href="/home">HOME</a></li>
+              <li><a class="tag_menu" href="/home#welcome-section">ABOUT</a></li>
+              <li><a class="tag_menu" href="/buy_sell">BUY & SELL</a></li>
+              <li><a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a></li>
+              <li><a class="tag_menu active_tab" href="/sell">SELL PLASTIC</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a class="tag_menu_righ" href="#" id="log-btn">
+                  <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
+                  <span id="username">Username</span>
+                  <i class="fas fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content">
+                  <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
+                  <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </section>
+    </div>
+    <div class="top_box_inner_2 clearfix">
+      <section id="top" class="clearfix">
+        <div class="top clearfix">
+          <div class="sell-container">
+            <div class="sell-form">
+              <h2 style="text-align: center; margin-bottom: 30px; font-size: 30px;">Sell Your Items</h2>
+              <form id="productForm" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="category">Category</label>
+                  <select id="category" name="category" class="form-control" required>
+                    <option value="">Select a category</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="books">Books</option>
+                    <option value="plastic">Plastic</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="name">Product Name</label>
+                  <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="price">Price (TND)</label>
+                  <input type="number" id="price" name="price" class="form-control" min="0" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="phoneNumber">Phone Number</label>
+                  <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" id="address" name="address" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <label for="images">Product Images (Max 3MB each, max 5 images)</label>
+                  <input type="file" id="images" name="images" class="form-control" multiple accept="image/*">
+                  <div class="image-preview" id="imagePreview"></div>
+                </div>
+                
+                <div style="text-align: center;">
+                  <button type="submit" class="btn-submit">POST PRODUCT</button>
+                </div>
+              </form>
+            </div>
+            
+            <h2 class="products-title">Your Listed Products</h2>
+            <div class="products-grid" id="productsContainer">
+              <!-- Products will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <i class="fa-regular fa-copyright"></i> 2025 Green Tunisia - All Rights Reserved
+    </div>
+  </footer>
+
+  <script>
+    const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+    let currentUser = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await fetchUserData();
+      loadUserProducts();
+      
+      // Image preview functionality
+      document.getElementById('images').addEventListener('change', function(e) {
+        const preview = document.getElementById('imagePreview');
+        preview.innerHTML = '';
+        
+        if (this.files && this.files.length > 5) {
+          alert('You can upload maximum 5 images');
+          this.value = '';
+          return;
+        }
+        
+        if (this.files) {
+          Array.from(this.files).forEach(file => {
+            if (file.size > 3 * 1024 * 1024) {
+              alert('One or more files exceed 3MB limit');
+              this.value = '';
+              preview.innerHTML = '';
+              return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              img.classList.add('preview-image');
+              preview.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+          });
+        }
+      });
+      
+      // Form submission
+      document.getElementById('productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'POSTING...';
+        
+        try {
+          const token = localStorage.getItem('token');
+          const response = await fetch(`${backendUrl}/api/products`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            },
+            body: formData
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok) {
+            alert('Product posted successfully!');
+            e.target.reset();
+            document.getElementById('imagePreview').innerHTML = '';
+            loadUserProducts();
+          } else {
+            alert(data.message || 'Failed to post product');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'POST PRODUCT';
+        }
+      });
+    });
+
+    async function fetchUserData() {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          window.location.href = '/login.html';
+          return;
+        }
+
+        const response = await fetch(`${backendUrl}/api/auth/user`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.ok) {
+          currentUser = await response.json();
+          document.getElementById('username').textContent = currentUser.username;
+          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${currentUser.email}</span>`;
+        } else {
+          window.location.href = '/login.html';
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        window.location.href = '/login.html';
+      }
+    }
+
+    async function loadUserProducts() {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${backendUrl}/api/products/my-products`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        const products = await response.json();
+        const container = document.getElementById('productsContainer');
+        
+        if (products.length === 0) {
+          container.innerHTML = '<div class="no-products">You have no products listed yet.</div>';
+          return;
+        }
+        
+        container.innerHTML = products.map(product => `
+          <div class="product-card" data-id="${product._id}">
+            ${product.images.length ? `<img src="${backendUrl}${product.images[0]}" class="product-image" alt="${product.name}">` : ''}
+            <div class="product-info">
+              <h3 class="product-name">${product.name}</h3>
+              <p><strong>Category:</strong> ${product.category}</p>
+              <p class="product-price"><strong>${product.price} TND</strong></p>
+              <p class="product-description">${product.description.substring(0, 100)}${product.description.length > 100 ? '...' : ''}</p>
+              <div class="product-actions">
+                <button class="action-btn edit-btn" onclick="editProduct('${product._id}')">Edit</button>
+                <button class="action-btn delete-btn" onclick="deleteProduct('${product._id}')">Delete</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading products:', error);
+        document.getElementById('productsContainer').innerHTML = '<div class="no-products">Error loading your products. Please try again.</div>';
+      }
+    }
+
+    function editProduct(productId) {
+      // Find the product in the list
+      const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
+      if (!productCard) return;
+      
+      // Get product details
+      const name = productCard.querySelector('.product-name').textContent;
+      const price = productCard.querySelector('.product-price').textContent.replace(' TND', '');
+      const category = productCard.querySelector('p:nth-of-type(1)').textContent.replace('Category: ', '');
+      const description = productCard.querySelector('.product-description').textContent;
+      
+      // Fill the form with product details
+      document.getElementById('category').value = category.toLowerCase();
+      document.getElementById('name').value = name;
+      document.getElementById('price').value = price;
+      document.getElementById('description').value = description;
+      
+      // Scroll to form
+      document.querySelector('.sell-form').scrollIntoView({ behavior: 'smooth' });
+      
+      // You can implement a more complete edit functionality here
+      alert('Edit mode activated. Fill the form and submit to update the product.');
+    }
+
+    async function deleteProduct(productId) {
+      if (confirm('Are you sure you want to delete this product?')) {
+        try {
+          const token = localStorage.getItem('token');
+          const response = await fetch(`${backendUrl}/api/products/${productId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          
+          if (response.ok) {
+            loadUserProducts();
+          } else {
+            const data = await response.json();
+            alert(data.message || 'Failed to delete product');
+          }
+        } catch (error) {
+          console.error('Error deleting product:', error);
+          alert('An error occurred while deleting the product');
+        }
+      }
+    }
+
+    // Logout functionality
+    document.getElementById('logout-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('token');
+      window.location.href = '/login.html';
+    });
+  </script>
+</body>
+</html>
