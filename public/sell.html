@@ -15,27 +15,34 @@
   <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
   <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
   <style>
-    /* Main Layout */
+    /* Main Layout - Matches Home Page Exactly */
     body {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      margin: 0;
+      padding: 0;
+      font-family: 'Slabo 27px', serif;
+      background-color: white; /* White background for non-covered areas */
+    }
+
+    /* Background Image - Matches Home Page Exactly */
+    .top_box_inner_2 {
       background-image: url('../css/background.png');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      margin: 0;
-      padding: 0;
-      font-family: 'Slabo 27px', serif;
+      flex: 1;
+      width: 100%;
     }
 
     /* Content Container */
     .sell-main-container {
-      flex: 1;
       padding: 120px 20px 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
     }
 
     /* Products Section */
@@ -53,8 +60,8 @@
     .product-form-section {
       width: 90%;
       max-width: 600px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(5px);
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
       padding: 30px;
@@ -125,7 +132,7 @@
       object-fit: contain;
     }
 
-    /* Action Buttons */
+    /* Action Buttons - Original Design */
     .btn-edit {
       padding: 8px 15px;
       background-color: #009900;
@@ -156,6 +163,18 @@
       width: 100%;
     }
 
+    /* Navbar Dropdown Fix */
+    #header .navbar-nav.navbar-right {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    .dropdown {
+      display: flex;
+      align-items: center;
+    }
+
     /* Responsive Adjustments */
     @media (max-width: 768px) {
       .sell-main-container {
@@ -169,6 +188,10 @@
       .product-images {
         flex: 0 0 auto;
         height: 200px;
+      }
+
+      #header .navbar-nav.navbar-right {
+        margin-left: auto;
       }
     }
   </style>
@@ -203,7 +226,7 @@
                   <span id="username">Username</span>
                   <i class="fas fa-caret-down"></i>
                 </a>
-                <div class="dropdown-content" style="display: none;">
+                <div class="dropdown-content" style="display: none; right: 0; left: auto;">
                   <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
                   <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
                 </div>
@@ -294,17 +317,22 @@
     // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
       // Handle dropdown toggle
-      document.querySelector('.dropdown').addEventListener('click', function(e) {
-        const dropdownContent = this.querySelector('.dropdown-content');
-        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-        e.stopPropagation();
-      });
+      const dropdownToggle = document.querySelector('.dropdown > a');
+      const dropdownContent = document.querySelector('.dropdown-content');
+      
+      if (dropdownToggle && dropdownContent) {
+        dropdownToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
 
-      // Close dropdown when clicking outside
-      document.addEventListener('click', function() {
-        const dropdownContent = document.querySelector('.dropdown-content');
-        if (dropdownContent) dropdownContent.style.display = 'none';
-      });
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.dropdown')) {
+            dropdownContent.style.display = 'none';
+          }
+        });
+      }
 
       // Check if user is logged in
       const token = localStorage.getItem('token');
