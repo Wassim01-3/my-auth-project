@@ -195,6 +195,7 @@
     <div class="top_box_inner_1 clearfix">
       <section id="header">
         <nav class="navbar navbar-default">
+          <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
               <span class="sr-only">Toggle navigation</span>
@@ -204,13 +205,25 @@
             </button>
             <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
           </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li><a class="tag_menu" href="/home">HOME</a></li>
-              <li><a class="tag_menu" href="/home#welcome-section">ABOUT</a></li>
-              <li><a class="tag_menu" href="/buy_sell">BUY & SELL</a></li>
-              <li><a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a></li>
-              <li><a class="tag_menu active_tab" href="/sell">SELL PLASTIC</a></li>
+              <li>
+                <a class="tag_menu active_tab" href="/home">HOME</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="#welcome-section">ABOUT</a> <!-- Updated href to point to the welcome section -->
+              </li>
+              <li>
+                <a class="tag_menu" href="/sell">SELL</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a>
+              </li>
+              <li>
+                <a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a>
+              </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -225,7 +238,19 @@
                 </div>
               </li>
             </ul>
+            <script>
+              document.addEventListener('click', function(event) {
+                var dropdown = document.querySelector('.dropdown');
+                var dropdownContent = document.querySelector('.dropdown-content');
+
+                // Check if the click is outside the dropdown
+                if (!dropdown.contains(event.target)) {
+                  dropdownContent.style.display = 'none';
+                }
+              });
+            </script>
           </div>
+          <!-- /.navbar-collapse -->
         </nav>
       </section>
     </div>
