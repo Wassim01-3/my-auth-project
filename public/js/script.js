@@ -27,20 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json();
         if (response.ok) {
           console.log('Registration successful. Redirecting to:', result.redirectUrl);
-          window.location.href = result.redirectUrl; // Redirect to the login page
+          window.location.href = result.redirectUrl;
         } else {
-          // Handle errors
           if (result.message === 'User already exists') {
             showError('email', 'Email address already exists');
           } else if (result.message === 'Invalid username') {
             showError('username', 'Username is not supported');
           } else {
-            showError('general', result.message || 'Registration failed'); // Fallback for other errors
+            showError('general', result.message || 'Registration failed');
           }
         }
       } catch (err) {
         console.error('Fetch error:', err);
-        showError('general', 'An error occurred. Please try again.'); // Fallback for network errors
+        showError('general', 'An error occurred. Please try again.');
       }
     });
   }
@@ -69,28 +68,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json();
         if (response.ok) {
           console.log('Login successful. Redirecting to:', result.redirectUrl);
-          localStorage.setItem('token', result.token); // Store the token
-          window.location.href = result.redirectUrl; // Redirect to the home page
+          localStorage.setItem('token', result.token);
+          window.location.href = result.redirectUrl;
         } else {
-          // Handle errors
           if (result.message === 'Invalid email') {
             showError('email', 'Invalid email address');
           } else if (result.message === 'Invalid password') {
             showError('password', 'Invalid password');
           } else {
-            showError('general', result.message || 'Login failed'); // Fallback for other errors
+            showError('general', result.message || 'Login failed');
           }
         }
       } catch (err) {
         console.error('Fetch error:', err);
-        showError('general', 'An error occurred. Please try again.'); // Fallback for network errors
+        showError('general', 'An error occurred. Please try again.');
       }
     });
   }
 
-  // Check authentication status when loading /home
-  if (window.location.pathname === '/home') {
+  // Check authentication status when loading /home or /sell
+  if (window.location.pathname === '/home' || window.location.pathname === '/sell') {
     fetchUserData();
+    
+    if (window.location.pathname === '/sell') {
+      fetchUserProducts();
+    }
   }
 });
 
@@ -98,16 +100,19 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fetchUserData() {
   try {
     console.log('Fetching user data...');
-    const token = localStorage.getItem('token'); // Get the token from localStorage
+    const token = localStorage.getItem('token');
 
     if (!token) {
-      console.log('No token found. User is not logged in.'); // Log a message
-      return; // Stop further execution
+      console.log('No token found. User is not logged in.');
+      if (window.location.pathname === '/sell' || window.location.pathname === '/home') {
+        window.location.href = '/login.html';
+      }
+      return;
     }
 
     const response = await fetch(`${backendUrl}/api/auth/user`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Include the token in the header
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -116,76 +121,26 @@ async function fetchUserData() {
       console.log('User data fetched:', user);
 
       // Update the dropdown button with the user's data
-      document.getElementById('username').textContent = user.username;
-      document.getElementById('user-email').textContent = user.email;
+      const usernameElement = document.getElementById('username');
+      const userEmailElement = document.getElementById('user-email');
+      
+      if (usernameElement) usernameElement.textContent = user.username;
+      if (userEmailElement) userEmailElement.innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
     } else {
       console.error('Failed to fetch user data:', response.status, response.statusText);
-      console.log('User is not authenticated.'); // Log a message
+      if (window.location.pathname === '/sell' || window.location.pathname === '/home') {
+        window.location.href = '/login.html';
+      }
     }
   } catch (err) {
     console.error('Error fetching user data:', err);
-    console.log('An error occurred while fetching user data.'); // Log a message
-  }
-}
-
-// Logout functionality
-const logoutLink = document.getElementById('logout-link');
-if (logoutLink) {
-  logoutLink.addEventListener('click', async (e) => {
-    e.preventDefault(); // Prevent default link behavior
-
-    try {
-      console.log('Logging out...');
-      const response = await fetch(`${backendUrl}/api/auth/logout`, {
-        method: 'POST',
-        credentials: 'include', // Include cookies
-      });
-
-      if (response.ok) {
-        console.log('Logout successful');
-        localStorage.removeItem('token'); // Remove the token
-        window.location.href = '/login.html';
-      } else {
-        console.error('Logout failed:', response.status, response.statusText);
-      }
-    } catch (err) {
-      console.error('Error during logout:', err);
+    if (window.location.pathname === '/sell' || window.location.pathname === '/home') {
+      window.location.href = '/login.html';
     }
-  });
-}
-
-// Function to display error messages
-function showError(field, message) {
-  const input = document.getElementById(field);
-  const errorElement = document.getElementById(`${field}-error`);
-
-  if (input && errorElement) {
-    input.classList.add('error'); // Add red border
-    errorElement.textContent = message; // Set error message
-    errorElement.style.display = 'block'; // Show error message
-  } else if (field === 'general') {
-    // Fallback for general errors (e.g., network errors)
-    alert(message); // Use alert as a fallback
   }
 }
 
-// Function to clear all errors
-function clearErrors() {
-  const errors = document.querySelectorAll('.error-message');
-  const inputs = document.querySelectorAll('.input-field');
-
-  errors.forEach((error) => {
-    error.textContent = '';
-    error.style.display = 'none';
-  });
-
-  inputs.forEach((input) => {
-    input.classList.remove('error');
-  });
-}
-// Previous code remains the same until the end, then add:
-
-// Product-related functions
+// Fetch user's products
 async function fetchUserProducts() {
   try {
     const token = localStorage.getItem('token');
@@ -204,6 +159,7 @@ async function fetchUserProducts() {
   }
 }
 
+// Render products
 function renderProducts(products) {
   const container = document.getElementById('products-container');
   
@@ -218,7 +174,7 @@ function renderProducts(products) {
     <div class="product-card" data-id="${product._id}">
       <div class="product-images">
         ${product.images.length > 0 ? 
-          `<img src="${backendUrl}${product.images[0]}" alt="${product.name}">` : 
+          `<img src="${product.images[0].startsWith('http') ? product.images[0] : backendUrl + product.images[0]}" alt="${product.name}">` : 
           '<div style="background: #eee; width: 200px; height: 150px;"></div>'}
       </div>
       <div class="product-details">
@@ -235,16 +191,39 @@ function renderProducts(products) {
   `).join('');
 }
 
-// Initialize on sell page
-if (window.location.pathname === '/sell') {
-  fetchUserData();
-  fetchUserProducts();
+// Function to display error messages
+function showError(field, message) {
+  const input = document.getElementById(field);
+  const errorElement = document.getElementById(`${field}-error`);
+
+  if (input && errorElement) {
+    input.classList.add('error');
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+  } else if (field === 'general') {
+    alert(message);
+  }
+}
+
+// Function to clear all errors
+function clearErrors() {
+  const errors = document.querySelectorAll('.error-message');
+  const inputs = document.querySelectorAll('.input-field');
+
+  errors.forEach((error) => {
+    error.textContent = '';
+    error.style.display = 'none';
+  });
+
+  inputs.forEach((input) => {
+    input.classList.remove('error');
+  });
 }
 
 // Add to window object for HTML onclick handlers
 window.editProduct = function(productId) {
-  // Implement edit functionality
   console.log('Edit product:', productId);
+  // Implement edit functionality
 };
 
 window.deleteProduct = async function(productId) {
@@ -269,3 +248,13 @@ window.deleteProduct = async function(productId) {
     alert('An error occurred. Please try again.');
   }
 };
+
+// Logout functionality
+const logoutLink = document.getElementById('logout-link');
+if (logoutLink) {
+  logoutLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    window.location.href = '/login.html';
+  });
+}
