@@ -15,57 +15,51 @@
   <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
   <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
   <style>
-    /* Main Layout - Matches Home Page Exactly */
+    /* Main Layout - Matches Plastic-Selling Page */
     body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      font-family: 'Slabo 27px', serif;
       margin: 0;
       padding: 0;
-      font-family: 'Slabo 27px', serif;
       background-color: white; /* White background for non-covered areas */
     }
 
-    /* Background Image - Matches Home Page Exactly */
-    .top_box_inner_2 {
-      background-image: url(../images/4.jpg);
+    /* Background Image - Same as plastic-selling page */
+    #top {
+      background-image: url('../css/background.png');
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* Content Container */
-    .sell-main-container {
-      padding: 120px 20px 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background-repeat: no-repeat;
       min-height: 100vh;
     }
 
-    /* Products Section */
-    .products-section {
-      width: 90%;
-      max-width: 1000px;
-      background: rgba(58, 66, 58, 0.8);
-      border-radius: 10px;
+    .top {
+      background: rgba(58, 66, 58, 0.75);
+      min-height: 100vh;
+    }
+
+    /* Main Container - Matches table-container from plastic-selling */
+    .sell-container {
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.9);
+      margin: 120px auto 50px;
       padding: 30px;
+      border-radius: 10px;
+      max-width: 1000px;
+    }
+
+    /* Form Section - Matches table style */
+    .form-section {
+      background: white;
+      padding: 30px;
+      border-radius: 5px;
       margin-bottom: 30px;
     }
 
-    /* Product Form Section */
-    .product-form-section {
-      width: 90%;
-      max-width: 600px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(5px);
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    /* Products Section - Matches table style */
+    .products-section {
+      background: white;
       padding: 30px;
-      margin-bottom: 50px;
+      border-radius: 5px;
     }
 
     /* Form Elements */
@@ -82,117 +76,73 @@
 
     .form-control {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       border: 1px solid #ddd;
       border-radius: 5px;
       font-size: 16px;
-      background-color: rgba(255,255,255,0.8);
     }
 
     .btn-submit {
       background-color: #009900;
       color: white;
       border: none;
-      padding: 12px 25px;
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
-      transition: background-color 0.3s;
     }
 
-    .btn-submit:hover {
-      background-color: #007700;
-    }
-
-    /* Product Cards */
+    /* Product Cards - Matching table row style */
     .product-card {
-      background-color: rgba(255,255,255,0.9);
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      margin-bottom: 20px;
+      border-bottom: 2px solid #009900;
+      padding: 15px 0;
       display: flex;
-      gap: 20px;
+      align-items: center;
     }
 
     .product-images {
-      flex: 0 0 200px;
-      height: 200px;
-      overflow: hidden;
-      border-radius: 5px;
-      background: #f5f5f5;
+      flex: 0 0 150px;
+      height: 150px;
+      margin-right: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #f5f5f5;
+      border-radius: 5px;
     }
 
     .product-images img {
       max-width: 100%;
       max-height: 100%;
-      object-fit: contain;
     }
 
     /* Action Buttons - Original Design */
     .btn-edit {
-      padding: 8px 15px;
       background-color: #009900;
       color: white;
+      padding: 8px 15px;
       border: none;
       border-radius: 5px;
-      cursor: pointer;
       margin-right: 10px;
     }
 
     .btn-delete {
-      padding: 8px 15px;
       background-color: #ff3333;
       color: white;
+      padding: 8px 15px;
       border: none;
       border-radius: 5px;
-      cursor: pointer;
     }
 
-    /* Footer */
-    footer {
+    /* Header matching plastic-selling page */
+    .section-header {
       background-color: #009900;
-      padding: 20px 0;
-      text-align: center;
       color: white;
-      font-family: 'Slabo 27px', serif;
-      font-size: 18px;
-      width: 100%;
-    }
-
-    /* Navbar Dropdown Fix */
-    #header .navbar-nav.navbar-right {
-      display: flex;
-      align-items: center;
-      margin-top: 0;
-    }
-
-    .dropdown {
-      display: flex;
-      align-items: center;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      .sell-main-container {
-        padding: 100px 15px 60px;
-      }
-      
-      .product-card {
-        flex-direction: column;
-      }
-      
-      .product-images {
-        flex: 0 0 auto;
-        height: 200px;
-      }
-
-      #header .navbar-nav.navbar-right {
-        margin-left: auto;
-      }
+      padding: 15px;
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 5px;
     }
   </style>
 </head>
@@ -214,7 +164,7 @@
             <ul class="nav navbar-nav">
               <li><a class="tag_menu" href="/home">HOME</a></li>
               <li><a class="tag_menu" href="/home#welcome-section">ABOUT</a></li>
-              <li><a class="tag_menu active_tab" href="/sell">SELL</a></li>
+              <li><a class="tag_menu" href="/sell">SELL</a></li>
               <li><a class="tag_menu" href="/garbage-trading">GARBAGE TRADING</a></li>
               <li><a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a></li>
             </ul>
@@ -225,7 +175,7 @@
                   <span id="username">Username</span>
                   <i class="fas fa-caret-down"></i>
                 </a>
-                <div class="dropdown-content" style="display: none; right: 0; left: auto;">
+                <div class="dropdown-content">
                   <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
                   <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
                 </div>
@@ -237,68 +187,72 @@
     </div>
     <div class="top_box_inner_2 clearfix">
       <section id="top" class="clearfix">
-        <div class="sell-main-container">
-          <div class="products-section">
-            <h2 style="text-align: center; margin-bottom: 30px; color: white;">My Products</h2>
-            <div id="products-container">
-              <div class="no-products" style="text-align: center; padding: 50px; color: white;">
-                <p>You haven't listed any products yet.</p>
+        <div class="top clearfix">
+          <div class="sell-container">
+            <!-- Form Section -->
+            <div class="form-section">
+              <div class="section-header">Add New Product</div>
+              <form id="product-form" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="category">Category</label>
+                  <select id="category" name="category" class="form-control" required>
+                    <option value="">Select a category</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Books">Books</option>
+                    <option value="Vehicles">Vehicles</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="name">Product Name</label>
+                  <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="price">Price (TND)</label>
+                  <input type="number" id="price" name="price" class="form-control" min="0" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="phoneNumber">Phone Number</label>
+                  <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" id="address" name="address" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <label for="images">Product Images (Max 3MB each)</label>
+                  <input type="file" id="images" name="images" class="form-control" multiple accept="image/*">
+                  <small style="color: #666;">You can upload up to 5 images</small>
+                  <div class="image-preview" id="image-preview" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                </div>
+                
+                <div style="text-align: center;">
+                  <button type="submit" class="btn-submit">Submit Product</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Products Section -->
+            <div class="products-section">
+              <div class="section-header">My Products</div>
+              <div id="products-container">
+                <div style="text-align: center; padding: 30px; color: #666;">
+                  <p>You haven't listed any products yet.</p>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="product-form-section">
-            <h2 style="text-align: center; margin-bottom: 30px; color: #009900;">Add New Product</h2>
-            <form id="product-form" enctype="multipart/form-data">
-              <div class="form-group">
-                <label for="category">Category</label>
-                <select id="category" name="category" class="form-control" required>
-                  <option value="">Select a category</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Furniture">Furniture</option>
-                  <option value="Clothing">Clothing</option>
-                  <option value="Books">Books</option>
-                  <option value="Vehicles">Vehicles</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              
-              <div class="form-group">
-                <label for="name">Product Name</label>
-                <input type="text" id="name" name="name" class="form-control" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="price">Price (TND)</label>
-                <input type="number" id="price" name="price" class="form-control" min="0" step="0.01" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" class="form-control" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
-              </div>
-              
-              <div class="form-group">
-                <label for="images">Product Images (Max 3MB each)</label>
-                <input type="file" id="images" name="images" class="form-control" multiple accept="image/*">
-                <small style="color: #666;">You can upload up to 5 images</small>
-                <div class="image-preview" id="image-preview" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
-              </div>
-              
-              <div style="text-align: center;">
-                <button type="submit" class="btn-submit">Submit Product</button>
-              </div>
-            </form>
           </div>
         </div>
       </section>
@@ -316,22 +270,17 @@
     // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
       // Handle dropdown toggle
-      const dropdownToggle = document.querySelector('.dropdown > a');
-      const dropdownContent = document.querySelector('.dropdown-content');
-      
-      if (dropdownToggle && dropdownContent) {
-        dropdownToggle.addEventListener('click', function(e) {
-          e.preventDefault();
-          dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-        });
+      document.querySelector('.dropdown').addEventListener('click', function(e) {
+        const dropdownContent = this.querySelector('.dropdown-content');
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        e.stopPropagation();
+      });
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!e.target.closest('.dropdown')) {
-            dropdownContent.style.display = 'none';
-          }
-        });
-      }
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function() {
+        const dropdownContent = document.querySelector('.dropdown-content');
+        if (dropdownContent) dropdownContent.style.display = 'none';
+      });
 
       // Check if user is logged in
       const token = localStorage.getItem('token');
@@ -360,7 +309,6 @@
             const reader = new FileReader();
             reader.onload = function(event) {
               const previewItem = document.createElement('div');
-              previewItem.className = 'image-preview-item';
               previewItem.style.width = '100px';
               previewItem.style.height = '100px';
               previewItem.style.position = 'relative';
