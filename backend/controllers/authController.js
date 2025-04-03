@@ -15,23 +15,19 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      {
+        userId: user._id,
+        email: user.email,
+        username: user.username
+      },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-    // Set cookie with token
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      domain: '.render.com',
-      maxAge: 3600000 // 1 hour
-    });
-
     res.json({
       message: 'Login successful',
       redirectUrl: 'https://my-auth-project.onrender.com/home',
+      token,
       user: {
         username: user.username,
         email: user.email
@@ -43,5 +39,30 @@ const login = async (req, res) => {
   }
 };
 
-// Keep other controller functions the same
+const register = async (req, res) => {
+  const { username, email, password } = req.body;
+
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    const user = new User({ username, email, password });
+    await user.save();
+
+    res.json({ 
+      message: 'Registration successful',
+      redirectUrl: 'https://my-auth-project.onrender.com/login'
+    });
+  } catch (err) {
+    console.error('Registration error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const logout = (req, res) => {
+  res.json({ message: 'Logout successful' });
+};
+
 module.exports = { login, register, logout };
