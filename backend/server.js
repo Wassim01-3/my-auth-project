@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const authMiddleware = require('./middleware/authMiddleware'); // Import the middleware
+const productRoutes = require('./routes/productRoutes');
 const path = require('path');
 require('dotenv').config();
 
@@ -24,10 +25,15 @@ app.use(cors({
   origin: 'https://my-auth-project.onrender.com', // Replace with your frontend URL
   credentials: true, // Allow credentials (cookies)
 }));
+// Add with other route middleware
+app.use('/api/products', productRoutes);
+
 
 // Serve static files (frontend)
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Add before your route handlers
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // Routes
 app.use('/api/auth', authRoutes);
 
