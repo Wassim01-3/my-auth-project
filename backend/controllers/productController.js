@@ -2,11 +2,10 @@ const Product = require('../models/Product');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-// Create a new product
 const createProduct = async (req, res) => {
     try {
         const { category, name, price, phoneNumber, address, description } = req.body;
-        const images = req.files?.map(file => file.path) || [];
+        const images = req.files?.map(file => `/uploads/${file.filename}`) || [];
         
         const product = new Product({
             userId: req.userId,
@@ -27,7 +26,6 @@ const createProduct = async (req, res) => {
     }
 };
 
-// Get user's products
 const getUserProducts = async (req, res) => {
     try {
         const products = await Product.find({ userId: req.userId }).sort({ createdAt: -1 });
@@ -38,12 +36,11 @@ const getUserProducts = async (req, res) => {
     }
 };
 
-// Update a product
 const updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const { category, name, price, phoneNumber, address, description } = req.body;
-        const images = req.files?.map(file => file.path) || [];
+        const images = req.files?.map(file => `/uploads/${file.filename}`) || [];
 
         const product = await Product.findOne({ _id: id, userId: req.userId });
         if (!product) {
@@ -69,7 +66,6 @@ const updateProduct = async (req, res) => {
     }
 };
 
-// Delete a product
 const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
