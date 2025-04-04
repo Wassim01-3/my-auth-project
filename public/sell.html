@@ -45,14 +45,20 @@
       flex-direction: column;
     }
 
-    /* Header/Navigation */
+    /* Header/Navigation - Fixed at top */
     .top_box {
       flex-shrink: 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      height: 80px;
     }
 
-    /* Main Content */
+    /* Main Content - Starts below fixed navbar */
     .main-content {
       flex: 1;
+      margin-top: 80px; /* Matches navbar height */
       position: relative;
       z-index: 1;
       display: flex;
@@ -61,7 +67,7 @@
 
     .sell-container {
       background: transparent;
-      margin: 30px auto;
+      margin: 20px auto;
       padding: 20px;
       max-width: 1200px;
       width: 90%;
@@ -281,8 +287,17 @@
 
     /* Responsive Adjustments */
     @media (max-width: 768px) {
+      .top_box {
+        height: auto;
+        position: relative;
+      }
+      
+      .main-content {
+        margin-top: 0;
+      }
+      
       .sell-container {
-        margin: 20px auto;
+        margin: 15px auto;
         padding: 15px;
         width: 95%;
       }
@@ -317,6 +332,7 @@
 <body>
   <div class="background-container">
     <div class="background-overlay">
+      <!-- Fixed Navbar -->
       <div class="top_box clearfix">
         <div class="top_box_inner_1 clearfix">
           <section id="header">
@@ -357,6 +373,7 @@
         </div>
       </div>
 
+      <!-- Main Content Area -->
       <div class="main-content">
         <div class="sell-container">
           <!-- My Products Section -->
@@ -440,6 +457,7 @@
     </div>
   </div>
 
+  <!-- Footer -->
   <footer>
     <div class="footer-content">
       <i class="fa-regular fa-copyright"></i> 2025 Green Tunisia - All Rights Reserved
