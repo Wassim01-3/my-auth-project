@@ -1,12 +1,14 @@
 const Product = require('../models/Product');
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
 
-// Create a new product
 const createProduct = async (req, res) => {
     try {
         const { category, name, price, phoneNumber, address, description } = req.body;
-        const images = req.files?.map(file => file.path) || [];
+        
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({ message: 'At least one image is required' });
+        }
+
+        const images = req.files.map(file => `/uploads/${file.filename}`);
         
         const product = new Product({
             userId: req.userId,
@@ -20,56 +22,83 @@ const createProduct = async (req, res) => {
         });
 
         await product.save();
-        res.status(201).json({ message: 'Product created successfully', product });
+        
+        // Return product with full image URLs
+        const productWithFullUrls = {
+            ...product.toObject(),
+            images: product.images.map(img => `https://green-tunisia-h3ji.onrender.com${img}`)
+        };
+        
+        res.status(201).json({ 
+            message: 'Product created successfully', 
+            product: productWithFullUrls 
+        });
     } catch (err) {
         console.error('Error creating product:', err);
         res.status(500).json({ message: 'Server error' });
     }
 };
 
-// Get user's products
 const getUserProducts = async (req, res) => {
     try {
         const products = await Product.find({ userId: req.userId }).sort({ createdAt: -1 });
-        res.json(products);
+        
+        // Add full backend URL to image paths
+        const productsWithFullUrls = products.map(product => ({
+            ...product.toObject(),
+            images: product.images.map(img => `https://green-tunisia-h3ji.onrender.com${img}`)
+        }));
+        
+        res.json(productsWithFullUrls);
     } catch (err) {
         console.error('Error fetching user products:', err);
         res.status(500).json({ message: 'Server error' });
     }
 };
 
-// Update a product
 const updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const { category, name, price, phoneNumber, address, description } = req.body;
-        const images = req.files?.map(file => file.path) || [];
+        const newImages = req.files?.map(file => `/uploads/${file.filename}`) || [];
 
         const product = await Product.findOne({ _id: id, userId: req.userId });
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
+        // Update fields
         product.category = category || product.category;
         product.name = name || product.name;
         product.price = price || product.price;
         product.phoneNumber = phoneNumber || product.phoneNumber;
         product.address = address || product.address;
         product.description = description || product.description;
-        if (images.length > 0) {
-            product.images = images;
+        
+        // Only update images if new ones were uploaded
+        if (newImages.length > 0) {
+            product.images = newImages;
         }
-        product.updatedAt = Date.now();
 
+        product.updatedAt = Date.now();
         await product.save();
-        res.json({ message: 'Product updated successfully', product });
+        
+        // Return product with full image URLs
+        const productWithFullUrls = {
+            ...product.toObject(),
+            images: product.images.map(img => `https://green-tunisia-h3ji.onrender.com${img}`)
+        };
+        
+        res.json({ 
+            message: 'Product updated successfully', 
+            product: productWithFullUrls 
+        });
     } catch (err) {
         console.error('Error updating product:', err);
         res.status(500).json({ message: 'Server error' });
     }
 };
 
-// Delete a product
 const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
