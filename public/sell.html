@@ -20,11 +20,11 @@
       font-family: 'Slabo 27px', serif;
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
       min-height: 100vh;
       background-color: white;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Background Image - Using images/4.jpg */
@@ -43,23 +43,27 @@
       flex-direction: column;
     }
 
-    /* Main Container - Wider and with two-column form */
+    /* Main Container */
     .sell-container {
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-      background: rgba(255, 255, 255, 0.9);
-      margin: 100px auto 50px;
+      background: transparent;
+      margin: 100px auto 0;
       padding: 30px;
-      border-radius: 10px;
       max-width: 1200px;
       width: 90%;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Sections */
+    /* Sections with blurred shadows */
     .section-container {
-      background: white;
+      background: rgba(255, 255, 255, 0.85);
       padding: 30px;
-      border-radius: 5px;
+      border-radius: 10px;
       margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .section-header {
@@ -68,8 +72,27 @@
       padding: 15px;
       font-size: 24px;
       text-align: center;
-      margin-bottom: 20px;
-      border-radius: 5px;
+      margin: -30px -30px 20px -30px;
+      border-radius: 10px 10px 0 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Space between sections with subtle shadow effect */
+    .section-spacer {
+      height: 40px;
+      position: relative;
+    }
+
+    .section-spacer::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 1px;
+      background: rgba(0, 153, 0, 0.3);
+      box-shadow: 0 0 15px rgba(0, 153, 0, 0.5);
     }
 
     /* Form Elements - Two Column Layout */
@@ -97,9 +120,17 @@
     .form-control {
       width: 100%;
       padding: 10px;
-      border: 1px solid #ddd;
+      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       font-size: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: #009900;
+      box-shadow: 0 0 0 2px rgba(0, 153, 0, 0.2);
+      background: white;
     }
 
     textarea.form-control {
@@ -115,19 +146,33 @@
       cursor: pointer;
       font-size: 16px;
       font-weight: bold;
-      transition: background-color 0.3s;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .btn-submit:hover {
       background-color: #007700;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
     }
 
     /* Product Cards */
     .product-card {
-      border-bottom: 2px solid #009900;
-      padding: 15px 0;
+      border-bottom: 1px solid rgba(0, 153, 0, 0.3);
+      padding: 20px;
       display: flex;
       align-items: center;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .product-card:hover {
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
     }
 
     .product-images {
@@ -140,42 +185,18 @@
       background: #f5f5f5;
       border-radius: 5px;
       overflow: hidden;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     }
 
     .product-images img {
-      max-width: 100%;
-      max-height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
+      transition: transform 0.3s;
     }
 
-    /* Action Buttons */
-    .btn-edit {
-      background-color: #009900;
-      color: white;
-      padding: 8px 15px;
-      border: none;
-      border-radius: 5px;
-      margin-right: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .btn-edit:hover {
-      background-color: #007700;
-    }
-
-    .btn-delete {
-      background-color: #ff3333;
-      color: white;
-      padding: 8px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .btn-delete:hover {
-      background-color: #cc0000;
+    .product-images:hover img {
+      transform: scale(1.05);
     }
 
     /* Image Preview */
@@ -190,20 +211,28 @@
       position: relative;
       width: 100px;
       height: 100px;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+
+    .image-preview-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
 
     .image-preview-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 5px;
     }
 
     .remove-btn {
       position: absolute;
       top: 5px;
       right: 5px;
-      background: red;
+      background: rgba(255, 0, 0, 0.8);
       color: white;
       border: none;
       border-radius: 50%;
@@ -215,9 +244,15 @@
       cursor: pointer;
       font-size: 12px;
       padding: 0;
+      transition: all 0.2s;
     }
 
-    /* Footer */
+    .remove-btn:hover {
+      background: red;
+      transform: scale(1.1);
+    }
+
+    /* Footer - Fixed at bottom */
     footer {
       background-color: #009900;
       padding: 20px 0;
@@ -226,13 +261,18 @@
       font-family: 'Slabo 27px', serif;
       font-size: 18px;
       width: 100%;
+      margin-top: auto;
+      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
     }
 
     /* Responsive Adjustments */
     @media (max-width: 768px) {
       .sell-container {
-        margin: 50px 10px;
+        margin: 50px auto 0;
         padding: 15px;
+        width: 95%;
       }
       
       .form-columns {
@@ -250,6 +290,14 @@
         margin-right: 0;
         width: 100%;
         flex: none;
+      }
+
+      .section-container {
+        padding: 20px;
+      }
+
+      .section-header {
+        margin: -20px -20px 15px -20px;
       }
     }
   </style>
@@ -306,6 +354,9 @@
                 </div>
               </div>
             </div>
+
+            <!-- Spacer with subtle effect -->
+            <div class="section-spacer"></div>
 
             <!-- Add New Product Section -->
             <div class="section-container">
@@ -376,7 +427,6 @@
     </div>
   </div>
 
-  <!-- Footer placed outside the top_box div -->
   <footer>
     <div class="footer-content">
       <i class="fa-regular fa-copyright"></i> 2025 Green Tunisia - All Rights Reserved
