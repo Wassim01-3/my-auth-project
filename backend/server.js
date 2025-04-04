@@ -25,6 +25,8 @@ app.use(cors({
   origin: 'https://my-auth-project.onrender.com',
   credentials: true,
 }));
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public')));
