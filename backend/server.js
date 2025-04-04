@@ -22,9 +22,15 @@ mongoose.connect(process.env.MONGO_URI)
 // Middleware (keep existing middleware)
 app.use(express.json());
 app.use(cors({
-  origin: 'https://my-auth-project.onrender.com',
+  origin: [
+    'https://my-auth-project.onrender.com',
+    'https://green-tunisia-h3ji.onrender.com'
+  ],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.options('*', cors());
 
 // Serve static files (keep existing static files config)
 app.use(express.static(path.join(__dirname, '../public')));
