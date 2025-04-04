@@ -3,7 +3,8 @@ const router = express.Router();
 const productController = require('../controllers/productController');
 const authMiddleware = require('../middleware/authMiddleware');
 const multer = require('multer');
-const path = require('fs');
+const path = require('path'); // THIS WAS MISSING
+const fs = require('fs');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
