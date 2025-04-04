@@ -246,36 +246,49 @@ function renderProducts(products) {
   const container = document.getElementById('products-container');
   if (!container) return;
 
-  if (products.length === 0) {
-    container.innerHTML = '<div class="no-products"><p>You haven\'t listed any products yet.</p></div>';
+  if (!products || products.length === 0) {
+    container.innerHTML = `
+      <div class="no-products">
+        <i class="fas fa-box-open" style="font-size: 48px; margin-bottom: 20px;"></i>
+        <p>You haven't listed any products yet.</p>
+      </div>
+    `;
     return;
   }
 
   container.innerHTML = products.map(product => {
-    const mainImage = product.images.length > 0 ? 
-      (product.images[0].startsWith('http') ? product.images[0] : `${backendUrl}${product.images[0]}`) : 
-      '/images/default-product.jpg';
+    // Use first image or placeholder
+    const mainImage = product.images && product.images.length > 0 ? 
+      product.images[0] : 
+      'https://via.placeholder.com/400x300?text=No+Product+Image';
     
     return `
       <div class="product-card" data-id="${product._id}">
         <div class="product-images">
-          <img src="${mainImage}" alt="${product.name}" onerror="this.src='/images/default-product.jpg'">
+          <img src="${mainImage}" 
+               alt="${product.name}"
+               onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Image+Load+Failed'">
         </div>
         <div class="product-details">
           <h3>${product.name}</h3>
           <p><strong>Category:</strong> ${product.category}</p>
           <p><strong>Price:</strong> ${product.price} TND</p>
-          <p><strong>Description:</strong> ${product.description}</p>
+          <p><strong>Contact:</strong> ${product.phoneNumber}</p>
+          <p><strong>Location:</strong> ${product.address}</p>
+          <p>${product.description}</p>
           <div class="product-actions">
-            <button class="btn-edit" onclick="editProduct('${product._id}')">Edit</button>
-            <button class="btn-delete" onclick="deleteProduct('${product._id}')">Delete</button>
+            <button class="btn-edit" onclick="editProduct('${product._id}')">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="btn-delete" onclick="deleteProduct('${product._id}')">
+              <i class="fas fa-trash"></i> Delete
+            </button>
           </div>
         </div>
       </div>
     `;
   }).join('');
 }
-
 // Remove image preview
 window.removeImagePreview = function(button) {
   button.parentElement.remove();
