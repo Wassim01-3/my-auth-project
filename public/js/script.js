@@ -1,4 +1,4 @@
-const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+const backendUrl = 'https://my-auth-project.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM fully loaded!');
@@ -8,25 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (registrationForm) {
     registrationForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      // Clear previous errors
       clearErrors();
-
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
 
       try {
-        console.log('Registration form submitted:', data);
-
         const response = await fetch(`${backendUrl}/api/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
-
         const result = await response.json();
         if (response.ok) {
-          console.log('Registration successful. Redirecting to:', result.redirectUrl);
           window.location.href = result.redirectUrl;
         } else {
           if (result.message === 'User already exists') {
@@ -49,25 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      // Clear previous errors
       clearErrors();
-
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
 
       try {
-        console.log('Login form submitted:', data);
-
         const response = await fetch(`${backendUrl}/api/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
-
         const result = await response.json();
         if (response.ok) {
-          console.log('Login successful. Redirecting to:', result.redirectUrl);
           localStorage.setItem('token', result.token);
           window.location.href = result.redirectUrl;
         } else {
@@ -110,11 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fetch user data from the backend
 async function fetchUserData() {
   try {
-    console.log('Fetching user data...');
     const token = localStorage.getItem('token');
-
     if (!token) {
-      console.log('No token found. User is not logged in.');
       if (window.location.pathname === '/sell' || window.location.pathname === '/home') {
         window.location.href = '/login.html';
       }
@@ -122,23 +105,16 @@ async function fetchUserData() {
     }
 
     const response = await fetch(`${backendUrl}/api/auth/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (response.ok) {
       const user = await response.json();
-      console.log('User data fetched:', user);
-
-      // Update the dropdown button with the user's data
       const usernameElement = document.getElementById('username');
       const userEmailElement = document.getElementById('user-email');
-      
       if (usernameElement) usernameElement.textContent = user.username;
       if (userEmailElement) userEmailElement.innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
     } else {
-      console.error('Failed to fetch user data:', response.status, response.statusText);
       if (window.location.pathname === '/sell' || window.location.pathname === '/home') {
         window.location.href = '/login.html';
       }
@@ -156,7 +132,6 @@ function setupProductForm() {
   const productForm = document.getElementById('product-form');
   if (!productForm) return;
 
-  // Image preview handling
   const imagesInput = document.getElementById('images');
   if (imagesInput) {
     imagesInput.addEventListener('change', function(e) {
@@ -189,10 +164,8 @@ function setupProductForm() {
     });
   }
 
-  // Form submission handling
   productForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
     const form = e.target;
     const formData = new FormData(form);
     const token = localStorage.getItem('token');
@@ -200,9 +173,7 @@ function setupProductForm() {
     try {
       const response = await fetch(`${backendUrl}/api/products`, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
 
@@ -253,13 +224,14 @@ function renderProducts(products) {
 
   container.innerHTML = products.map(product => {
     const mainImage = product.images.length > 0 ? 
-      (product.images[0].startsWith('http') ? product.images[0] : `${backendUrl}${product.images[0]}`) : 
-      '/images/default-product.jpg';
+      `${backendUrl}${product.images[0]}` : 
+      'https://via.placeholder.com/400x300?text=No+Image';
     
     return `
       <div class="product-card" data-id="${product._id}">
         <div class="product-images">
-          <img src="${mainImage}" alt="${product.name}" onerror="this.src='/images/default-product.jpg'">
+          <img src="${mainImage}" alt="${product.name}" 
+               onerror="this.src='https://via.placeholder.com/400x300?text=Image+Error'">
         </div>
         <div class="product-details">
           <h3>${product.name}</h3>
@@ -267,8 +239,12 @@ function renderProducts(products) {
           <p><strong>Price:</strong> ${product.price} TND</p>
           <p><strong>Description:</strong> ${product.description}</p>
           <div class="product-actions">
-            <button class="btn-edit" onclick="editProduct('${product._id}')">Edit</button>
-            <button class="btn-delete" onclick="deleteProduct('${product._id}')">Delete</button>
+            <button class="btn-edit" onclick="editProduct('${product._id}')">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="btn-delete" onclick="deleteProduct('${product._id}')">
+              <i class="fas fa-trash"></i> Delete
+            </button>
           </div>
         </div>
       </div>
@@ -284,7 +260,6 @@ window.removeImagePreview = function(button) {
 // Edit product
 window.editProduct = function(productId) {
   console.log('Edit product:', productId);
-  // Implement edit functionality
   alert('Edit functionality will be implemented here');
 };
 
