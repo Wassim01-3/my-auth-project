@@ -281,37 +281,32 @@ function renderProducts(products) {
   const container = document.getElementById('products-container');
   if (!container) return;
 
-  if (!products || products.length === 0) {
-    container.innerHTML = `
-      <div class="no-products">
-        <i class="fas fa-box-open" style="font-size: 48px; margin-bottom: 20px;"></i>
-        <p>You haven't listed any products yet.</p>
-      </div>
-    `;
+  if (products.length === 0) {
+    container.innerHTML = '<div class="no-products"><p>You haven\'t listed any products yet.</p></div>';
     return;
   }
 
   container.innerHTML = products.map(product => {
-    // Use first image or placeholder
-    const mainImage = product.images && product.images.length > 0 ? 
+    const mainImage = product.images.length > 0 ? 
       product.images[0] : 
-      'https://via.placeholder.com/400x300?text=No+Product+Image';
+      'https://via.placeholder.com/400x300?text=No+Image';
     
     return `
       <div class="product-card" data-id="${product._id}">
         <div class="product-images">
-          <img src="${mainImage}" 
-               alt="${product.name}"
-               onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Image+Load+Failed'">
+          <img src="${mainImage}" alt="${product.name}" 
+               onerror="this.src='https://via.placeholder.com/400x300?text=Image+Error'">
+          ${product.images.length > 1 ? 
+            `<span class="image-count-badge">+${product.images.length-1}</span>` : ''}
         </div>
         <div class="product-details">
           <h3>${product.name}</h3>
           <p><strong>Category:</strong> ${product.category}</p>
           <p><strong>Price:</strong> ${product.price} TND</p>
-          <p><strong>Contact:</strong> ${product.phoneNumber}</p>
-          <p><strong>Location:</strong> ${product.address}</p>
-          <p>${product.description}</p>
           <div class="product-actions">
+            <button class="btn-view" onclick="viewProduct('${product._id}')">
+              <i class="fas fa-eye"></i> View
+            </button>
             <button class="btn-edit" onclick="editProduct('${product._id}')">
               <i class="fas fa-edit"></i> Edit
             </button>
@@ -359,6 +354,55 @@ window.deleteProduct = async function(productId) {
     alert('An error occurred. Please try again.');
   }
 };
+window.viewProduct = async function(productId) {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${backendUrl}/api/products/${productId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    
+    if (response.ok) {
+      const product = await response.json();
+      
+      // Create modal
+      const modal = document.createElement('div');
+      modal.className = 'product-modal';
+      modal.innerHTML = `
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h2>${product.name}</h2>
+          <div class="product-gallery">
+            ${product.images.map(img => `
+              <div class="gallery-item">
+                <img src="${img}" alt="${product.name}">
+              </div>
+            `).join('')}
+          </div>
+          <div class="product-info">
+            <p><strong>Category:</strong> ${product.category}</p>
+            <p><strong>Price:</strong> ${product.price} TND</p>
+            <p><strong>Contact:</strong> ${product.phoneNumber}</p>
+            <p><strong>Location:</strong> ${product.address}</p>
+            <p><strong>Description:</strong> ${product.description}</p>
+          </div>
+        </div>
+      `;
+      
+      // Add close handler
+      modal.querySelector('.close-modal').addEventListener('click', () => {
+        modal.remove();
+      });
+      
+      document.body.appendChild(modal);
+    } else {
+      throw new Error('Failed to fetch product');
+    }
+  } catch (err) {
+    console.error('Error viewing product:', err);
+    alert('Error loading product details');
+  }
+};
+
 
 // Function to display error messages
 function showError(field, message) {
