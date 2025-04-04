@@ -8,6 +8,7 @@ const createProduct = async (req, res) => {
             return res.status(400).json({ message: 'At least one image is required' });
         }
 
+        // Store all images in one product
         const images = req.files.map(file => `/uploads/${file.filename}`);
         
         const product = new Product({
@@ -18,20 +19,17 @@ const createProduct = async (req, res) => {
             phoneNumber,
             address,
             description,
-            images
+            images  // This now contains all uploaded images
         });
 
         await product.save();
         
-        // Return product with full image URLs
-        const productWithFullUrls = {
-            ...product.toObject(),
-            images: product.images.map(img => `https://green-tunisia-h3ji.onrender.com${img}`)
-        };
-        
         res.status(201).json({ 
             message: 'Product created successfully', 
-            product: productWithFullUrls 
+            product: {
+                ...product.toObject(),
+                images: product.images.map(img => `${req.protocol}://${req.get('host')}${img}`)
+            }
         });
     } catch (err) {
         console.error('Error creating product:', err);
@@ -39,6 +37,7 @@ const createProduct = async (req, res) => {
     }
 };
 
+// [Keep all other existing controller functions exactly as they were]
 const getUserProducts = async (req, res) => {
     try {
         const products = await Product.find({ userId: req.userId }).sort({ createdAt: -1 });
