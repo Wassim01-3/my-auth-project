@@ -153,8 +153,43 @@ async function fetchUserData() {
 
 // Setup product form functionality
 function setupProductForm() {
+  // Update the product form submission handler
   const productForm = document.getElementById('product-form');
-  if (!productForm) return;
+  if (productForm) {
+      productForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const token = localStorage.getItem('token');
+          if (!token) {
+              alert('Please login first');
+              return window.location.href = '/login.html';
+          }
+
+          try {
+              const formData = new FormData(productForm);
+              const response = await fetch(`${backendUrl}/api/products`, {
+                  method: 'POST',
+                  headers: {
+                      'Authorization': `Bearer ${token}`
+                  },
+                  body: formData
+              });
+
+              if (!response.ok) {
+                  const error = await response.json();
+                  throw new Error(error.message || 'Upload failed');
+              }
+
+                const result = await response.json();
+              alert('Product added successfully!');
+              productForm.reset();
+              document.getElementById('image-preview').innerHTML = '';
+              fetchUserProducts();
+          } catch (err) {
+              console.error('Product submission error:', err);
+              alert(`Error: ${err.message || 'Failed to add product'}`);
+          }
+      });
+  }
 
   // Image preview handling
   const imagesInput = document.getElementById('images');
