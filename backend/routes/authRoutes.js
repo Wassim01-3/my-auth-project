@@ -24,6 +24,19 @@ router.get('/user', authMiddleware, (req, res) => {
       res.status(500).json({ message: 'Server error' });
     });
 });
+// Add this new route to get user by ID
+router.get('/user/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (err) {
+    console.error('Error fetching user:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 // User logout
 router.post('/logout', authController.logout);
