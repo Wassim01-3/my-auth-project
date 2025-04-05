@@ -156,39 +156,39 @@ function setupProductForm() {
   // Update the product form submission handler
   const productForm = document.getElementById('product-form');
   if (productForm) {
-      productForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const token = localStorage.getItem('token');
-          if (!token) {
-              alert('Please login first');
-              return window.location.href = '/login.html';
-          }
+    productForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please login first');
+        return window.location.href = '/login.html';
+      }
 
-          try {
-              const formData = new FormData(productForm);
-              const response = await fetch(`${backendUrl}/api/products`, {
-                  method: 'POST',
-                  headers: {
-                      'Authorization': `Bearer ${token}`
-                  },
-                  body: formData
-              });
+      try {
+        const formData = new FormData(productForm);
+        const response = await fetch(`${backendUrl}/api/products`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
 
-              if (!response.ok) {
-                  const error = await response.json();
-                  throw new Error(error.message || 'Upload failed');
-              }
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Upload failed');
+        }
 
-                const result = await response.json();
-              alert('Product added successfully!');
-              productForm.reset();
-              document.getElementById('image-preview').innerHTML = '';
-              fetchUserProducts();
-          } catch (err) {
-              console.error('Product submission error:', err);
-              alert(`Error: ${err.message || 'Failed to add product'}`);
-          }
-      });
+        const result = await response.json();
+        alert('Product added successfully!');
+        productForm.reset();
+        document.getElementById('image-preview').innerHTML = '';
+        fetchUserProducts();
+      } catch (err) {
+        console.error('Product submission error:', err);
+        alert(`Error: ${err.message || 'Failed to add product'}`);
+      }
+    });
   }
 
   // Image preview handling
@@ -198,7 +198,7 @@ function setupProductForm() {
       const preview = document.getElementById('image-preview');
       preview.innerHTML = '';
       
-      Array.from(e.target.files).forEach(file => {
+      Array.from(e.target.files).slice(0, 5).forEach(file => {
         if (file.size > 3 * 1024 * 1024) {
           alert(`File ${file.name} exceeds 3MB limit`);
           return;
@@ -223,38 +223,6 @@ function setupProductForm() {
       });
     });
   }
-
-  // Form submission handling
-  productForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const form = e.target;
-    const formData = new FormData(form);
-    const token = localStorage.getItem('token');
-    
-    try {
-      const response = await fetch(`${backendUrl}/api/products`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        alert('Product added successfully!');
-        form.reset();
-        document.getElementById('image-preview').innerHTML = '';
-        fetchUserProducts();
-      } else {
-        alert(result.message || 'Failed to add product');
-      }
-    } catch (err) {
-      console.error('Error:', err);
-      alert('An error occurred. Please try again.');
-    }
-  });
 }
 
 // Fetch user's products
@@ -289,13 +257,13 @@ function renderProducts(products) {
   container.innerHTML = products.map(product => {
     const mainImage = product.images.length > 0 ? 
       product.images[0] : 
-      'https://via.placeholder.com/400x300?text=No+Image';
+      'https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png';
     
     return `
       <div class="product-card" data-id="${product._id}">
         <div class="product-images">
           <img src="${mainImage}" alt="${product.name}" 
-               onerror="this.src='https://via.placeholder.com/400x300?text=Image+Error'">
+               onerror="this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
           ${product.images.length > 1 ? 
             `<span class="image-count-badge">+${product.images.length-1}</span>` : ''}
         </div>
@@ -319,6 +287,7 @@ function renderProducts(products) {
     `;
   }).join('');
 }
+
 // Remove image preview
 window.removeImagePreview = function(button) {
   button.parentElement.remove();
@@ -354,6 +323,8 @@ window.deleteProduct = async function(productId) {
     alert('An error occurred. Please try again.');
   }
 };
+
+// View product details
 window.viewProduct = async function(productId) {
   try {
     const token = localStorage.getItem('token');
@@ -402,7 +373,6 @@ window.viewProduct = async function(productId) {
     alert('Error loading product details');
   }
 };
-
 
 // Function to display error messages
 function showError(field, message) {
