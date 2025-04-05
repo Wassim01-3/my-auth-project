@@ -6,20 +6,20 @@ const productRoutes = require('./routes/productRoutes');
 const authMiddleware = require('./middleware/authMiddleware');
 const path = require('path');
 require('dotenv').config();
-const fs = require('fs');
 
 const app = express();
 
-// Log environment variables (keep existing logging)
+// Log environment variables
 console.log('MONGO_URI:', process.env.MONGO_URI);
 console.log('JWT_SECRET:', process.env.JWT_SECRET);
+console.log('CLOUDINARY_CLOUD_NAME:', process.env.CLOUDINARY_CLOUD_NAME);
 
-// Connect to MongoDB (keep existing connection)
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB connection error:', err));
 
-// Middleware (keep existing middleware)
+// Middleware
 app.use(express.json());
 app.use(cors({
   origin: [
@@ -32,28 +32,14 @@ app.use(cors({
 }));
 app.options('*', cors());
 
-// Serve static files (keep existing static files config)
+// Serve static files
 app.use(express.static(path.join(__dirname, '../public')));
 
-// NEW: Ensure uploads directory exists on startup
-const uploadDir = path.join(__dirname, '../public/uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-  console.log('Created uploads directory:', uploadDir);
-}
-
-// NEW: Explicitly serve uploads with cache headers
-app.use('/uploads', express.static(uploadDir, {
-  setHeaders: (res, path) => {
-    res.set('Cache-Control', 'public, max-age=86400'); // Cache for 1 day
-  }
-}));
-
-// Routes (keep existing routes)
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 
-// Keep all existing route handlers
+// Route handlers
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
@@ -62,15 +48,13 @@ app.get('/home', authMiddleware, (req, res) => {
   res.sendFile(path.join(__dirname, '../public/home.html'));
 });
 
-// Keep existing health check endpoint
+// Health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', uploadsDir: uploadDir });
+  res.status(200).json({ status: 'OK' });
 });
 
-// Start server (keep existing server start)
+// Start server
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`Uploads directory: ${uploadDir}`);
-  console.log(`Static files served from: ${path.join(__dirname, '../public')}`);
 });
