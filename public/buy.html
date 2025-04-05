@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>Buy Products - GreenTunisia</title>
+  <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
+  <link rel="shortcut icon" href="/images/fav/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/fav/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="GreenTunisia" />
+  <link rel="manifest" href="/images/fav/site.webmanifest" />
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+  <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  <style>
+    /* Reuse most styles from sell.html */
+    body {
+      font-family: 'Slabo 27px', serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+    }
+
+    .background-container {
+      flex: 1;
+      background-image: url('../images/4.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .background-overlay {
+      background: rgba(58, 66, 58, 0.75);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top_box {
+      flex-shrink: 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      height: 80px;
+    }
+
+    .main-content {
+      flex: 1;
+      margin-top: 80px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .buy-container {
+      background: transparent;
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 1200px;
+      width: 90%;
+      flex: 1;
+    }
+
+    .section-container {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .section-header {
+      background-color: #009900;
+      color: white;
+      padding: 15px;
+      font-size: 24px;
+      text-align: center;
+      margin: -30px -30px 20px -30px;
+      border-radius: 10px 10px 0 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Products Grid */
+    #products-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .product-images {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .product-images img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .product-card:hover .product-images img {
+      transform: scale(1.05);
+    }
+
+    .image-count-badge {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .product-details {
+      padding: 20px;
+    }
+
+    .product-details h3 {
+      margin: 0 0 10px 0;
+      color: #333;
+      font-size: 20px;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .product-price {
+      font-weight: bold;
+      color: #009900;
+      font-size: 18px;
+    }
+
+    .product-category {
+      background: #f0f0f0;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .product-description {
+      color: #666;
+      margin-bottom: 15px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-contact {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .product-location {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #555;
+    }
+
+    .product-phone {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #555;
+    }
+
+    .btn-view {
+      background-color: #924D8F;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    
+    .btn-view:hover {
+      background-color: #7a3f77;
+    }
+
+    /* Search and Filter */
+    .search-filter-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .filter-select {
+      min-width: 200px;
+    }
+
+    .search-box input, .filter-select select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #products-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .search-filter-container {
+        flex-direction: column;
+      }
+    }
+
+    /* Product Modal (same as sell.html) */
+    .product-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 800px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .product-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .gallery-item {
+      flex: 1 1 300px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border: 1px solid #eee;
+      border-radius: 5px;
+    }
+
+    .product-info {
+      margin-top: 20px;
+    }
+
+    .product-info p {
+      margin: 12px 0;
+      font-size: 16px;
+    }
+
+    .product-info strong {
+      color: #009900;
+    }
+  </style>
+</head>
+<body>
+  <div class="background-container">
+    <div class="background-overlay">
+      <!-- Fixed Navbar -->
+      <div class="top_box clearfix">
+        <div class="top_box_inner_1 clearfix">
+          <section id="header">
+            <nav class="navbar navbar-default">
+              <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
+              </div>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li><a class="tag_menu" href="/home">HOME</a></li>
+                  <li><a class="tag_menu" href="/home#welcome-section">ABOUT</a></li>
+                  <li><a class="tag_menu" href="/sell">SELL</a></li>
+                  <li><a class="tag_menu active_tab" href="/buy">BUY</a></li>
+                  <li><a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown">
+                    <a class="tag_menu_righ" href="#" id="log-btn">
+                      <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
+                      <span id="username">Username</span>
+                      <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-content">
+                      <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
+                      <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </section>
+        </div>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="main-content">
+        <div class="buy-container">
+          <!-- All Products Section -->
+          <div class="section-container" style="margin-top: 40px;">
+            <div class="section-header">Available Products</div>
+            
+            <!-- Search and Filter -->
+            <div class="search-filter-container">
+              <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search products...">
+              </div>
+              <div class="filter-select">
+                <select id="category-filter">
+                  <option value="">All Categories</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Furniture">Furniture</option>
+                  <option value="Clothing">Clothing</option>
+                  <option value="Books">Books</option>
+                  <option value="Vehicles">Vehicles</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            
+            <div id="products-container">
+              <div class="no-products">
+                <p>Loading products...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <i class="fa-regular fa-copyright"></i> 2025 Green Tunisia - All Rights Reserved
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+  <script>
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle dropdown toggle
+      document.querySelector('.dropdown').addEventListener('click', function(e) {
+        const dropdownContent = this.querySelector('.dropdown-content');
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        e.stopPropagation();
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function() {
+        const dropdownContent = document.querySelector('.dropdown-content');
+        if (dropdownContent) dropdownContent.style.display = 'none';
+      });
+
+      // Check if user is logged in
+      if (typeof fetchUserData === 'function') fetchUserData();
+      
+      // Load all products
+      fetchAllProducts();
+
+      // Setup search and filter
+      document.getElementById('search-input').addEventListener('input', filterProducts);
+      document.getElementById('category-filter').addEventListener('change', filterProducts);
+    });
+
+    // Fetch all products
+    async function fetchAllProducts() {
+      try {
+        const response = await fetch(`${backendUrl}/api/products`);
+        if (response.ok) {
+          const products = await response.json();
+          renderAllProducts(products);
+        } else {
+          throw new Error('Failed to fetch products');
+        }
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        document.getElementById('products-container').innerHTML = `
+          <div class="no-products">
+            <p>Error loading products. Please try again later.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Render all products
+    function renderAllProducts(products) {
+      const container = document.getElementById('products-container');
+      if (!container) return;
+
+      if (products.length === 0) {
+        container.innerHTML = `
+          <div class="no-products">
+            <p>No products available yet. Check back later!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = products.map(product => {
+        const mainImage = product.images.length > 0 ? 
+          product.images[0] : 
+          'https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png';
+        
+        return `
+          <div class="product-card" data-id="${product._id}" data-category="${product.category}" data-search="${product.name.toLowerCase()} ${product.description.toLowerCase()}">
+            <div class="product-images">
+              <img src="${mainImage}" alt="${product.name}" 
+                   onerror="this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
+              ${product.images.length > 1 ? 
+                `<span class="image-count-badge">+${product.images.length-1}</span>` : ''}
+            </div>
+            <div class="product-details">
+              <h3>${product.name}</h3>
+              <div class="product-meta">
+                <span class="product-price">${product.price} TND</span>
+                <span class="product-category">${product.category}</span>
+              </div>
+              <p class="product-description">${product.description}</p>
+              <div class="product-contact">
+                <span class="product-location">
+                  <i class="fas fa-map-marker-alt"></i> ${product.address}
+                </span>
+                <span class="product-phone">
+                  <i class="fas fa-phone"></i> ${product.phoneNumber}
+                </span>
+              </div>
+              <button class="btn-view" onclick="viewProduct('${product._id}')">
+                <i class="fas fa-eye"></i> View Details
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Filter products based on search and category
+    function filterProducts() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const categoryFilter = document.getElementById('category-filter').value;
+      
+      const products = document.querySelectorAll('.product-card');
+      let hasVisibleProducts = false;
+      
+      products.forEach(product => {
+        const matchesSearch = product.dataset.search.includes(searchTerm);
+        const matchesCategory = categoryFilter === '' || product.dataset.category === categoryFilter;
+        
+        if (matchesSearch && matchesCategory) {
+          product.style.display = 'block';
+          hasVisibleProducts = true;
+        } else {
+          product.style.display = 'none';
+        }
+      });
+      
+      const noProductsMsg = document.querySelector('.no-products');
+      if (!hasVisibleProducts) {
+        if (!noProductsMsg) {
+          document.getElementById('products-container').innerHTML += `
+            <div class="no-products">
+              <p>No products match your search criteria.</p>
+            </div>
+          `;
+        }
+      } else if (noProductsMsg) {
+        noProductsMsg.remove();
+      }
+    }
+
+    // Global view product function
+    window.viewProduct = async function(productId) {
+      try {
+        const response = await fetch(`${backendUrl}/api/products/${productId}`);
+        
+        if (response.ok) {
+          const product = await response.json();
+          
+          // Create modal
+          const modal = document.createElement('div');
+          modal.className = 'product-modal';
+          modal.innerHTML = `
+            <div class="modal-content">
+              <span class="close-modal">&times;</span>
+              <h2>${product.name}</h2>
+              <div class="product-gallery">
+                ${product.images.map(img => `
+                  <div class="gallery-item">
+                    <img src="${img}" alt="${product.name}">
+                  </div>
+                `).join('')}
+              </div>
+              <div class="product-info">
+                <p><strong>Category:</strong> ${product.category}</p>
+                <p><strong>Price:</strong> ${product.price} TND</p>
+                <p><strong>Contact:</strong> ${product.phoneNumber}</p>
+                <p><strong>Location:</strong> ${product.address}</p>
+                <p><strong>Description:</strong> ${product.description}</p>
+              </div>
+            </div>
+          `;
+          
+          // Add close handler
+          modal.querySelector('.close-modal').addEventListener('click', () => {
+            modal.remove();
+          });
+          
+          document.body.appendChild(modal);
+        } else {
+          throw new Error('Failed to fetch product');
+        }
+      } catch (err) {
+        console.error('Error viewing product:', err);
+        alert('Error loading product details');
+      }
+    };
+  </script>
+</body>
+</html>
