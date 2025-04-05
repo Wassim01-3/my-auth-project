@@ -402,3 +402,20 @@ function clearErrors() {
     input.classList.remove('error');
   });
 }
+async function fetchAllProducts() {
+    try {
+        console.log('Fetching all products...');
+        const response = await fetch(`${backendUrl}/api/products`);
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch products');
+        }
+        
+        const products = await response.json();
+        console.log('Products fetched:', products.length);
+        return products;
+    } catch (err) {
+        console.error('Error fetching products:', err);
+        throw err;
+    }
+}
