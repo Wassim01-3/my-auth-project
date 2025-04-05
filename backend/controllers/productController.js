@@ -2,6 +2,49 @@ const Product = require('../models/Product');
 const cloudinary = require('../config/cloudinary');
 const streamifier = require('streamifier');
 
+// Get all products with user info
+const getAllProducts = async (req, res) => {
+    try {
+        const products = await Product.find()
+            .populate('userId', 'username email')
+            .sort({ createdAt: -1 });
+        res.json(products);
+    } catch (err) {
+        console.error('Error fetching products:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+// Get single product by ID with user info
+const getProductById = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id)
+            .populate('userId', 'username email');
+            
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        
+        res.json(product);
+    } catch (err) {
+        console.error('Error fetching product:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+// Get user's products
+const getUserProducts = async (req, res) => {
+    try {
+        const products = await Product.find({ userId: req.userId })
+            .sort({ createdAt: -1 });
+        res.json(products);
+    } catch (err) {
+        console.error('Error fetching user products:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+// Create new product
 const createProduct = async (req, res) => {
     try {
         const { category, name, price, phoneNumber, address, description } = req.body;
@@ -10,7 +53,7 @@ const createProduct = async (req, res) => {
             return res.status(400).json({ message: 'At least one image is required' });
         }
 
-        // Upload all images to Cloudinary
+        // Upload images to Cloudinary
         const uploadPromises = req.files.map(file => {
             return new Promise((resolve, reject) => {
                 const uploadStream = cloudinary.uploader.upload_stream(
@@ -33,6 +76,7 @@ const createProduct = async (req, res) => {
         const uploadResults = await Promise.all(uploadPromises);
         const images = uploadResults.map(result => result.secure_url);
         
+        // Create new product
         const product = new Product({
             userId: req.userId,
             category,
@@ -56,16 +100,7 @@ const createProduct = async (req, res) => {
     }
 };
 
-const getUserProducts = async (req, res) => {
-    try {
-        const products = await Product.find({ userId: req.userId }).sort({ createdAt: -1 });
-        res.json(products);
-    } catch (err) {
-        console.error('Error fetching user products:', err);
-        res.status(500).json({ message: 'Server error' });
-    }
-};
-
+// Update product
 const updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
@@ -124,6 +159,7 @@ const updateProduct = async (req, res) => {
     }
 };
 
+// Delete product
 const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
@@ -150,4 +186,11 @@ const deleteProduct = async (req, res) => {
     }
 };
 
-module.exports = { createProduct, getUserProducts, updateProduct, deleteProduct };
+module.exports = { 
+    getAllProducts,
+    getProductById,
+    getUserProducts,
+    createProduct,
+    updateProduct,
+    deleteProduct
+};
