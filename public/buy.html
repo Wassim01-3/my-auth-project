@@ -15,6 +15,253 @@
   <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
   <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
   <style>
+        /* Enhanced Modal Styles */
+    .product-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .product-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 900px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .product-modal.active .modal-content {
+      transform: scale(1);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 30px;
+      cursor: pointer;
+      color: #333;
+      background: rgba(255,255,255,0.8);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+      background: #fff;
+      transform: rotate(90deg);
+    }
+
+    /* Image Carousel */
+    .product-carousel {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+    }
+
+    .carousel-item img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: opacity 0.5s ease;
+    }
+
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 5;
+    }
+
+    .carousel-control {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin: 0 15px;
+      font-size: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-control:hover {
+      background: rgba(0,0,0,0.8);
+      transform: scale(1.1);
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 5;
+    }
+
+    .carousel-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-indicator.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    /* Product Info Section */
+    .product-info-section {
+      padding: 25px;
+    }
+
+    .product-title {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .product-price {
+      font-size: 24px;
+      color: #009900;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .product-meta {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .product-category {
+      background: #f0f0f0;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .product-description {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+
+    /* Seller Info Section */
+    .seller-info {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .seller-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .seller-title i {
+      color: #009900;
+    }
+
+    .seller-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .seller-detail {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #555;
+    }
+
+    .seller-detail i {
+      color: #009900;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .product-carousel {
+        height: 300px;
+      }
+      
+      .product-title {
+        font-size: 24px;
+      }
+      
+      .product-price {
+        font-size: 20px;
+      }
+      
+      .seller-details {
+        grid-template-columns: 1fr;
+      }
+    }
     body {
       font-family: 'Slabo 27px', serif;
       margin: 0;
@@ -564,51 +811,212 @@
     // Global function to view product details
     window.viewProduct = async function(productId) {
       try {
-        const response = await fetch(`${backendUrl}/api/products/${productId}`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const product = await response.json();
-        
-        // Create modal
+        // Show loading state
         const modal = document.createElement('div');
-        modal.className = 'product-modal';
+        modal.className = 'product-modal active';
         modal.innerHTML = `
           <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2>${product.name || 'Product Details'}</h2>
-            <div class="product-gallery">
-              ${product.images && product.images.length > 0 ? 
-                product.images.map(img => `
-                  <div class="gallery-item">
-                    <img src="${img}" alt="${product.name || 'Product image'}">
-                  </div>
-                `).join('') : 
-                '<p>No images available</p>'}
-            </div>
-            <div class="product-info">
-              <p><strong>Category:</strong> ${product.category || 'Not specified'}</p>
-              <p><strong>Price:</strong> ${product.price || 'N/A'} TND</p>
-              <p><strong>Contact:</strong> ${product.phoneNumber || 'Not provided'}</p>
-              <p><strong>Location:</strong> ${product.address || 'Not specified'}</p>
-              <p><strong>Description:</strong> ${product.description || 'No description provided'}</p>
+            <div style="padding: 20px; text-align: center;">
+              <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #009900;"></i>
+              <p>Loading product details...</p>
             </div>
           </div>
         `;
+        document.body.appendChild(modal);
         
         // Add close handler
         modal.querySelector('.close-modal').addEventListener('click', () => {
-          modal.remove();
+          modal.classList.remove('active');
+          setTimeout(() => modal.remove(), 300);
         });
-        
-        document.body.appendChild(modal);
+
+        // Fetch product data
+        const productResponse = await fetch(`${backendUrl}/api/products/${productId}`);
+        if (!productResponse.ok) throw new Error('Failed to fetch product');
+        const product = await productResponse.json();
+
+        // Fetch seller data if available
+        let seller = null;
+        if (product.userId) {
+          try {
+            const sellerResponse = await fetch(`${backendUrl}/api/auth/user/${product.userId}`);
+            if (sellerResponse.ok) {
+              seller = await sellerResponse.json();
+            }
+          } catch (e) {
+            console.error('Error fetching seller info:', e);
+          }
+        }
+
+        // Update modal with product data
+        modal.innerHTML = `
+          <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            ${product.images && product.images.length > 0 ? `
+              <div class="product-carousel">
+                <div class="carousel-inner" style="width: ${product.images.length * 100}%">
+                  ${product.images.map(img => `
+                    <div class="carousel-item">
+                      <img src="${img}" alt="${product.name || 'Product image'}">
+                    </div>
+                  `).join('')}
+                </div>
+                
+                <div class="carousel-controls">
+                  <button class="carousel-control prev" onclick="moveCarousel(this.closest('.product-modal'), -1)">
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <button class="carousel-control next" onclick="moveCarousel(this.closest('.product-modal'), 1)">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </div>
+                
+                <div class="carousel-indicators">
+                  ${product.images.map((_, index) => `
+                    <div class="carousel-indicator ${index === 0 ? 'active' : ''}" 
+                         onclick="goToCarouselSlide(this.closest('.product-modal'), ${index})"></div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : `
+              <div class="product-carousel" style="background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+                <p>No images available</p>
+              </div>
+            `}
+            
+            <div class="product-info-section">
+              <h1 class="product-title">${product.name || 'Unnamed Product'}</h1>
+              <div class="product-price">${product.price || 'N/A'} TND</div>
+              
+              <div class="product-meta">
+                <span class="product-category">${product.category || 'Uncategorized'}</span>
+                <span class="product-location">
+                  <i class="fas fa-map-marker-alt"></i> ${product.address || 'Location not specified'}
+                </span>
+                <span class="product-phone">
+                  <i class="fas fa-phone"></i> ${product.phoneNumber || 'Phone not provided'}
+                </span>
+              </div>
+              
+              <div class="product-description">
+                ${product.description || 'No description provided'}
+              </div>
+              
+              ${seller ? `
+                <div class="seller-info">
+                  <h3 class="seller-title"><i class="fas fa-user"></i> Seller Information</h3>
+                  <div class="seller-details">
+                    <div class="seller-detail">
+                      <i class="fas fa-user"></i>
+                      <span>${seller.username || 'Not available'}</span>
+                    </div>
+                    <div class="seller-detail">
+                      <i class="fas fa-envelope"></i>
+                      <span>${seller.email || 'Not available'}</span>
+                    </div>
+                    ${seller.phoneNumber ? `
+                      <div class="seller-detail">
+                        <i class="fas fa-phone"></i>
+                        <span>${seller.phoneNumber}</span>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+
+        // Re-add close handler
+        modal.querySelector('.close-modal').addEventListener('click', () => {
+          modal.classList.remove('active');
+          setTimeout(() => modal.remove(), 300);
+        });
+
+        // Initialize carousel
+        initCarousel(modal);
+
       } catch (err) {
         console.error('Error viewing product:', err);
-        alert('Error loading product details. Please try again.');
+        modal.innerHTML = `
+          <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div style="padding: 30px; text-align: center; color: #ff4444;">
+              <i class="fas fa-exclamation-triangle" style="font-size: 40px; margin-bottom: 15px;"></i>
+              <h2>Error Loading Product</h2>
+              <p>${err.message || 'Please try again later.'}</p>
+            </div>
+          </div>
+        `;
+        modal.querySelector('.close-modal').addEventListener('click', () => {
+          modal.classList.remove('active');
+          setTimeout(() => modal.remove(), 300);
+        });
       }
     };
+
+    // Carousel Functions
+    function initCarousel(modal) {
+      const carousel = modal.querySelector('.carousel-inner');
+      const indicators = modal.querySelectorAll('.carousel-indicator');
+      let currentIndex = 0;
+      
+      // Store current index on the modal element
+      modal._currentCarouselIndex = 0;
+      updateCarouselPosition(modal);
+    }
+
+    function moveCarousel(modal, direction) {
+      const product = modal.querySelector('.product-carousel');
+      if (!product) return;
+      
+      const items = modal.querySelectorAll('.carousel-item');
+      const itemCount = items.length;
+      let newIndex = modal._currentCarouselIndex + direction;
+      
+      // Wrap around
+      if (newIndex < 0) newIndex = itemCount - 1;
+      if (newIndex >= itemCount) newIndex = 0;
+      
+      modal._currentCarouselIndex = newIndex;
+      updateCarouselPosition(modal);
+    }
+
+    function goToCarouselSlide(modal, index) {
+      const items = modal.querySelectorAll('.carousel-item');
+      if (index >= 0 && index < items.length) {
+        modal._currentCarouselIndex = index;
+        updateCarouselPosition(modal);
+      }
+    }
+
+    function updateCarouselPosition(modal) {
+      const carousel = modal.querySelector('.carousel-inner');
+      const indicators = modal.querySelectorAll('.carousel-indicator');
+      const currentIndex = modal._currentCarouselIndex || 0;
+      
+      if (carousel) {
+        carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+      
+      indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    // Close modal when clicking outside content
+    document.addEventListener('click', function(e) {
+      const modals = document.querySelectorAll('.product-modal.active');
+      modals.forEach(modal => {
+        if (!modal.querySelector('.modal-content').contains(e.target)) {
+          modal.classList.remove('active');
+          setTimeout(() => modal.remove(), 300);
+        }
+      });
+    });
+
   </script>
 </body>
 </html>
