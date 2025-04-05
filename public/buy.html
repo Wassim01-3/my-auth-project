@@ -743,9 +743,11 @@
 
     // Global function to view product details
     window.viewProduct = async function(productId) {
+      let modal; // Declare modal at function scope
+      
       try {
         // Show loading state
-        const modal = document.createElement('div');
+        modal = document.createElement('div');
         modal.className = 'product-modal active';
         modal.innerHTML = `
           <div class="modal-content">
@@ -766,14 +768,21 @@
 
         // Fetch product data
         const productResponse = await fetch(`${backendUrl}/api/products/${productId}`);
-        if (!productResponse.ok) throw new Error('Failed to fetch product');
+        if (!productResponse.ok) {
+          throw new Error(`Failed to fetch product: ${productResponse.status} ${productResponse.statusText}`);
+        }
         const product = await productResponse.json();
 
         // Fetch seller data if available
         let seller = null;
         if (product.userId) {
           try {
-            const sellerResponse = await fetch(`${backendUrl}/api/auth/user/${product.userId}`);
+            const token = localStorage.getItem('token');
+            const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+            
+            const sellerResponse = await fetch(`${backendUrl}/api/auth/user/${product.userId}`, {
+              headers: headers
+            });
             if (sellerResponse.ok) {
               seller = await sellerResponse.json();
             }
@@ -792,7 +801,8 @@
                 <div class="carousel-inner" style="width: ${product.images.length * 100}%">
                   ${product.images.map(img => `
                     <div class="carousel-item">
-                      <img src="${img}" alt="${product.name || 'Product image'}">
+                      <img src="${img}" alt="${product.name || 'Product image'}" 
+                           onerror="this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
                     </div>
                   `).join('')}
                 </div>
@@ -873,41 +883,36 @@
 
       } catch (err) {
         console.error('Error viewing product:', err);
-        modal.innerHTML = `
-          <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div style="padding: 30px; text-align: center; color: #ff4444;">
-              <i class="fas fa-exclamation-triangle" style="font-size: 40px; margin-bottom: 15px;"></i>
-              <h2>Error Loading Product</h2>
-              <p>${err.message || 'Please try again later.'}</p>
+        if (modal) {
+          modal.innerHTML = `
+            <div class="modal-content">
+              <span class="close-modal">&times;</span>
+              <div style="padding: 30px; text-align: center; color: #ff4444;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 40px; margin-bottom: 15px;"></i>
+                <h2>Error Loading Product</h2>
+                <p>${err.message || 'Please try again later.'}</p>
+              </div>
             </div>
-          </div>
-        `;
-        modal.querySelector('.close-modal').addEventListener('click', () => {
-          modal.classList.remove('active');
-          setTimeout(() => modal.remove(), 300);
-        });
+          `;
+          modal.querySelector('.close-modal').addEventListener('click', () => {
+            modal.classList.remove('active');
+            setTimeout(() => modal.remove(), 300);
+          });
+        } else {
+          alert(`Error loading product: ${err.message || 'Please try again later.'}`);
+        }
       }
     };
 
     // Carousel Functions
     function initCarousel(modal) {
-      const carousel = modal.querySelector('.carousel-inner');
-      const indicators = modal.querySelectorAll('.carousel-indicator');
-      let currentIndex = 0;
-      
-      // Store current index on the modal element
-      modal._currentCarouselIndex = 0;
       updateCarouselPosition(modal);
     }
 
     function moveCarousel(modal, direction) {
-      const product = modal.querySelector('.product-carousel');
-      if (!product) return;
-      
       const items = modal.querySelectorAll('.carousel-item');
       const itemCount = items.length;
-      let newIndex = modal._currentCarouselIndex + direction;
+      let newIndex = (modal._currentCarouselIndex || 0) + direction;
       
       // Wrap around
       if (newIndex < 0) newIndex = itemCount - 1;
@@ -950,6 +955,47 @@
       });
     });
 
+    // Fetch user data from the backend
+    async function fetchUserData() {
+      try {
+        console.log('Fetching user data...');
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+          console.log('No token found. User is not logged in.');
+          return;
+        }
+
+        const response = await fetch(`${backendUrl}/api/auth/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          console.log('User data fetched:', user);
+
+          // Update the dropdown button with the user's data
+          document.getElementById('username').textContent = user.username;
+          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
+        } else {
+          console.error('Failed to fetch user data:', response.status, response.statusText);
+        }
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+      }
+    }
+
+    // Logout functionality
+    const logoutLink = document.getElementById('logout-link');
+    if (logoutLink) {
+      logoutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        window.location.href = '/login.html';
+      });
+    }
   </script>
 </body>
 </html>
