@@ -3,6 +3,7 @@ const router = express.Router();
 const productController = require('../controllers/productController');
 const authMiddleware = require('../middleware/authMiddleware');
 const multer = require('multer');
+const Product = require('../models/Product');
 
 // Configure multer for memory storage (no disk storage needed)
 const storage = multer.memoryStorage();
@@ -68,6 +69,22 @@ router.get('/', async (req, res) => {
     console.error('Error fetching products:', err);
     res.status(500).json({ message: 'Server error' });
   }
+});
+router.get('/', async (req, res) => {
+    try {
+        const products = await Product.find().sort({ createdAt: -1 });
+        
+        // Add full backend URL to image paths if needed
+        const productsWithFullUrls = products.map(product => ({
+            ...product.toObject(),
+            images: product.images // Cloudinary URLs are already complete
+        }));
+        
+        res.json(productsWithFullUrls);
+    } catch (err) {
+        console.error('Error fetching products:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
 module.exports = router;
