@@ -2,11 +2,14 @@ const Product = require('../models/Product');
 const cloudinary = require('../config/cloudinary');
 const streamifier = require('streamifier');
 
-// Get all products with user info
+// Update the getAllProducts and getProductById methods to properly populate user data
 const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find()
-            .populate('userId', 'username email')
+            .populate({
+                path: 'userId',
+                select: 'username email'
+            })
             .sort({ createdAt: -1 });
         res.json(products);
     } catch (err) {
@@ -15,11 +18,13 @@ const getAllProducts = async (req, res) => {
     }
 };
 
-// Get single product by ID with user info
 const getProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id)
-            .populate('userId', 'username email');
+            .populate({
+                path: 'userId',
+                select: 'username email'
+            });
             
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
