@@ -1,4 +1,6 @@
 const Product = require('../models/Product');
+const cloudinary = require('../config/cloudinary');
+const streamifier = require('streamifier');
 
 const createProduct = async (req, res) => {
     try {
@@ -8,8 +10,28 @@ const createProduct = async (req, res) => {
             return res.status(400).json({ message: 'At least one image is required' });
         }
 
-        // Store all images in one product
-        const images = req.files.map(file => `/uploads/${file.filename}`);
+        // Upload all images to Cloudinary
+        const uploadPromises = req.files.map(file => {
+            return new Promise((resolve, reject) => {
+                const uploadStream = cloudinary.uploader.upload_stream(
+                    {
+                        folder: `green-tunisia/products/user-${req.userId}`,
+                        resource_type: 'auto',
+                        quality: 'auto',
+                        fetch_format: 'auto'
+                    },
+                    (error, result) => {
+                        if (error) reject(error);
+                        else resolve(result);
+                    }
+                );
+                
+                streamifier.createReadStream(file.buffer).pipe(uploadStream);
+            });
+        });
+
+        const uploadResults = await Promise.all(uploadPromises);
+        const images = uploadResults.map(result => result.secure_url);
         
         const product = new Product({
             userId: req.userId,
@@ -19,17 +41,14 @@ const createProduct = async (req, res) => {
             phoneNumber,
             address,
             description,
-            images  // This now contains all uploaded images
+            images
         });
 
         await product.save();
         
         res.status(201).json({ 
             message: 'Product created successfully', 
-            product: {
-                ...product.toObject(),
-                images: product.images.map(img => `${req.protocol}://${req.get('host')}${img}`)
-            }
+            product
         });
     } catch (err) {
         console.error('Error creating product:', err);
@@ -37,18 +56,10 @@ const createProduct = async (req, res) => {
     }
 };
 
-// [Keep all other existing controller functions exactly as they were]
 const getUserProducts = async (req, res) => {
     try {
         const products = await Product.find({ userId: req.userId }).sort({ createdAt: -1 });
-        
-        // Add full backend URL to image paths
-        const productsWithFullUrls = products.map(product => ({
-            ...product.toObject(),
-            images: product.images.map(img => `https://green-tunisia-h3ji.onrender.com${img}`)
-        }));
-        
-        res.json(productsWithFullUrls);
+        res.json(products);
     } catch (err) {
         console.error('Error fetching user products:', err);
         res.status(500).json({ message: 'Server error' });
@@ -59,38 +70,53 @@ const updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const { category, name, price, phoneNumber, address, description } = req.body;
-        const newImages = req.files?.map(file => `/uploads/${file.filename}`) || [];
 
         const product = await Product.findOne({ _id: id, userId: req.userId });
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        // Update fields
+        let images = product.images;
+        
+        // If new images were uploaded
+        if (req.files && req.files.length > 0) {
+            // Upload new images to Cloudinary
+            const uploadPromises = req.files.map(file => {
+                return new Promise((resolve, reject) => {
+                    const uploadStream = cloudinary.uploader.upload_stream(
+                        {
+                            folder: `green-tunisia/products/user-${req.userId}`,
+                            resource_type: 'auto'
+                        },
+                        (error, result) => {
+                            if (error) reject(error);
+                            else resolve(result);
+                        }
+                    );
+                    
+                    streamifier.createReadStream(file.buffer).pipe(uploadStream);
+                });
+            });
+
+            const uploadResults = await Promise.all(uploadPromises);
+            images = uploadResults.map(result => result.secure_url);
+        }
+
+        // Update product fields
         product.category = category || product.category;
         product.name = name || product.name;
         product.price = price || product.price;
         product.phoneNumber = phoneNumber || product.phoneNumber;
         product.address = address || product.address;
         product.description = description || product.description;
-        
-        // Only update images if new ones were uploaded
-        if (newImages.length > 0) {
-            product.images = newImages;
-        }
-
+        product.images = images;
         product.updatedAt = Date.now();
-        await product.save();
         
-        // Return product with full image URLs
-        const productWithFullUrls = {
-            ...product.toObject(),
-            images: product.images.map(img => `https://green-tunisia-h3ji.onrender.com${img}`)
-        };
+        await product.save();
         
         res.json({ 
             message: 'Product updated successfully', 
-            product: productWithFullUrls 
+            product
         });
     } catch (err) {
         console.error('Error updating product:', err);
@@ -105,6 +131,16 @@ const deleteProduct = async (req, res) => {
         
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
+        }
+        
+        // Delete images from Cloudinary
+        if (product.images && product.images.length > 0) {
+            const deletePromises = product.images.map(imageUrl => {
+                const publicId = imageUrl.split('/').slice(-2).join('/').split('.')[0];
+                return cloudinary.uploader.destroy(publicId);
+            });
+            
+            await Promise.all(deletePromises);
         }
         
         res.json({ message: 'Product deleted successfully' });
