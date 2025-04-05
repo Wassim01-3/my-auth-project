@@ -3,35 +3,22 @@ const router = express.Router();
 const productController = require('../controllers/productController');
 const authMiddleware = require('../middleware/authMiddleware');
 const multer = require('multer');
-const path = require('path'); // THIS WAS MISSING
-const fs = require('fs');
 
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '../../public/uploads/'));
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + '-' + file.originalname);
-    }
-});
-
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-        cb(null, true);
-    } else {
-        cb(new Error('Only image files are allowed!'), false);
-    }
-};
-
+// Configure multer for memory storage (no disk storage needed)
+const storage = multer.memoryStorage();
 const upload = multer({ 
     storage: storage,
     limits: { 
         fileSize: 3 * 1024 * 1024, // 3MB
         files: 5 // Max 5 files
     },
-    fileFilter: fileFilter
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only image files are allowed!'), false);
+        }
+    }
 });
 
 // Error handling middleware for file uploads
