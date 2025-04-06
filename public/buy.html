@@ -805,51 +805,22 @@
 
     // View product details in modal
     window.viewProductDetails = async function(productId) {
-        console.log(`Viewing product details for ID: ${productId}`);
         try {
-            // Show loading state
             const modal = createModal();
-            
-            // Fetch product data
-            console.log(`Fetching product details for ID: ${productId}`);
             const response = await fetch(`${backendUrl}/api/products/${productId}`);
-            if (!response.ok) {
-                throw new Error('Product not found');
-            }
+            if (!response.ok) throw new Error('Product not found');
             
             const product = await response.json();
-            console.log('Product details received:', product);
-            
-            // Ensure we have proper product data
-            if (!product) {
-                throw new Error('Product data is invalid');
-            }
+            if (!product) throw new Error('Product data is invalid');
 
-            // Handle seller information
-            let seller = {
-                username: 'Seller',
-                email: 'Contact for details'
-            };
-
-            if (product.userId && typeof product.userId === 'object') {
-                seller = {
-                    username: product.userId.username || 'Seller',
-                    email: product.userId.email || 'Contact for details'
-                };
-            }
-            
-            // Update modal with product data
-            updateModalContent(modal, product, seller);
-            
+            updateModalContent(modal, product);
         } catch (err) {
             console.error('Error viewing product:', err);
             alert(`Error: ${err.message || 'Failed to load product details'}`);
         }
     };
 
-    // Create modal
     function createModal() {
-        console.log('Creating modal...');
         const modal = document.createElement('div');
         modal.className = 'product-modal';
         modal.innerHTML = `
@@ -863,47 +834,33 @@
             </div>
         `;
         document.body.appendChild(modal);
-        
-        // Add close handlers
-        modal.querySelector('.close-modal').addEventListener('click', () => closeModal(modal));
-        modal.querySelector('.modal-overlay').addEventListener('click', () => closeModal(modal));
-        
-        // Show modal
-        setTimeout(() => {
-            modal.classList.add('active');
-            console.log('Modal shown');
-        }, 10);
-        
         return modal;
     }
 
-    // Update modal content with product data - FIXED VERSION
-    function updateModalContent(modal, product, seller) {
-        console.log('Updating modal content with product data');
-        
+    function updateModalContent(modal, product) {
         const images = product.images || [];
-        const itemWidth = 100 / Math.max(1, images.length);
-        
-        console.log(`Product has ${images.length} images, each item width: ${itemWidth}%`);
-        
+        const seller = product.userId && typeof product.userId === 'object' ? {
+            username: product.userId.username || 'Seller',
+            email: product.userId.email || 'Contact for details'
+        } : {
+            username: 'Seller',
+            email: 'Contact for details'
+        };
+
         modal.innerHTML = `
             <div class="modal-overlay"></div>
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
                 
-                <!-- Image Carousel - FIXED STRUCTURE -->
+                <!-- Fixed Carousel Structure -->
                 <div class="image-carousel">
-                    <div class="carousel-inner" style="width: ${images.length * 100}%">
-                        ${images.length ? images.map((img, index) => {
-                            console.log(`Adding image ${index}: ${img}`);
-                            return `
-                                <div class="carousel-item" style="width: ${itemWidth}%">
-                                    <img src="${img}" alt="${product.name}" 
-                                         onerror="this.onerror=null;this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'"
-                                         style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto;">
-                                </div>
-                            `;
-                        }).join('') : `
+                    <div class="carousel-inner">
+                        ${images.length ? images.map(img => `
+                            <div class="carousel-item">
+                                <img src="${img}" alt="${product.name}" 
+                                     onerror="this.onerror=null;this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
+                            </div>
+                        `).join('') : `
                             <div class="no-images">
                                 <i class="fas fa-image"></i>
                                 <p>No images available</p>
@@ -916,11 +873,7 @@
                             <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
                             <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
                         </div>
-                        <div class="carousel-indicators">
-                            ${images.map((_, i) => `
-                                <span class="indicator ${i === 0 ? 'active' : ''}" data-index="${i}"></span>
-                            `).join('')}
-                        </div>
+                        <div class="carousel-indicators"></div>
                     ` : ''}
                 </div>
                 
@@ -940,7 +893,6 @@
                         <p>${product.description || 'No description available'}</p>
                     </div>
                     
-                    <!-- Seller Information -->
                     <div class="seller-info">
                         <h3><i class="fas fa-user"></i> Seller Information</h3>
                         <div class="seller-details">
@@ -951,99 +903,70 @@
                 </div>
             </div>
         `;
-        
+
         if (images.length > 1) {
-            console.log('Setting up carousel controls');
             setupCarousel(modal, images);
         }
+
+        modal.querySelector('.close-modal').addEventListener('click', () => {
+            modal.classList.remove('active');
+            setTimeout(() => modal.remove(), 300);
+        });
         
-        // Re-add close handlers
-        modal.querySelector('.close-modal').addEventListener('click', () => closeModal(modal));
-        modal.querySelector('.modal-overlay').addEventListener('click', () => closeModal(modal));
+        modal.querySelector('.modal-overlay').addEventListener('click', () => {
+            modal.classList.remove('active');
+            setTimeout(() => modal.remove(), 300);
+        });
         
-        console.log('Modal content updated');
+        setTimeout(() => modal.classList.add('active'), 10);
     }
 
-    // Setup carousel - UPDATED WITH DEBUGGING
     function setupCarousel(modal, images) {
-        console.log('Initializing carousel with', images.length, 'images');
         let currentIndex = 0;
         const inner = modal.querySelector('.carousel-inner');
         const items = modal.querySelectorAll('.carousel-item');
+        const indicatorsContainer = modal.querySelector('.carousel-indicators');
+        
+        // Create indicators
+        indicatorsContainer.innerHTML = images.map((_, i) => `
+            <span class="indicator ${i === 0 ? 'active' : ''}" data-index="${i}"></span>
+        `).join('');
+        
         const indicators = modal.querySelectorAll('.indicator');
         const prevBtn = modal.querySelector('.carousel-prev');
         const nextBtn = modal.querySelector('.carousel-next');
         
-        // Debug: Verify DOM elements
-        console.log('Carousel elements:', {
-            inner,
-            items,
-            indicators,
-            prevBtn,
-            nextBtn
-        });
-
-        // Set initial position
-        updateCarousel();
-        
         function updateCarousel() {
-            console.log(`Updating carousel to index ${currentIndex}`);
-            const translateX = -currentIndex * (100 / images.length);
-            inner.style.transform = `translateX(${translateX}%)`;
+            inner.style.transform = `translateX(-${currentIndex * 100}%)`;
             
             indicators.forEach((ind, i) => {
                 ind.classList.toggle('active', i === currentIndex);
-            });
-            
-            // Debug: Verify item positions
-            console.log('Current carousel state:', {
-                translateX,
-                currentIndex,
-                items: Array.from(items).map((item, i) => ({
-                    index: i,
-                    isActive: i === currentIndex,
-                    imgSrc: item.querySelector('img')?.src
-                }))
             });
         }
         
         prevBtn.addEventListener('click', () => {
             currentIndex = (currentIndex - 1 + images.length) % images.length;
-            console.log('Previous clicked, new index:', currentIndex);
             updateCarousel();
         });
         
         nextBtn.addEventListener('click', () => {
             currentIndex = (currentIndex + 1) % images.length;
-            console.log('Next clicked, new index:', currentIndex);
             updateCarousel();
         });
         
         indicators.forEach((ind, i) => {
             ind.addEventListener('click', () => {
-                console.log('Indicator clicked:', i);
                 currentIndex = i;
                 updateCarousel();
             });
         });
         
-        // Touch support
-        let touchStartX = 0;
-        inner.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            console.log('Touch start:', touchStartX);
-        }, { passive: true });
-        
-        inner.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].screenX;
-            console.log('Touch end:', touchEndX);
-            if (touchEndX < touchStartX - 50) {
-                currentIndex = (currentIndex + 1) % images.length;
-            } else if (touchEndX > touchStartX + 50) {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-            }
-            updateCarousel();
-        }, { passive: true });
+        // Initialize
+        inner.style.width = `${images.length * 100}%`;
+        items.forEach(item => {
+            item.style.width = `${100 / images.length}%`;
+        });
+        updateCarousel();
     }
 
     function closeModal(modal) {
