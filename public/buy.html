@@ -709,6 +709,13 @@
       <i class="fa-regular fa-copyright"></i> 2025 Green Tunisia - All Rights Reserved
     </div>
   </footer>
+  <!-- First load jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Then load Slick Carousel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <!-- Load Slick Carousel CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
 
   <script>
     const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
@@ -932,37 +939,7 @@
         `;
 
         // Initialize Slick Carousel if there are images
-        if (images.length) {
-            // Load Slick CSS and JS dynamically if not already loaded
-            if (!document.querySelector('link[href*="slick.css"]')) {
-                const slickCSS = document.createElement('link');
-                slickCSS.rel = 'stylesheet';
-                slickCSS.href = 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css';
-                document.head.appendChild(slickCSS);
-                
-                const slickThemeCSS = document.createElement('link');
-                slickThemeCSS.rel = 'stylesheet';
-                slickThemeCSS.href = 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css';
-                document.head.appendChild(slickThemeCSS);
-            }
-            
-            // Load Slick JS if not already loaded
-            if (!window.jQuery || !window.jQuery.fn.slick) {
-                const jqueryScript = document.createElement('script');
-                jqueryScript.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
-                jqueryScript.onload = initSlick;
-                document.body.appendChild(jqueryScript);
-                
-                const slickScript = document.createElement('script');
-                slickScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js';
-                slickScript.onload = initSlick;
-                document.body.appendChild(slickScript);
-            } else {
-                initSlick();
-            }
-        }
-
-        function initSlick() {
+        if (images.length && typeof $.fn.slick !== 'undefined') {
             $(modal.querySelector('.slick-carousel')).slick({
                 dots: true,
                 infinite: true,
@@ -996,7 +973,7 @@
 
     function closeModal(modal) {
         // Destroy slick carousel if it exists
-        if (window.jQuery && modal.querySelector('.slick-carousel')) {
+        if (modal.querySelector('.slick-carousel') && typeof $.fn.slick !== 'undefined') {
             $(modal.querySelector('.slick-carousel')).slick('unslick');
         }
         
