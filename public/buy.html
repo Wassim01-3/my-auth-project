@@ -918,13 +918,24 @@
             <span class="close-modal">&times;</span>
             
             ${images.length ? `
-                <div class="slick-carousel">
-                    ${images.map(img => `
-                        <div class="carousel-slide">
-                            <img src="${img}" alt="${product.name}" 
-                                 onerror="this.onerror=null;this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
-                        </div>
-                    `).join('')}
+                <div class="carousel-container">
+                    <div class="carousel-slides">
+                        ${images.map(img => `
+                            <div class="carousel-slide">
+                                <div class="slide-image-container">
+                                    <img src="${img}" alt="${product.name}" 
+                                         onerror="this.onerror=null;this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="carousel-button prev" aria-label="Previous image">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-button next" aria-label="Next image">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="carousel-dots"></div>
                 </div>
             ` : `
                 <div class="no-images">
@@ -959,64 +970,98 @@
             </div>
         `;
 
+        // Initialize carousel if there are images
+        if (images.length) {
+            initCustomCarousel(modal);
+        }
+
         // Close modal handler
         modal.querySelector('.close-modal').addEventListener('click', () => {
             closeModal(modal);
         });
 
-        // Initialize Slick Carousel if there are images
-        if (images.length && typeof $.fn.slick !== 'undefined') {
-            setTimeout(() => {
-                const carousel = $(modal.querySelector('.slick-carousel'));
-                
-                carousel.slick({
-                    dots: true,
-                    infinite: true,
-                    speed: 500,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    adaptiveHeight: false,
-                    arrows: true,
-                    prevArrow: '<button type="button" class="slick-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>',
-                    nextArrow: '<button type="button" class="slick-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>',
-                    cssEase: 'ease-in-out',
-                    autoplay: false,
-                    pauseOnHover: true,
-                    responsive: [
-                        {
-                            breakpoint: 768,
-                            settings: {
-                                arrows: true,
-                                dots: true
-                            }
-                        }
-                    ]
-                });
-                
-                // Add keyboard navigation
-                modal.addEventListener('keydown', function handleKeyDown(e) {
-                    if (e.key === 'ArrowLeft') {
-                        carousel.slick('slickPrev');
-                    } else if (e.key === 'ArrowRight') {
-                        carousel.slick('slickNext');
-                    } else if (e.key === 'Escape') {
-                        closeModal(modal);
-                    }
-                });
-            }, 50);
-        }
-
         // Focus modal for keyboard navigation
         modal.focus();
     }
 
+    function initCustomCarousel(modal) {
+        const carousel = modal.querySelector('.carousel-slides');
+        const slides = modal.querySelectorAll('.carousel-slide');
+        const dotsContainer = modal.querySelector('.carousel-dots');
+        const prevButton = modal.querySelector('.carousel-button.prev');
+        const nextButton = modal.querySelector('.carousel-button.next');
+        
+        let currentIndex = 0;
+        const slideCount = slides.length;
+        
+        // Create dots
+        slides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.classList.add('carousel-dot');
+            dot.setAttribute('aria-label', `Go to image ${index + 1}`);
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+            });
+            dotsContainer.appendChild(dot);
+        });
+        
+        const dots = modal.querySelectorAll('.carousel-dot');
+        
+        // Update carousel state
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Update active dot
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+            
+            // Disable/enable buttons at boundaries
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === slideCount - 1;
+        }
+        
+        // Go to specific slide
+        function goToSlide(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+        
+        // Next slide
+        function nextSlide() {
+            if (currentIndex < slideCount - 1) {
+                currentIndex++;
+                updateCarousel();
+            }
+        }
+        
+        // Previous slide
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        }
+        
+        // Event listeners
+        prevButton.addEventListener('click', prevSlide);
+        nextButton.addEventListener('click', nextSlide);
+        
+        // Keyboard navigation
+        modal.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+        
+        // Initialize
+        updateCarousel();
+    }
+
     function closeModal(modal) {
         if (!modal) return;
-        
-        // Destroy slick carousel if it exists
-        if (modal.querySelector('.slick-carousel') && typeof $.fn.slick !== 'undefined') {
-            $(modal.querySelector('.slick-carousel')).slick('unslick');
-        }
         
         modal.classList.remove('active');
         setTimeout(() => {
