@@ -877,35 +877,30 @@
         return modal;
     }
 
-    // Update modal content with product data
+    // Update modal content with product data - FIXED VERSION
     function updateModalContent(modal, product, seller) {
         console.log('Updating modal content with product data');
         
-        // Handle product data
-        const productName = product.name || 'Unnamed Product';
-        const productDescription = product.description || 'No description available';
-        const productPrice = product.price ? `${product.price} TND` : 'N/A';
-        const productCategory = product.category || 'Uncategorized';
-        const productAddress = product.address || 'Location not specified';
-        const productPhone = product.phoneNumber || 'Phone not provided';
         const images = product.images || [];
+        const itemWidth = 100 / Math.max(1, images.length);
         
-        console.log(`Product has ${images.length} images`);
+        console.log(`Product has ${images.length} images, each item width: ${itemWidth}%`);
         
         modal.innerHTML = `
             <div class="modal-overlay"></div>
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
                 
-                <!-- Image Carousel -->
+                <!-- Image Carousel - FIXED STRUCTURE -->
                 <div class="image-carousel">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style="width: ${images.length * 100}%">
                         ${images.length ? images.map((img, index) => {
                             console.log(`Adding image ${index}: ${img}`);
                             return `
-                                <div class="carousel-item">
-                                    <img src="${img}" alt="${productName}" 
-                                         onerror="console.error('Failed to load image: ${img}'); this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
+                                <div class="carousel-item" style="width: ${itemWidth}%">
+                                    <img src="${img}" alt="${product.name}" 
+                                         onerror="this.onerror=null;this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'"
+                                         style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto;">
                                 </div>
                             `;
                         }).join('') : `
@@ -931,18 +926,18 @@
                 
                 <!-- Product Details -->
                 <div class="product-info">
-                    <h2>${productName}</h2>
-                    <div class="price">${productPrice}</div>
+                    <h2>${product.name || 'Unnamed Product'}</h2>
+                    <div class="price">${product.price ? `${product.price} TND` : 'N/A'}</div>
                     
                     <div class="details-grid">
-                        <div><i class="fas fa-tag"></i> ${productCategory}</div>
-                        <div><i class="fas fa-map-marker-alt"></i> ${productAddress}</div>
-                        <div><i class="fas fa-phone"></i> ${productPhone}</div>
+                        <div><i class="fas fa-tag"></i> ${product.category || 'Uncategorized'}</div>
+                        <div><i class="fas fa-map-marker-alt"></i> ${product.address || 'Location not specified'}</div>
+                        <div><i class="fas fa-phone"></i> ${product.phoneNumber || 'Phone not provided'}</div>
                     </div>
                     
                     <div class="description">
                         <h3>Description</h3>
-                        <p>${productDescription}</p>
+                        <p>${product.description || 'No description available'}</p>
                     </div>
                     
                     <!-- Seller Information -->
@@ -957,7 +952,6 @@
             </div>
         `;
         
-        // Add event listeners for carousel if there are multiple images
         if (images.length > 1) {
             console.log('Setting up carousel controls');
             setupCarousel(modal, images);
@@ -970,9 +964,9 @@
         console.log('Modal content updated');
     }
 
-    // Setup carousel
+    // Setup carousel - UPDATED WITH DEBUGGING
     function setupCarousel(modal, images) {
-        console.log('Initializing carousel');
+        console.log('Initializing carousel with', images.length, 'images');
         let currentIndex = 0;
         const inner = modal.querySelector('.carousel-inner');
         const items = modal.querySelectorAll('.carousel-item');
@@ -980,12 +974,13 @@
         const prevBtn = modal.querySelector('.carousel-prev');
         const nextBtn = modal.querySelector('.carousel-next');
         
-        console.log(`Found ${items.length} carousel items`);
-        
-        // Debug: Log all image sources
-        items.forEach((item, i) => {
-            const img = item.querySelector('img');
-            console.log(`Item ${i} image src: ${img?.src}`);
+        // Debug: Verify DOM elements
+        console.log('Carousel elements:', {
+            inner,
+            items,
+            indicators,
+            prevBtn,
+            nextBtn
         });
 
         // Set initial position
@@ -993,79 +988,62 @@
         
         function updateCarousel() {
             console.log(`Updating carousel to index ${currentIndex}`);
-            // Calculate the translateX value based on current index
-            const translateX = -currentIndex * 100;
+            const translateX = -currentIndex * (100 / images.length);
             inner.style.transform = `translateX(${translateX}%)`;
             
-            // Update indicators
             indicators.forEach((ind, i) => {
                 ind.classList.toggle('active', i === currentIndex);
             });
+            
+            // Debug: Verify item positions
+            console.log('Current carousel state:', {
+                translateX,
+                currentIndex,
+                items: Array.from(items).map((item, i) => ({
+                    index: i,
+                    isActive: i === currentIndex,
+                    imgSrc: item.querySelector('img')?.src
+                }))
+            });
         }
         
-        // Previous button
         prevBtn.addEventListener('click', () => {
             currentIndex = (currentIndex - 1 + images.length) % images.length;
-            console.log(`Previous button clicked, new index: ${currentIndex}`);
+            console.log('Previous clicked, new index:', currentIndex);
             updateCarousel();
         });
         
-        // Next button
         nextBtn.addEventListener('click', () => {
             currentIndex = (currentIndex + 1) % images.length;
-            console.log(`Next button clicked, new index: ${currentIndex}`);
+            console.log('Next clicked, new index:', currentIndex);
             updateCarousel();
         });
         
-        // Indicator clicks
         indicators.forEach((ind, i) => {
             ind.addEventListener('click', () => {
-                console.log(`Indicator ${i} clicked`);
+                console.log('Indicator clicked:', i);
                 currentIndex = i;
                 updateCarousel();
             });
         });
         
-        // Touch support for mobile
+        // Touch support
         let touchStartX = 0;
-        let touchEndX = 0;
-        
         inner.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            console.log('Touch start:', touchStartX);
         }, { passive: true });
         
         inner.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-        
-        function handleSwipe() {
+            const touchEndX = e.changedTouches[0].screenX;
+            console.log('Touch end:', touchEndX);
             if (touchEndX < touchStartX - 50) {
-                // Swipe left - next
                 currentIndex = (currentIndex + 1) % images.length;
-                console.log(`Swipe left detected, new index: ${currentIndex}`);
             } else if (touchEndX > touchStartX + 50) {
-                // Swipe right - previous
                 currentIndex = (currentIndex - 1 + images.length) % images.length;
-                console.log(`Swipe right detected, new index: ${currentIndex}`);
             }
             updateCarousel();
-        }
-        
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (!modal.classList.contains('active')) return;
-            
-            if (e.key === 'ArrowLeft') {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                console.log(`Left arrow pressed, new index: ${currentIndex}`);
-                updateCarousel();
-            } else if (e.key === 'ArrowRight') {
-                currentIndex = (currentIndex + 1) % images.length;
-                console.log(`Right arrow pressed, new index: ${currentIndex}`);
-                updateCarousel();
-            }
-        });
+        }, { passive: true });
     }
 
     function closeModal(modal) {
