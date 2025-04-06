@@ -899,7 +899,7 @@
             ${images.length ? `
                 <div class="slick-carousel">
                     ${images.map(img => `
-                        <div>
+                        <div class="carousel-slide">
                             <img src="${img}" alt="${product.name}" 
                                  onerror="this.onerror=null;this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
                         </div>
@@ -940,16 +940,29 @@
 
         // Initialize Slick Carousel if there are images
         if (images.length && typeof $.fn.slick !== 'undefined') {
-            $(modal.querySelector('.slick-carousel')).slick({
-                dots: true,
-                infinite: true,
-                speed: 300,
-                slidesToShow: 1,
-                adaptiveHeight: true,
-                arrows: true,
-                prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
-                nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>'
-            });
+            // Wait a brief moment for DOM to update
+            setTimeout(() => {
+                $(modal.querySelector('.slick-carousel')).slick({
+                    dots: true,
+                    infinite: true,
+                    speed: 300,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    adaptiveHeight: true,
+                    arrows: true,
+                    prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
+                    nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>',
+                    responsive: [
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                arrows: true,
+                                dots: true
+                            }
+                        }
+                    ]
+                });
+            }, 50);
         }
 
         modal.querySelector('.close-modal').addEventListener('click', () => {
