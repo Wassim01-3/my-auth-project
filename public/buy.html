@@ -872,6 +872,8 @@
                 </div>
             `;
             
+            modal.classList.add('active');
+            
             const response = await fetch(`${backendUrl}/api/products/${productId}`);
             if (!response.ok) throw new Error('Product not found');
             
@@ -893,6 +895,12 @@
             <div class="modal-content"></div>
         `;
         document.body.appendChild(modal);
+        
+        // Close modal when clicking overlay
+        modal.querySelector('.modal-overlay').addEventListener('click', () => {
+            closeModal(modal);
+        });
+        
         return modal;
     }
 
@@ -951,20 +959,29 @@
             </div>
         `;
 
+        // Close modal handler
+        modal.querySelector('.close-modal').addEventListener('click', () => {
+            closeModal(modal);
+        });
+
         // Initialize Slick Carousel if there are images
         if (images.length && typeof $.fn.slick !== 'undefined') {
-            // Wait a brief moment for DOM to update
             setTimeout(() => {
-                $(modal.querySelector('.slick-carousel')).slick({
+                const carousel = $(modal.querySelector('.slick-carousel'));
+                
+                carousel.slick({
                     dots: true,
                     infinite: true,
-                    speed: 300,
+                    speed: 500,
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    adaptiveHeight: true,
+                    adaptiveHeight: false,
                     arrows: true,
-                    prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
-                    nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>',
+                    prevArrow: '<button type="button" class="slick-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>',
+                    nextArrow: '<button type="button" class="slick-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>',
+                    cssEase: 'ease-in-out',
+                    autoplay: false,
+                    pauseOnHover: true,
                     responsive: [
                         {
                             breakpoint: 768,
@@ -975,29 +992,27 @@
                         }
                     ]
                 });
+                
+                // Add keyboard navigation
+                modal.addEventListener('keydown', function handleKeyDown(e) {
+                    if (e.key === 'ArrowLeft') {
+                        carousel.slick('slickPrev');
+                    } else if (e.key === 'ArrowRight') {
+                        carousel.slick('slickNext');
+                    } else if (e.key === 'Escape') {
+                        closeModal(modal);
+                    }
+                });
             }, 50);
         }
 
-        modal.querySelector('.close-modal').addEventListener('click', () => {
-            closeModal(modal);
-        });
-        
-        modal.querySelector('.modal-overlay').addEventListener('click', () => {
-            closeModal(modal);
-        });
-        
-        // Add keyboard event listener for ESC key
-        document.addEventListener('keydown', function handleEsc(e) {
-            if (e.key === 'Escape') {
-                closeModal(modal);
-                document.removeEventListener('keydown', handleEsc);
-            }
-        });
-        
-        setTimeout(() => modal.classList.add('active'), 10);
+        // Focus modal for keyboard navigation
+        modal.focus();
     }
 
     function closeModal(modal) {
+        if (!modal) return;
+        
         // Destroy slick carousel if it exists
         if (modal.querySelector('.slick-carousel') && typeof $.fn.slick !== 'undefined') {
             $(modal.querySelector('.slick-carousel')).slick('unslick');
@@ -1094,6 +1109,6 @@
             `;
         }
     }
-  </script>
+</script>
 </body>
 </html>
