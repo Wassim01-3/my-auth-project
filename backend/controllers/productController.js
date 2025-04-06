@@ -104,7 +104,6 @@ const createProduct = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
-
 // Update product
 const updateProduct = async (req, res) => {
     try {
