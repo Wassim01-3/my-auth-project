@@ -1038,47 +1038,47 @@
 
     // Render products with identical view functionality to buy page
     function renderProducts(products) {
-        const container = document.getElementById('products-container');
-        if (!container) return;
+    const container = document.getElementById('products-container');
+    if (!container) return;
 
-        if (products.length === 0) {
-            container.innerHTML = '<div class="no-products"><p>You haven\'t listed any products yet.</p></div>';
-            return;
-        }
-
-        container.innerHTML = products.map(product => {
-            const mainImage = product.images.length > 0 ? 
-                product.images[0] : 
-                'https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png';
-            
-            return `
-                <div class="product-card" data-id="${product._id}">
-                    <div class="product-images">
-                        <img src="${mainImage}" alt="${product.name}" 
-                             onerror="this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
-                        ${product.images.length > 1 ? 
-                            `<span class="image-count-badge">+${product.images.length-1}</span>` : ''}
-                    </div>
-                    <div class="product-details">
-                        <h3>${product.name}</h3>
-                        <p><strong>Category:</strong> ${product.category}</p>
-                        <p><strong>Price:</strong> ${product.price} TND</p>
-                        <div class="product-actions">
-                            <button class="btn-view" onclick="viewProductDetails('${product._id}')">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="btn-edit" onclick="editProduct('${product._id}')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="btn-delete" onclick="deleteProduct('${product._id}')">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }).join('');
+    if (products.length === 0) {
+        container.innerHTML = '<div class="no-products"><p>You haven\'t listed any products yet.</p></div>';
+        return;
     }
+
+    container.innerHTML = products.map(product => {
+        const mainImage = product.images.length > 0 ? 
+            product.images[0] : 
+            'https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png';
+        
+        return `
+            <div class="product-card" data-id="${product._id}">
+                <div class="product-images">
+                    <img src="${mainImage}" alt="${product.name}" 
+                         onerror="this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
+                    ${product.images.length > 1 ? 
+                        `<span class="image-count-badge">+${product.images.length-1}</span>` : ''}
+                </div>
+                <div class="product-details">
+                    <h3>${product.name}</h3>
+                    <div class="product-meta">
+                        <span class="product-price">${product.price} TND</span>
+                        <span class="product-category">${product.category}</span>
+                    </div>
+                    <p class="product-description">${product.description.substring(0, 100)}${product.description.length > 100 ? '...' : ''}</p>
+                    <div class="product-contact">
+                        <span class="product-location">
+                            <i class="fas fa-map-marker-alt"></i> ${product.address.substring(0, 20)}${product.address.length > 20 ? '...' : ''}
+                        </span>
+                    </div>
+                    <button class="btn-view" onclick="viewProductDetails('${product._id}')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 
     // View product details in modal (identical to buy page)
     window.viewProductDetails = async function(productId) {
@@ -1130,84 +1130,83 @@
     }
 
     function updateModalContent(modal, product) {
-        const images = product.images || [];
-        const seller = product.userId && typeof product.userId === 'object' ? {
-            username: product.userId.username || 'Seller',
-            email: product.userId.email || 'Contact for details'
-        } : {
-            username: 'Seller',
-            email: 'Contact for details'
-        };
+    const images = product.images || [];
+    const seller = product.userId && typeof product.userId === 'object' ? {
+        username: product.userId.username || 'Seller',
+        email: product.userId.email || 'Contact for details'
+    } : {
+        username: 'Seller',
+        email: 'Contact for details'
+    };
 
-        modal.querySelector('.modal-content').innerHTML = `
-            <span class="close-modal">&times;</span>
-            
-            ${images.length ? `
-                <div class="carousel-container">
-                    <div class="carousel-slides">
-                        ${images.map(img => `
-                            <div class="carousel-slide">
-                                <div class="slide-image-container">
-                                    <img src="${img}" alt="${product.name}" 
-                                         onerror="this.onerror=null;this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
-                                </div>
+    modal.querySelector('.modal-content').innerHTML = `
+        <button class="close-modal" aria-label="Close modal">&times;</button>
+        
+        ${images.length ? `
+            <div class="carousel-container">
+                <div class="carousel-slides">
+                    ${images.map(img => `
+                        <div class="carousel-slide">
+                            <div class="slide-image-container">
+                                <img src="${img}" alt="${product.name}" 
+                                     onerror="this.onerror=null;this.src='https://res.cloudinary.com/demo/image/upload/v1626286349/default-product.png'">
                             </div>
-                        `).join('')}
-                    </div>
-                    <button class="carousel-button prev" aria-label="Previous image">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="carousel-button next" aria-label="Next image">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <div class="carousel-dots"></div>
+                        </div>
+                    `).join('')}
                 </div>
-            ` : `
-                <div class="no-images">
-                    <i class="fas fa-image"></i>
-                    <p>No images available</p>
-                </div>
-            `}
+                <button class="carousel-button prev" aria-label="Previous image">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-button next" aria-label="Next image">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="carousel-dots"></div>
+            </div>
+        ` : `
+            <div class="no-images">
+                <i class="fas fa-image"></i>
+                <p>No images available</p>
+            </div>
+        `}
+        
+        <div class="product-info">
+            <h2>${product.name || 'Unnamed Product'}</h2>
+            <div class="price">${product.price ? `${product.price} TND` : 'N/A'}</div>
             
-            <div class="product-info">
-                <h2>${product.name || 'Unnamed Product'}</h2>
-                <div class="price">${product.price ? `${product.price} TND` : 'N/A'}</div>
-                
-                <div class="details-grid">
-                    <div><i class="fas fa-tag"></i> ${product.category || 'Uncategorized'}</div>
-                    <div><i class="fas fa-map-marker-alt"></i> ${product.address || 'Location not specified'}</div>
-                    <div><i class="fas fa-phone"></i> ${product.phoneNumber || 'Phone not provided'}</div>
-                </div>
-                
-                <div class="description">
-                    <h3>Description</h3>
-                    <p>${product.description || 'No description available'}</p>
-                </div>
-                
-                <div class="seller-info">
-                    <h3><i class="fas fa-user"></i> Seller Information</h3>
-                    <div class="seller-details">
-                        <div><i class="fas fa-user-circle"></i> ${seller.username}</div>
-                        <div><i class="fas fa-envelope"></i> ${seller.email}</div>
-                    </div>
+            <div class="details-grid">
+                <div><i class="fas fa-tag"></i> ${product.category || 'Uncategorized'}</div>
+                <div><i class="fas fa-map-marker-alt"></i> ${product.address || 'Location not specified'}</div>
+                <div><i class="fas fa-phone"></i> ${product.phoneNumber || 'Phone not provided'}</div>
+            </div>
+            
+            <div class="description">
+                <h3>Description</h3>
+                <p>${product.description || 'No description available'}</p>
+            </div>
+            
+            <div class="seller-info">
+                <h3><i class="fas fa-user"></i> Seller Information</h3>
+                <div class="seller-details">
+                    <div><i class="fas fa-user-circle"></i> ${seller.username}</div>
+                    <div><i class="fas fa-envelope"></i> ${seller.email}</div>
                 </div>
             </div>
-        `;
+        </div>
+    `;
 
-        // Initialize carousel if there are images
-        if (images.length) {
-            initCustomCarousel(modal);
-        }
-
-        // Close modal handler
-        modal.querySelector('.close-modal').addEventListener('click', () => {
-            closeModal(modal);
-        });
-
-        // Focus modal for keyboard navigation
-        modal.focus();
+    // Initialize carousel if there are images
+    if (images.length) {
+        initCustomCarousel(modal);
     }
 
+    // Close modal handler
+    modal.querySelector('.close-modal').addEventListener('click', () => {
+        closeModal(modal);
+    });
+
+    // Focus modal for keyboard navigation
+    modal.focus();
+}
     function initCustomCarousel(modal) {
         const carousel = modal.querySelector('.carousel-slides');
         const slides = modal.querySelectorAll('.carousel-slide');
