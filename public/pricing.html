@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <title>Premium Plans - GreenTunisia</title>
+  <title>Pricing - GreenTunisia</title>
   <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
   <link rel="shortcut icon" href="/images/fav/favicon.ico" />
@@ -43,31 +43,26 @@
       scroll-behavior: smooth;
     }
 
-    .top_main {
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      height: 400px !important;
-      margin-left: 200px !important;
-      margin-right: 200px !important;
-      padding: 0 !important;
-      margin-bottom: 150px !important;
+    .pricing-section {
+      background: #3a423abf;
+      padding: 80px 0;
+      min-height: calc(100vh - 80px);
     }
 
-    .table-container {
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
-      margin-top: 350px !important;
-      padding-bottom: 10px !important;
-      background: 0 0 30px rgba(0, 0, 0, 0.5) !important;
-      text-align: center;
+    .pricing-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
     .pricing-table {
-      width: 100% !important;
+      width: 100%;
       border-collapse: separate;
       border-spacing: 0;
       border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      margin-top: 40px;
     }
 
     .pricing-table th {
@@ -142,7 +137,7 @@
     .subscribe-btn {
       background-color: #FFFFFF;
       color: #D4AF37;
-      border: none;
+      border: 2px solid transparent;
       padding: 12px 30px;
       border-radius: 30px;
       font-size: 18px;
@@ -156,6 +151,36 @@
     .subscribe-btn:hover {
       transform: translateY(-3px);
       box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    .subscribe-btn.clicked {
+      border-color: #F44336;
+      animation: pulse 0.5s;
+    }
+
+    .request-message {
+      color: #F44336;
+      font-size: 16px;
+      margin-top: 10px;
+      display: none;
+      font-weight: bold;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+      .pricing-table {
+        display: block;
+        overflow-x: auto;
+      }
+      
+      .pricing-section {
+        padding: 40px 0;
+      }
     }
   </style>
 </head>
@@ -180,7 +205,7 @@
               <li><a class="tag_menu" href="/sell">SELL</a></li>
               <li><a class="tag_menu" href="/buy">BUY</a></li>
               <li><a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a></li>
-              <li><a class="tag_menu active_tab" href="/pricing">PREMIUM</a></li>
+              <li><a class="tag_menu active_tab" href="/pricing">PRICING</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -208,57 +233,56 @@
         </nav>
       </section>
     </div>
-    <div class="top_box_inner_2 clearfix">
-      <section id="top" class="clearfix">
-        <div class="top clearfix">
-          <div class="top_main clearfix">
-            <div class="table-container">
-              <table class="pricing-table">
-                <tr>
-                  <th class="free">Free Users (Basic)</th>
-                  <th class="premium">Premium Users</th>
-                </tr>
-                <tr>
-                  <td class="free">Standard listings</td>
-                  <td class="premium"><i class="fas fa-check check-icon"></i> Highlighted listings with gold background</td>
-                </tr>
-                <tr>
-                  <td class="free">Normal search ranking</td>
-                  <td class="premium"><i class="fas fa-check check-icon"></i> Priority in default search rankings</td>
-                </tr>
-                <tr>
-                  <td class="free">No verification badge</td>
-                  <td class="premium"><i class="fas fa-check check-icon"></i> Verified user badge (ID verified)</td>
-                </tr>
-                <tr>
-                  <td class="free">No buyer notifications</td>
-                  <td class="premium"><i class="fas fa-check check-icon"></i> Email alerts to interested buyers</td>
-                </tr>
-                <tr>
-                  <td class="free">30-day listing duration</td>
-                  <td class="premium"><i class="fas fa-check check-icon"></i> Auto-renewing listings</td>
-                </tr>
-                <tr>
-                  <td class="free">Standard support</td>
-                  <td class="premium"><i class="fas fa-check check-icon"></i> Priority support</td>
-                </tr>
-                <tr>
-                  <td class="free">Free</td>
-                  <td class="premium">
-                    <div class="price-tag">
-                      <div class="monthly-price">12.990 DT/month</div>
-                      <div class="yearly-price">129.900 DT/year (2 months free!)</div>
-                    </div>
-                    <button class="subscribe-btn">UPGRADE NOW</button>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
   </div>
+
+  <!-- Pricing Section -->
+  <section class="pricing-section">
+    <div class="pricing-container">
+      <table class="pricing-table">
+        <tr>
+          <th class="free">Free Users (Basic)</th>
+          <th class="premium">Premium Users</th>
+        </tr>
+        <tr>
+          <td class="free">Standard listings</td>
+          <td class="premium"><i class="fas fa-check check-icon"></i> Highlighted listings with gold background</td>
+        </tr>
+        <tr>
+          <td class="free">Normal search ranking</td>
+          <td class="premium"><i class="fas fa-check check-icon"></i> Priority in default search rankings</td>
+        </tr>
+        <tr>
+          <td class="free">No verification badge</td>
+          <td class="premium"><i class="fas fa-check check-icon"></i> Verified user badge (ID verified)</td>
+        </tr>
+        <tr>
+          <td class="free">No buyer notifications</td>
+          <td class="premium"><i class="fas fa-check check-icon"></i> Email alerts to interested buyers</td>
+        </tr>
+        <tr>
+          <td class="free">30-day listing duration</td>
+          <td class="premium"><i class="fas fa-check check-icon"></i> Auto-renewing listings</td>
+        </tr>
+        <tr>
+          <td class="free">Standard support</td>
+          <td class="premium"><i class="fas fa-check check-icon"></i> Priority support</td>
+        </tr>
+        <tr>
+          <td class="free">Free</td>
+          <td class="premium">
+            <div class="price-tag">
+              <div class="monthly-price">12.990 DT/month</div>
+              <div class="yearly-price">129.900 DT/year (2 months free!)</div>
+            </div>
+            <button class="subscribe-btn" id="upgrade-btn">UPGRADE NOW</button>
+            <div class="request-message" id="request-message">
+              Your request has been sent! You'll be notified when this option becomes available.
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </section>
 
   <footer>
     <div class="footer-content">
@@ -268,6 +292,28 @@
 
   <script>
     const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+    
+    // Handle upgrade button click
+    document.getElementById('upgrade-btn').addEventListener('click', function() {
+      const btn = this;
+      const message = document.getElementById('request-message');
+      
+      // Add visual feedback
+      btn.classList.add('clicked');
+      btn.disabled = true;
+      message.style.display = 'block';
+      
+      // Remove the animation class after it completes
+      setTimeout(() => {
+        btn.classList.remove('clicked');
+      }, 500);
+      
+      // In a real implementation, you would send a request to the backend here
+      // For now, we'll just simulate it
+      console.log('Upgrade request sent');
+    });
+
+    // Fetch user data
     async function fetchUserData() {
       try {
         console.log('Fetching user data...');
@@ -293,6 +339,8 @@
         console.log('An error occurred while fetching user data.');
       }
     }
+    
+    // Handle logout
     const logoutLink = document.getElementById('logout-link');
     if (logoutLink) {
       logoutLink.addEventListener('click', (e) => {
@@ -301,22 +349,9 @@
         window.location.href = '/login.html';
       });
     }
+    
+    // Initialize
     fetchUserData();
-
-    // Handle subscribe button click
-    document.querySelector('.subscribe-btn')?.addEventListener('click', function() {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        window.location.href = '/login.html?redirect=/pricing';
-        return;
-      }
-      // Here you would integrate with your payment processor
-      alert('Redirecting to payment gateway...');
-      // In a real implementation, you would:
-      // 1. Create a subscription intent on your backend
-      // 2. Redirect to payment processor
-      // 3. Handle the callback to upgrade the user
-    });
   </script>
 </body>
 </html>
