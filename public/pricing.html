@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>Premium Plans - GreenTunisia</title>
+  <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
+  <link rel="shortcut icon" href="/images/fav/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/fav/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="GreenTunisia" />
+  <link rel="manifest" href="/images/fav/site.webmanifest" />
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+  <link rel="stylesheet" type="text/css" href="css/style2.css" media="all">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  <style>
+    .dropdown-content a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    footer {
+      background-color: #009900;
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      font-family: 'Slabo 27px', serif;
+      font-size: 18px;
+      position: relative;
+      width: 100%;
+      bottom: 0;
+    }
+
+    .footer-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .top_main {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      height: 400px !important;
+      margin-left: 200px !important;
+      margin-right: 200px !important;
+      padding: 0 !important;
+      margin-bottom: 150px !important;
+    }
+
+    .table-container {
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+      margin-top: 350px !important;
+      padding-bottom: 10px !important;
+      background: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+      text-align: center;
+    }
+
+    .pricing-table {
+      width: 100% !important;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .pricing-table th {
+      font-size: 24px !important;
+      font-weight: bold !important;
+      padding: 20px !important;
+      text-align: center !important;
+      color: #FFFFFF !important;
+    }
+
+    .pricing-table th.free {
+      background-color: #009900 !important;
+    }
+
+    .pricing-table th.premium {
+      background: linear-gradient(135deg, #FFD700, #D4AF37) !important;
+      border-radius: 0 10px 0 0;
+    }
+
+    .pricing-table td {
+      padding: 15px !important;
+      text-align: center !important;
+      color: #FFFFFF !important;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .pricing-table td.free {
+      background-color: #3a423a !important;
+    }
+
+    .pricing-table td.premium {
+      background: rgba(212, 175, 55, 0.8) !important;
+    }
+
+    .pricing-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .pricing-table tr:last-child td.free {
+      border-radius: 0 0 0 10px;
+    }
+
+    .pricing-table tr:last-child td.premium {
+      border-radius: 0 0 10px 0;
+    }
+
+    .check-icon {
+      color: #4CAF50;
+      font-size: 20px;
+    }
+
+    .x-icon {
+      color: #F44336;
+      font-size: 20px;
+    }
+
+    .price-tag {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .monthly-price {
+      color: #FFD700;
+    }
+
+    .yearly-price {
+      color: #FFD700;
+      font-size: 24px;
+    }
+
+    .subscribe-btn {
+      background-color: #FFFFFF;
+      color: #D4AF37;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .subscribe-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="top_box clearfix">
+    <div class="top_box_inner_1 clearfix">
+      <section id="header">
+        <nav class="navbar navbar-default">
+          <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand heading_tag" href="/home"><i class="fa-solid fa-leaf"></i>GREEN TUNISIA</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a class="tag_menu" href="/home">HOME</a></li>
+              <li><a class="tag_menu" href="/home#welcome-section">ABOUT</a></li>
+              <li><a class="tag_menu" href="/sell">SELL</a></li>
+              <li><a class="tag_menu" href="/buy">BUY</a></li>
+              <li><a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a></li>
+              <li><a class="tag_menu active_tab" href="/pricing">PREMIUM</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a class="tag_menu_righ" href="#" id="log-btn">
+                  <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
+                  <span id="username">Username</span>
+                  <i class="fas fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content">
+                  <a href="#" id="user-email"><i class="fas fa-envelope"></i><span>user@example.com</span></a>
+                  <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                </div>
+              </li>
+            </ul>
+            <script>
+              document.addEventListener('click', function(event) {
+                var dropdown = document.querySelector('.dropdown');
+                var dropdownContent = document.querySelector('.dropdown-content');
+                if (!dropdown.contains(event.target)) {
+                  dropdownContent.style.display = 'none';
+                }
+              });
+            </script>
+          </div>
+        </nav>
+      </section>
+    </div>
+    <div class="top_box_inner_2 clearfix">
+      <section id="top" class="clearfix">
+        <div class="top clearfix">
+          <div class="top_main clearfix">
+            <div class="table-container">
+              <table class="pricing-table">
+                <tr>
+                  <th class="free">Free Users (Basic)</th>
+                  <th class="premium">Premium Users</th>
+                </tr>
+                <tr>
+                  <td class="free">Standard listings</td>
+                  <td class="premium"><i class="fas fa-check check-icon"></i> Highlighted listings with gold background</td>
+                </tr>
+                <tr>
+                  <td class="free">Normal search ranking</td>
+                  <td class="premium"><i class="fas fa-check check-icon"></i> Priority in default search rankings</td>
+                </tr>
+                <tr>
+                  <td class="free">No verification badge</td>
+                  <td class="premium"><i class="fas fa-check check-icon"></i> Verified user badge (ID verified)</td>
+                </tr>
+                <tr>
+                  <td class="free">No buyer notifications</td>
+                  <td class="premium"><i class="fas fa-check check-icon"></i> Email alerts to interested buyers</td>
+                </tr>
+                <tr>
+                  <td class="free">30-day listing duration</td>
+                  <td class="premium"><i class="fas fa-check check-icon"></i> Auto-renewing listings</td>
+                </tr>
+                <tr>
+                  <td class="free">Standard support</td>
+                  <td class="premium"><i class="fas fa-check check-icon"></i> Priority support</td>
+                </tr>
+                <tr>
+                  <td class="free">Free</td>
+                  <td class="premium">
+                    <div class="price-tag">
+                      <div class="monthly-price">12.990 DT/month</div>
+                      <div class="yearly-price">129.900 DT/year (2 months free!)</div>
+                    </div>
+                    <button class="subscribe-btn">UPGRADE NOW</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <i class="fa-regular fa-copyright"></i> 2025 Green Tunisia - All Rights Reserved
+    </div>
+  </footer>
+
+  <script>
+    const backendUrl = 'https://green-tunisia-h3ji.onrender.com';
+    async function fetchUserData() {
+      try {
+        console.log('Fetching user data...');
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.log('No token found. User is not logged in.');
+          return;
+        }
+        const response = await fetch(`${backendUrl}/api/auth/user`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response.ok) {
+          const user = await response.json();
+          console.log('User data fetched:', user);
+          document.getElementById('username').textContent = user.username;
+          document.getElementById('user-email').innerHTML = `<i class="fas fa-envelope"></i><span>${user.email}</span>`;
+        } else {
+          console.error('Failed to fetch user data:', response.status, response.statusText);
+          console.log('User is not authenticated.');
+        }
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+        console.log('An error occurred while fetching user data.');
+      }
+    }
+    const logoutLink = document.getElementById('logout-link');
+    if (logoutLink) {
+      logoutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        window.location.href = '/login.html';
+      });
+    }
+    fetchUserData();
+
+    // Handle subscribe button click
+    document.querySelector('.subscribe-btn')?.addEventListener('click', function() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = '/login.html?redirect=/pricing';
+        return;
+      }
+      // Here you would integrate with your payment processor
+      alert('Redirecting to payment gateway...');
+      // In a real implementation, you would:
+      // 1. Create a subscription intent on your backend
+      // 2. Redirect to payment processor
+      // 3. Handle the callback to upgrade the user
+    });
+  </script>
+</body>
+</html>
