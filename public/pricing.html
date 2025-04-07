@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <title>Pricing - GreenTunisia</title>
+  <title>Premium Plans - GreenTunisia</title>
   <link rel="icon" type="image/png" href="/images/fav/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/images/fav/favicon.svg" />
   <link rel="shortcut icon" href="/images/fav/favicon.ico" />
@@ -43,10 +43,17 @@
       scroll-behavior: smooth;
     }
 
-    .pricing-section {
-      background: #3a423abf;
-      padding: 80px 0;
+    body {
+      background-image: url('../images/4.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .pricing-overlay {
+      background: rgba(58, 66, 58, 0.85);
       min-height: calc(100vh - 80px);
+      padding: 40px 0;
     }
 
     .pricing-container {
@@ -66,9 +73,9 @@
     }
 
     .pricing-table th {
-      font-size: 24px !important;
+      font-size: 28px !important;
       font-weight: bold !important;
-      padding: 20px !important;
+      padding: 25px !important;
       text-align: center !important;
       color: #FFFFFF !important;
     }
@@ -83,18 +90,20 @@
     }
 
     .pricing-table td {
-      padding: 15px !important;
+      padding: 20px !important;
       text-align: center !important;
       color: #FFFFFF !important;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 18px;
     }
 
     .pricing-table td.free {
-      background-color: #3a423a !important;
+      background-color: rgba(58, 66, 58, 0.9) !important;
     }
 
     .pricing-table td.premium {
-      background: rgba(212, 175, 55, 0.8) !important;
+      background: rgba(212, 175, 55, 0.85) !important;
+      font-size: 20px;
     }
 
     .pricing-table tr:last-child td {
@@ -103,6 +112,8 @@
 
     .pricing-table tr:last-child td.free {
       border-radius: 0 0 0 10px;
+      font-size: 24px;
+      font-weight: bold;
     }
 
     .pricing-table tr:last-child td.premium {
@@ -111,16 +122,16 @@
 
     .check-icon {
       color: #4CAF50;
-      font-size: 20px;
+      font-size: 24px;
     }
 
     .x-icon {
       color: #F44336;
-      font-size: 20px;
+      font-size: 24px;
     }
 
     .price-tag {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: bold;
       margin: 20px 0;
     }
@@ -131,20 +142,20 @@
 
     .yearly-price {
       color: #FFD700;
-      font-size: 24px;
+      font-size: 28px;
     }
 
     .subscribe-btn {
       background-color: #FFFFFF;
       color: #D4AF37;
       border: 2px solid transparent;
-      padding: 12px 30px;
+      padding: 15px 35px;
       border-radius: 30px;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
       cursor: pointer;
       transition: all 0.3s;
-      margin-top: 15px;
+      margin-top: 20px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
@@ -160,8 +171,8 @@
 
     .request-message {
       color: #F44336;
-      font-size: 16px;
-      margin-top: 10px;
+      font-size: 18px;
+      margin-top: 15px;
       display: none;
       font-weight: bold;
     }
@@ -178,8 +189,27 @@
         overflow-x: auto;
       }
       
-      .pricing-section {
-        padding: 40px 0;
+      .pricing-table th, 
+      .pricing-table td {
+        padding: 15px !important;
+        font-size: 16px !important;
+      }
+      
+      .pricing-table td.premium {
+        font-size: 17px !important;
+      }
+      
+      .pricing-table tr:last-child td.free {
+        font-size: 20px !important;
+      }
+      
+      .price-tag {
+        font-size: 24px;
+      }
+      
+      .subscribe-btn {
+        padding: 12px 25px;
+        font-size: 18px;
       }
     }
   </style>
@@ -205,7 +235,7 @@
               <li><a class="tag_menu" href="/sell">SELL</a></li>
               <li><a class="tag_menu" href="/buy">BUY</a></li>
               <li><a class="tag_menu" href="/plastic-selling">SELL PLASTIC</a></li>
-              <li><a class="tag_menu active_tab" href="/pricing">PRICING</a></li>
+              <li><a class="tag_menu active_tab" href="/pricing">PREMIUM</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -235,8 +265,8 @@
     </div>
   </div>
 
-  <!-- Pricing Section -->
-  <section class="pricing-section">
+  <!-- Pricing Section with Background Overlay -->
+  <div class="pricing-overlay">
     <div class="pricing-container">
       <table class="pricing-table">
         <tr>
@@ -268,7 +298,7 @@
           <td class="premium"><i class="fas fa-check check-icon"></i> Priority support</td>
         </tr>
         <tr>
-          <td class="free">Free</td>
+          <td class="free">FREE</td>
           <td class="premium">
             <div class="price-tag">
               <div class="monthly-price">12.990 DT/month</div>
@@ -282,7 +312,7 @@
         </tr>
       </table>
     </div>
-  </section>
+  </div>
 
   <footer>
     <div class="footer-content">
